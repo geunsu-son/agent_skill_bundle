@@ -197,6 +197,7 @@ workshop-kit/             공방 운영용 Rule·Skill의 관리 원본
 - [공방 운영용 Rule](workshop-kit/rules/agent-skill-workshop.mdc)
 - [아이디어 구현 Skill](workshop-kit/skills/idea-to-agent-artifact/SKILL.md)
 - [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
+- [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
 - [작업대 메모](workshop/README.md)
 
 ## 첫 예시: 세션 경제 브리핑
