@@ -36,6 +36,15 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 경제 캘린더와 시장 데이터 수집을 Script로 분리할 수 있는지 검토
 - 실제 브리핑 결과를 저장하고 판단 일관성을 비교하는 방법 필요
 
+### 웹 크롤러 제작 Rule·Skill
+
+- Agent가 크롤 요청마다 API 확인·robots·스키마 설계를 건너뛰는 패턴이 반복됨
+- Rule: 수집 경로 우선순위, 법·예의, 데이터·구현 품질, 금지 패턴
+- Skill: 요청 정리 → 경로 검토 → 사전 조사 → 스키마 → 구현 → 검증 → 한계 기록
+- ver0 예시: [`examples/web-crawler-ver0/`](../../examples/web-crawler-ver0/README.md)
+- 아직 확인 필요: 대상 사이트 유형(뉴스, 쇼핑, 공공데이터 등)에 따라 Skill 단계를 쪼갤지
+- Script 후보: robots·sitemap 스캔, JSON-LD 추출, 스키마 검증
+
 ### 다음 후보
 
 - 데이터 검증 Skill
