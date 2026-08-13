@@ -1,0 +1,16 @@
+{
+  "name": "agent-skill-bundle",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Docs-QA tooling for the Agent Skill Bundle workshop repository.",
+  "type": "module",
+  "scripts": {
+    "check:links": "node scripts/check-links.mjs",
+    "lint:md": "markdownlint-cli2 \"**/*.md\"",
+    "check": "npm run check:links && npm run lint:md"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "markdownlint-cli2": "^0.23.2"
+  }
+}

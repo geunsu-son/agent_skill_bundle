@@ -1,0 +1,4 @@
+{
+  "name": "Agent Skill Bundle",
+  "install": "npm ci"
+}
