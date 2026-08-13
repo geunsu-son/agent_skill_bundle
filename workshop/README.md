@@ -43,7 +43,9 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - Skill: 요청 정리 → 경로 검토 → 사전 조사 → 스키마 → 구현 → 검증 → 한계 기록
 - ver0 예시: [`examples/web-crawler-ver0/`](../../examples/web-crawler-ver0/README.md)
 - SPA·내부 API 직접 호출 검토 단계와 참고 문서 추가
-- **testing:** kr.investing.com — RSS + 본문 파이프라인 ([`BODY_TESTING.md`](../../examples/web-crawler-ver0/testing/investing-kr-news/BODY_TESTING.md))
+- **testing:** kr.investing.com — RSS + 본문 ([`BODY_TESTING.md`](../../examples/web-crawler-ver0/testing/investing-kr-news/BODY_TESTING.md))
+- **testing:** yozm.wishket.com — RSS 본문 E2E ([`yozm-wishket/`](../../examples/web-crawler-ver0/testing/yozm-wishket/README.md))
+- reusable 판단 메모: [`REUSABLE_ASSESSMENT.md`](../../examples/web-crawler-ver0/testing/REUSABLE_ASSESSMENT.md)
 - 아직 확인 필요: 대상 사이트 유형(뉴스, 쇼핑, 공공데이터 등)에 따라 Skill 단계를 쪼갤지
 - Script 후보: robots·sitemap 스캔, JSON-LD 추출, 스키마 검증
 

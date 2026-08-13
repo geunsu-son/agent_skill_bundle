@@ -25,7 +25,7 @@ Agent에게 크롤·스크래핑을 맡기면 다음이 반복적으로 발생�
 
 ## 상태
 
-`testing` — kr.investing.com 뉴스 RSS testing 완료. [`testing/investing-kr-news/`](testing/investing-kr-news/README.md) 참고.
+`testing` — Investing.com + yozm.wishket.com 2사이트 testing 완료. reusable 판단은 [`testing/REUSABLE_ASSESSMENT.md`](testing/REUSABLE_ASSESSMENT.md).
 
 ## 구성
 
@@ -43,8 +43,10 @@ Skill
 - [`scripts/fetch_investing_kr_news_rss.py`](scripts/fetch_investing_kr_news_rss.py) — testing용 RSS 수집
 - [`scripts/fetch_investing_kr_news_with_body.py`](scripts/fetch_investing_kr_news_with_body.py) — RSS + 본문 파이프라인 (testing)
 - [`scripts/investing_kr_parse.py`](scripts/investing_kr_parse.py) — HTML 본문 파서
-- [`testing/investing-kr-news/README.md`](testing/investing-kr-news/README.md) — 첫 testing 관찰 기록 (RSS)
-- [`testing/investing-kr-news/BODY_TESTING.md`](testing/investing-kr-news/BODY_TESTING.md) — 본문 수집 testing
+- [`scripts/fetch_yozm_magazine.py`](scripts/fetch_yozm_magazine.py) — 요즘IT RSS+본문 (testing)
+- [`scripts/yozm_parse.py`](scripts/yozm_parse.py) — 요즘IT RSS/HTML 파서
+- [`testing/yozm-wishket/README.md`](testing/yozm-wishket/README.md) — yozm testing 관찰
+- [`testing/REUSABLE_ASSESSMENT.md`](testing/REUSABLE_ASSESSMENT.md) — reusable 판단 메모
 
 ## ver0에서 일부러 하지 않은 것
 
