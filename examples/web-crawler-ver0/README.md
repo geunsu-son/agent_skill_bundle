@@ -40,8 +40,11 @@ Skill
 - [`rules/crawler-craft.mdc`](rules/crawler-craft.mdc)
 - [`skills/web-crawler-craft/SKILL.md`](skills/web-crawler-craft/SKILL.md)
 - [`docs/api-direct-call-guideline.md`](docs/api-direct-call-guideline.md) — SPA·내부 API 검토 참고
-- [`scripts/fetch_investing_kr_news_rss.py`](scripts/fetch_investing_kr_news_rss.py) — testing용 RSS 수집 스크립트
-- [`testing/investing-kr-news/README.md`](testing/investing-kr-news/README.md) — 첫 testing 관찰 기록
+- [`scripts/fetch_investing_kr_news_rss.py`](scripts/fetch_investing_kr_news_rss.py) — testing용 RSS 수집
+- [`scripts/fetch_investing_kr_news_with_body.py`](scripts/fetch_investing_kr_news_with_body.py) — RSS + 본문 파이프라인 (testing)
+- [`scripts/investing_kr_parse.py`](scripts/investing_kr_parse.py) — HTML 본문 파서
+- [`testing/investing-kr-news/README.md`](testing/investing-kr-news/README.md) — 첫 testing 관찰 기록 (RSS)
+- [`testing/investing-kr-news/BODY_TESTING.md`](testing/investing-kr-news/BODY_TESTING.md) — 본문 수집 testing
 
 ## ver0에서 일부러 하지 않은 것
 
