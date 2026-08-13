@@ -43,6 +43,8 @@ Skill
 - [`scripts/fetch_investing_kr_news_rss.py`](scripts/fetch_investing_kr_news_rss.py) — testing용 RSS 수집
 - [`scripts/fetch_investing_kr_news_with_body.py`](scripts/fetch_investing_kr_news_with_body.py) — RSS + 본문 파이프라인 (testing)
 - [`scripts/investing_kr_parse.py`](scripts/investing_kr_parse.py) — HTML 본문 파서
+- [`testing/investing-kr-news/README.md`](testing/investing-kr-news/README.md) — Investing RSS testing
+- [`testing/investing-kr-news/BODY_TESTING.md`](testing/investing-kr-news/BODY_TESTING.md) — Investing 본문 testing
 - [`scripts/fetch_yozm_magazine.py`](scripts/fetch_yozm_magazine.py) — 요즘IT RSS+본문 (testing)
 - [`scripts/yozm_parse.py`](scripts/yozm_parse.py) — 요즘IT RSS/HTML 파서
 - [`testing/yozm-wishket/README.md`](testing/yozm-wishket/README.md) — yozm testing 관찰
