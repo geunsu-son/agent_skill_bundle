@@ -1,0 +1,16 @@
+{
+  // Docs-QA lint config for this workshop repo. It lints only the repository's
+  // own Markdown (never dependencies) and disables purely stylistic rules that
+  // conflict with the existing hand-authored Korean prose and tables, so the
+  // check focuses on structural correctness rather than reformatting content.
+  "ignores": ["node_modules/**", ".git/**"],
+  "config": {
+    "default": true,
+    "MD013": false, // line length: prose lines are intentionally long
+    "MD033": false, // inline HTML: docs use HTML comments/blocks
+    "MD036": false, // emphasis used as heading (e.g. "**ver0 — ...**")
+    "MD041": false, // first line in file need not be a top-level heading
+    "MD060": false, // table pipe spacing style is author's choice
+    "MD024": { "siblings_only": true } // repeated headings under distinct parents are fine
+  }
+}
