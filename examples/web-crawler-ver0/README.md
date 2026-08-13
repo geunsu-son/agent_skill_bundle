@@ -23,6 +23,10 @@ Agent에게 크롤·스크래핑을 맡기면 다음이 반복적으로 발생�
 4. 어떤 도구와 추출 전략이 이 사이트에 맞는가?
 5. 결과를 어떻게 검증하고 한계를 기록하는가?
 
+## 상태
+
+`testing` — kr.investing.com 뉴스 RSS testing 완료. [`testing/investing-kr-news/`](testing/investing-kr-news/README.md) 참고.
+
 ## 구성
 
 ```text
@@ -36,6 +40,8 @@ Skill
 - [`rules/crawler-craft.mdc`](rules/crawler-craft.mdc)
 - [`skills/web-crawler-craft/SKILL.md`](skills/web-crawler-craft/SKILL.md)
 - [`docs/api-direct-call-guideline.md`](docs/api-direct-call-guideline.md) — SPA·내부 API 검토 참고
+- [`scripts/fetch_investing_kr_news_rss.py`](scripts/fetch_investing_kr_news_rss.py) — testing용 RSS 수집 스크립트
+- [`testing/investing-kr-news/README.md`](testing/investing-kr-news/README.md) — 첫 testing 관찰 기록
 
 ## ver0에서 일부러 하지 않은 것
 
