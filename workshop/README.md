@@ -45,9 +45,10 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 ### 도메인 기반 데이터 분석
 
 - 작업 정의: [`domain-data-analysis.md`](domain-data-analysis.md)
-- ver0 예시: [`examples/domain-data-analysis/`](../examples/domain-data-analysis/README.md) (Rule, Skill)
-- 가설: 범용 EDA·모델보다 질문·입도·변수 설계를 먼저 고정하면 검증과 보고서 품질이 달라진다
-- 다음: 캐글 마케팅·학습 데이터로 Skill을 한 번씩 실행하고 관찰 기록
+- 예시: [`examples/domain-data-analysis/`](../examples/domain-data-analysis/README.md) — 상태 `testing`
+- 실행 4건: [`testing/`](../examples/domain-data-analysis/testing/README.md)
+- 확인: 질문·입도가 기법을 바꿈. 도메인 카드를 더 늘리지는 않음
+- 다음: view→cart 이벤트 로그, 소비자 문장 레이어. `.cursor/` 승격은 보류
 
 ### 다음 후보
 
