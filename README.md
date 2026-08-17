@@ -23,25 +23,44 @@ Agent 작업 아이디어
 
 ## 시작하기
 
-저장소를 아직 clone하지 않았거나, clone한 뒤 Cursor에서 열었지만 **`.cursor/`에 공방 설정이 반영되지 않은 상태**라면 Agent에게 아래 프롬프트를 입력합니다.
+**작업 중인 저장소**에 Agent Skill Bundle을 처음 연결할 때 Agent에게 아래 프롬프트를 입력합니다. 번들 소스 저장소를 clone하지 않고, 현재 저장소의 `.cursor/`에만 설치합니다.
 
-저장소 주소: https://github.com/geunsu-son/agent_skill_bundle
+번들 소스: https://github.com/geunsu-son/agent_skill_bundle
 
 ```text
-이 Agent Skill Bundle 저장소를 Cursor에서 처음 쓸 수 있게 설정해줘.
-저장소: https://github.com/geunsu-son/agent_skill_bundle
+지금 작업 중인 이 저장소에 Agent Skill Bundle을 연결해줘.
+번들 소스: https://github.com/geunsu-son/agent_skill_bundle
 
-아직 이 저장소를 열지 않았거나, Rule·Skill이 .cursor/에 반영되지 않은 상태라고 가정해.
+아직 Agent Skill Bundle이 이 저장소에 적용되지 않은 상태라고 가정해.
 
-1. 저장소를 아직 열지 않았다면 위 주소에서 clone한 뒤 Cursor에서 연다
-2. README와 workshop-kit/ 구조를 확인한다
-3. workshop-kit/catalog.md에 등록된 공방 키트 번들을 .cursor/rules, .cursor/skills에 설치한다
-4. examples/의 예시 번들은 설치하지 않는다
-5. catalog의 활성 번들 목록과 .cursor/ 상태가 일치하는지 확인한다
-6. 설치한 번들과, 이 저장소에서 바로 할 수 있는 다음 작업을 요약한다
+1. 번들 소스 저장소를 clone하지 말고, 현재 저장소의 .cursor/에만 설치한다
+2. 먼저 Bundle Catalog gate 번들만 가져온다
+   - bundle-catalog.mdc
+   - manage-agent-bundles Skill
+3. .cursor/agent-bundles/catalog.md에 번들 소스 주소와 설치 이력을 기록한다
+4. bundle-catalog 규칙과 manage-agent-bundles Skill 절차에 따라,
+   번들 소스 catalog에서 다음에 가져올 번들 후보를 설명하고 내 선택을 받는다
+5. 내가 고른 번들만 .cursor/에 설치한다
+6. gate 상태, 설치한 번들, 아직 가져오지 않은 후보를 요약한다
 ```
 
-이 프롬프트는 공방 운영용 번들(Agent Skill Workshop)과 번들 총관리 번들(Bundle Catalog)을 함께 적용합니다. 예시 번들은 실제로 쓸 때만 별도로 설치합니다.
+### gate 흐름
+
+```text
+작업 중인 저장소
+→ Bundle Catalog gate 설치 (첫 단계)
+→ gate가 소스 catalog의 후보를 설명
+→ 사용자가 필요한 번들 선택
+→ 선택한 번들만 .cursor/에 설치
+```
+
+예시 번들은 gate를 통해 필요할 때만 가져옵니다. Agent Skill Workshop 번들은 이 저장소에서 아이디어를 구현할 때 gate를 통해 추가합니다.
+
+추가 번들만 설치할 때:
+
+```text
+Agent Skill Bundle gate를 통해 Agent Skill Workshop 번들만 추가로 설치해줘.
+```
 
 ## 용어: 에이전트 번들
 
@@ -62,7 +81,7 @@ Agent 작업 아이디어
 → 필요 시 .cursor/에 설치해 활성화
 ```
 
-예시 번들은 `examples/`에 두고, 실제로 쓸 때만 `.cursor/`에 설치합니다. 등록 목록은 [`workshop-kit/catalog.md`](workshop-kit/catalog.md)에서 관리합니다.
+예시 번들은 `examples/`에 두고, 실제로 쓸 때 gate를 통해 `.cursor/`에 설치합니다. 가져올 수 있는 번들 목록은 [`workshop-kit/catalog.md`](workshop-kit/catalog.md), 설치된 번들 목록은 소비 프로젝트의 `.cursor/agent-bundles/catalog.md`에서 관리합니다.
 
 ## 기본 관점
 
@@ -153,13 +172,13 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 
 ### 번들 총관리 Rule과 Skill
 
-번들이 늘어날수록 어떤 세트를 설치·업데이트·삭제할지 판단하는 **총관리 번들**도 둡니다.
+번들이 늘어날수록 어떤 세트를 가져오고·업데이트하고·삭제할지 판단하는 **gate 번들**입니다.
 
 - Rule: [`workshop-kit/rules/bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc)
 - Skill: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
-- 카탈로그: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
+- 소스 catalog: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
 
-처음 적용할 때는 위 [시작하기](#시작하기) 프롬프트에 포함됩니다. 저장소를 이미 적용한 뒤 번들을 추가·정리할 때는 `manage-agent-bundles` Skill 절차를 따릅니다.
+다른 저장소에 연결할 때는 [시작하기](#시작하기) 프롬프트로 **Bundle Catalog gate만** 먼저 설치하고, gate가 다음 번들 선택을 안내합니다. 소비 프로젝트의 설치 기록은 `.cursor/agent-bundles/catalog.md`에 둡니다.
 
 ## 작업 아이디어 인터뷰
 
