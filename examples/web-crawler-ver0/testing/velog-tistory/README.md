@@ -148,9 +148,28 @@ python3 fetch_blog_platform_rss.py --platform tistory --target toss.tech/rss.xml
 - Tistory 스킨/설정에 따른 RSS 필드 차이
 - Velog → Tistory 역방향 이전은 본 testing 범위 밖
 
-## 다음 검증
+## 사용자 블로그 샘플: super-son.tistory.com (2026-08-17)
 
-1. 사용자 실제 Tistory RSS URL로 `fetch_blog_platform_rss.py` 실행
+- URL: https://super-son.tistory.com/
+- 블로그명: Simple is Best.
+- 스킨: hELLO (커스텀) — 상세 HTML은 JS 렌더 위주, **RSS 우선 채택**
+
+| 항목 | 결과 |
+|---|---|
+| RSS `https://super-son.tistory.com/rss` | 200, **최근 10건만** (`count=100` 파라미터도 10건) |
+| `content:encoded` | 없음 (10/10) |
+| 본문 | `description` HTML → 텍스트 **전건 성공** (최신 글 ~5.3k, 긴 글 RSS raw ~12k) |
+| sitemap | 200, **숫자 URL 글 107건** (id 2–115) |
+| robots | 글·RSS disallow 없음 |
+
+**전체 마이그레이션 시:** RSS만으로는 부족 → `sitemap.xml`에서 URL 목록 + 글별 RSS `description` 또는 HTML(스킨 의존) 필요.
+
+```bash
+python3 fetch_blog_platform_rss.py --platform tistory --target super-son --limit 10
+```
+
+최신 10건 E2E: 본문 10/10 ✅ (클라우드 VM).
+
 2. 글 수·이미지 비중에 따라 HTML→MD 변환 품질 확인
 3. Velog 계정 생성 후 **수동 이전 1건** vs 스크립트 출력 비교
 
