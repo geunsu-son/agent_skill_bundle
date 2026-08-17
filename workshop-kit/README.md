@@ -48,7 +48,7 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 실제로 시험할 수 있는 최소 예시를 만들어줘.
 ```
 
-저장소를 Cursor에 처음 적용할 때는 루트 [README의 시작하기](../README.md#시작하기) 프롬프트를 사용합니다.
+저장소를 Cursor에 처음 적용할 때는 루트 [README의 시작하기](../README.md#시작하기) 프롬프트를 사용합니다. 저장소 주소(`https://github.com/geunsu-son/agent_skill_bundle`)가 포함되어 있습니다.
 
 ## 현재 상태
 
