@@ -25,11 +25,13 @@ description: Bundle Catalog gate 설치, 번들 선택, 설치·업데이트·�
 
 ### 1. 요청과 범위 확인
 
-- 작업: 연결·점검, gate 보완, 추가 설치, 업데이트, 삭제 중 무엇인가
+- **요청 유형**: `connect`(연결), `add`(추가 설치), `audit`(조사만), `update`, `remove` 중 무엇인가
 - 번들 소스 URL
 - 사용자가 이미 선택한 번들 또는 Agent 작업 목적
 
 이미 제공된 정보는 다시 묻지 않는다.
+
+`connect`가 아닌 일반 작업 turn에서는 번들 추가 설치를 묻지 않는다.
 
 ### 2. Bundle Catalog gate 보완
 
@@ -59,11 +61,17 @@ curl -fsSL "$SOURCE/raw/$REF/workshop-kit/skills/manage-agent-bundles/SKILL.md" 
 - 번들별 `installed` / `partial` / `missing` / `catalog-only` / `files-only` 상태를 만든다
 - gate 다음 단계 제안을 받는다
 
-조사 결과를 사용자에게 먼저 보여 준다.
+조사 결과를 사용자에게 보여 준다. `audit` 요청이면 여기서 종료한다.
 
 ### 4. gate: 설치할 번들 선택
 
-조사 결과를 바탕으로 사용자에게 질문한다.
+**`connect` 또는 `add` 요청일 때만** 실행한다.
+
+- `connect`: 조사 결과를 보여 준 뒤, **이번 turn 안에서 한 번만** 추가 설치할 번들을 묻는다.
+- `add`: 요청에 번들이 지정되어 있으면 바로 설치하고, 없을 때만 짧게 확인한다.
+- 사용자가 “추가하지 않음”, “gate만 유지”, “여기까지” 등으로 끝내면 설치하지 않고 종료한다.
+
+질문에 포함할 내용:
 
 - 이미 설치된 번들
 - 불일치·부분 설치가 있으면 정리 필요 여부
@@ -122,9 +130,11 @@ examples/<bundle-name>/skills/<skill>/SKILL.md → .cursor/skills/<skill>/SKILL.
 ### 이번에 설치·변경한 번들
 - ...
 
-### gate 후보 (아직 미설치)
-- ...
+### 추가 설치 (요청 시에만)
+- gate를 통해 추가 설치하려면 사용자가 명시적으로 요청한다.
 ```
+
+연결 turn을 마칠 때 미설치 후보 목록을 반복해 설치를 재촉하지 않는다.
 
 ## 번들 소스 저장소 내부
 
@@ -133,8 +143,8 @@ examples/<bundle-name>/skills/<skill>/SKILL.md → .cursor/skills/<skill>/SKILL.
 ## 완료 조건
 
 - Bundle Catalog gate가 `installed` 상태다.
-- `audit-installed-bundles` 결과를 사용자에게 공유했다.
-- 사용자가 고른 번들만 `.cursor/`에 반영되었다.
+- 요청 유형(`connect` / `add` / `audit` / `update` / `remove`) 범위를 벗어나지 않았다.
+- `connect`/`add` turn에서만 설치 질문을 했고, 그 외 turn에서는 추가 설치를 묻지 않았다.
 - 재조사 후 로컬 catalog와 `.cursor/` 상태가 일치한다.
 
 ## 기본 요청 예시
