@@ -1,22 +1,23 @@
 ---
 name: manage-agent-bundles
-description: 에이전트 번들의 설치·업데이트·삭제·보관을 판단하고, catalog와 .cursor/ 상태를 일치시키는 절차
+description: 작업 중인 저장소에 Agent Skill Bundle을 연결하고, gate를 통해 번들 설치·업데이트·삭제·보관을 관리하는 절차
 ---
 
 # Manage Agent Bundles
 
 ## 사용 시점
 
-다음과 같은 요청에 사용한다.
+- 작업 중인 저장소에 Agent Skill Bundle을 처음 연결할 때
+- gate를 통해 다음 번들을 가져올지 선택할 때
+- 설치된 번들을 업데이트·삭제·점검할 때
 
-- 어떤 rule-skill 세트를 설치·삭제·업데이트할지 정리할 때
-- `.cursor/`와 `workshop-kit/` 또는 `examples/` 상태를 맞출 때
-- 새 번들을 추가한 뒤 카탈로그를 갱신할 때
-- 오래된 번들을 보관하거나 대체할 때
+## 기본값
 
-## 목표
+- **번들 소스**: `https://github.com/geunsu-son/agent_skill_bundle`
+- **소스 catalog**: `workshop-kit/catalog.md`
+- **로컬 catalog**: `.cursor/agent-bundles/catalog.md`
 
-저장소에 있는 **에이전트 번들** 중 무엇을 활성화하고, 무엇을 제거하고, 무엇을 최신으로 맞출지 판단한 뒤, `workshop-kit/catalog.md`와 `.cursor/`를 일치시킨다.
+번들 소스 저장소를 clone하지 않는다. 필요한 파일만 가져온다.
 
 ## 절차
 
@@ -24,48 +25,89 @@ description: 에이전트 번들의 설치·업데이트·삭제·보관을 판�
 
 다음을 먼저 확인한다.
 
-- 사용자가 원하는 작업: 설치, 업데이트, 삭제, 전체 점검 중 무엇인가
-- 대상 번들 이름 또는 Agent 작업 목적
-- 이 저장소를 다루는 공방 작업인지, 특정 업무 예시를 쓰는 것인지
+- 작업: 첫 연결, gate 선택, 업데이트, 삭제, 점검 중 무엇인가
+- 현재 저장소가 번들 소스 저장소인지, 다른 프로젝트인지
+- 사용자가 이미 선택한 번들 또는 Agent 작업 목적
 
 이미 제공된 정보는 다시 묻지 않는다.
 
-### 2. 현재 목록 수집
+### 2. 저장소 유형 판별
 
-다음 위치를 확인한다.
+- `workshop-kit/catalog.md`가 있으면 **번들 소스 저장소**다. 원본 편집과 `.cursor/` 동기화를 수행한다.
+- 없으면 **소비 프로젝트**다. 번들 소스에서 필요한 파일만 `.cursor/`로 가져온다.
 
-- `workshop-kit/catalog.md` — 등록된 번들과 상태
-- `workshop-kit/rules/`, `workshop-kit/skills/` — 공방 키트 번들 원본
-- `examples/*/` — 예시 번들 원본
-- `.cursor/rules/`, `.cursor/skills/` — 현재 활성 번들
+### 3. 첫 연결 (소비 프로젝트)
 
-각 번들에 대해 Rule, Skill, Script, Automation 경로와 README 상태(`draft`, `testing`, `reusable`, `archived`)를 적는다.
+현재 작업 중인 저장소에 Agent Skill Bundle을 처음 연결할 때는 **Bundle Catalog 번들만** 설치한다.
 
-### 3. 중복과 충돌 검사
+1. `.cursor/rules/`, `.cursor/skills/`, `.cursor/agent-bundles/` 디렉터리를 준비한다.
+2. 번들 소스에서 아래 파일만 가져와 `.cursor/`에 둔다.
+   - `workshop-kit/rules/bundle-catalog.mdc` → `.cursor/rules/bundle-catalog.mdc`
+   - `workshop-kit/skills/manage-agent-bundles/SKILL.md` → `.cursor/skills/manage-agent-bundles/SKILL.md`
+3. `.cursor/agent-bundles/catalog.md`를 만든다.
 
-- 같은 Agent 작업 목적을 가진 활성 번들이 두 개 이상인지 확인한다.
-- Rule의 `alwaysApply: true`가 겹치거나 상충하는지 확인한다.
-- 예시 번들과 공방 키트 번들의 역할이 섞이지 않았는지 확인한다.
+```md
+# Local Agent Bundle Catalog
 
-충돌이 있으면 유지할 번들 하나를 정하고, 대체 또는 보관 대상을 명시한다.
+## Bundle Source
 
-### 4. 작업 판단
+https://github.com/geunsu-son/agent_skill_bundle
 
-`bundle-catalog` Rule의 기준에 따라 각 번들에 대해 다음 중 하나를 정한다.
+## Installed Bundles
 
-- **install**: `.cursor/`에 복사
-- **update**: 원본에서 `.cursor/`로 반영
-- **remove**: `.cursor/`에서 제거
-- **keep**: 현재 상태 유지
-- **archive**: 상태를 `archived`로 바꾸고 `.cursor/`에서 제거
+| 번들 | 상태 | Rule | Skill | 메모 |
+|---|---|---|---|---|
+| Bundle Catalog | active | bundle-catalog.mdc | manage-agent-bundles | gate |
 
-판단 이유를 한 줄씩 남긴다.
+## Last Action
 
-### 5. 파일 반영
+- YYYY-MM-DD: Bundle Catalog gate 설치
+```
+
+4. 다른 번들은 아직 설치하지 않는다.
+5. gate 절차로 넘긴다.
+
+파일 가져오기 예시:
+
+```bash
+SOURCE=https://github.com/geunsu-son/agent_skill_bundle
+REF=main
+curl -fsSL "$SOURCE/raw/$REF/workshop-kit/rules/bundle-catalog.mdc" -o .cursor/rules/bundle-catalog.mdc
+curl -fsSL "$SOURCE/raw/$REF/workshop-kit/skills/manage-agent-bundles/SKILL.md" -o .cursor/skills/manage-agent-bundles/SKILL.md
+curl -fsSL "$SOURCE/raw/$REF/workshop-kit/catalog.md" -o /tmp/agent-skill-bundle-source-catalog.md
+```
+
+### 4. gate: 다음 번들 선택
+
+Bundle Catalog가 활성화된 뒤, 추가 번들은 gate를 통해서만 설치한다.
+
+1. 번들 소스의 `workshop-kit/catalog.md`를 읽는다.
+2. 로컬 catalog의 설치 목록과 비교한다.
+3. 아직 설치되지 않은 번들 후보를 표로 정리한다.
+   - 번들 이름
+   - 유형(공방 키트 / 예시)
+   - Agent 작업 목적 한 줄
+   - 포함 Rule·Skill
+4. 사용자에게 어떤 번들이 필요한지 짧게 묻거나, 이미 말한 목적에 맞는 후보를 추천한다.
+5. 사용자가 고른 번들만 설치한다. 고르지 않은 번들은 설치하지 않는다.
+
+gate 질문 예시:
+
+```text
+지금 저장소에서 어떤 Agent 작업을 맡기려 하나요?
+아래 후보 중 필요한 번들만 골라주세요.
+
+1. Agent Skill Workshop — 아이디어를 번들로 구현
+2. Session Market Briefing — 세션 경제 브리핑
+3. Web Crawler Craft — 웹 크롤러 제작
+4. 지금은 gate만 유지
+```
+
+### 5. 선택된 번들 설치
+
+사용자가 고른 번들만 번들 소스에서 가져와 `.cursor/`에 둔다.
 
 #### 공방 키트 번들
-
-원본은 `workshop-kit/`에, 실행본은 `.cursor/`에 둔다.
 
 ```text
 workshop-kit/rules/<rule>.mdc        → .cursor/rules/<rule>.mdc
@@ -74,69 +116,74 @@ workshop-kit/skills/<skill>/SKILL.md → .cursor/skills/<skill>/SKILL.md
 
 #### 예시 번들
 
-사용자가 명시적으로 요청한 경우에만 설치한다.
-
 ```text
 examples/<bundle-name>/rules/<rule>.mdc        → .cursor/rules/<rule>.mdc
 examples/<bundle-name>/skills/<skill>/SKILL.md → .cursor/skills/<skill>/SKILL.md
 ```
 
-예시 번들의 Rule은 기본적으로 `alwaysApply: false`를 유지한다.
+예시 번들 Rule은 기본적으로 `alwaysApply: false`를 유지한다.
 
-#### 삭제
+설치 후 로컬 catalog에 번들, Rule, Skill, 상태, 설치일을 추가한다.
 
-- `.cursor/`에서 해당 Rule·Skill 파일 또는 디렉터리를 제거한다.
-- 원본은 `archived`가 아니면 삭제하지 않는다.
+### 6. 번들 소스 저장소 동기화
 
-### 6. 카탈로그 갱신
+번들 소스 저장소 내부에서는 clone 대신 아래 경로를 사용한다.
 
-`workshop-kit/catalog.md`를 다음 기준으로 수정한다.
+- 원본: `workshop-kit/`, `examples/`
+- 실행본: `.cursor/`
+- catalog: `workshop-kit/catalog.md`
 
-- 번들 이름, 유형(공방 키트 / 예시), 상태, 원본 경로
-- 활성 여부(`.cursor/` 설치 여부)
-- 마지막 관리 작업과 한 줄 메모
+공방 키트 번들은 원본과 `.cursor/`를 함께 수정한다. 예시 번들은 기본적으로 `.cursor/`에 설치하지 않는다.
 
-새 번들을 추가했다면 카탈로그에 등록한다.
+### 7. 업데이트·삭제·점검
 
-### 7. README 연결
-
-필요하면 다음을 갱신한다.
-
-- 루트 `README.md`의 주요 파일 목록
-- `workshop-kit/README.md`의 구성 목록
-- 해당 번들 README의 상태
+- **update**: 로컬 catalog에 active인 번들만 번들 소스에서 다시 가져온다.
+- **remove**: `.cursor/`에서 제거하고 로컬 catalog 상태를 `archived`로 바꾼다.
+- **audit**: 로컬 catalog, `.cursor/`, 번들 소스 catalog를 비교해 누락·중복·충돌을 찾는다.
 
 ### 8. 결과 요약
-
-다음 형식으로 마무리한다.
 
 ```md
 ## 번들 관리 결과
 
+### Gate 상태
+- Bundle Catalog: active / not installed
+
 ### 활성 번들
 - ...
 
-### 변경 사항
-- install / update / remove / archive 항목과 이유
-
-### 유지한 번들
+### 이번에 설치·변경한 번들
 - ...
 
-### 다음 검증
+### gate 후보 (아직 미설치)
+- ...
+
+### 다음 선택
 - ...
 ```
 
 ## 완료 조건
 
-- 요청한 설치·업데이트·삭제·점검이 반영되었다.
-- `workshop-kit/catalog.md`가 실제 `.cursor/` 상태와 일치한다.
-- 중복 활성 번들이 없다.
-- 변경 이유와 다음 검증 항목이 남아 있다.
+- 첫 연결: Bundle Catalog와 로컬 catalog만 준비되어 있다.
+- gate 이후: 사용자가 고른 번들만 `.cursor/`에 반영되어 있다.
+- 로컬 catalog와 `.cursor/` 상태가 일치한다.
+- 다음 gate 후보가 요약되어 있다.
 
 ## 기본 요청 예시
 
+첫 연결:
+
 ```text
-이 저장소의 에이전트 번들을 점검하고,
-bundle-catalog 규칙에 맞춰 설치·업데이트·삭제가 필요한 항목을 정리해줘.
-catalog와 .cursor/ 상태를 맞춘 뒤, 무엇을 바꿨는지 요약해줘.
+지금 작업 중인 이 저장소에 Agent Skill Bundle을 연결해줘.
+번들 소스: https://github.com/geunsu-son/agent_skill_bundle
+
+먼저 Bundle Catalog gate만 .cursor/에 설치하고,
+다음에 가져올 번들 후보를 설명한 뒤 내 선택을 받아줘.
+```
+
+gate 이후:
+
+```text
+Agent Skill Bundle gate를 통해
+Agent Skill Workshop 번들만 추가로 설치해줘.
 ```
