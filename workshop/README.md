@@ -42,13 +42,12 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 3패턴 testing으로 절차 검증 완료 — 사이트별 스크립트·testing 기록은 예시에 보관하지 않음
 - 다음: 실제 크롤 요청에서 Skill만으로 수행되는지 관찰, 반복 시 Script·`.cursor/` 승격 검토
 
-### 도메인 기반 데이터 분석
+### 도메인 기반 데이터 분석 — 이 저장소 작업 마감
 
-- 작업 정의: [`domain-data-analysis.md`](domain-data-analysis.md)
-- 예시: [`examples/domain-data-analysis/`](../examples/domain-data-analysis/README.md) — 상태 `testing`
-- 실행 4건: [`testing/`](../examples/domain-data-analysis/testing/README.md)
-- 확인: 질문·입도가 기법을 바꿈. 해석·보고서는 임원진/대중 gate 후 작성
-- 추후: Skill 없는 대조 실행, 이벤트 로그 퍼널, `.cursor/` 승격
+- 예시: [`examples/domain-data-analysis/`](../examples/domain-data-analysis/README.md) (Rule, Skill)
+- 캐글 선정 4건으로 절차 검증 완료 — 케이스별 testing 기록은 예시에 보관하지 않음
+- 해석·보고서는 임원진/대중 gate 후 작성
+- 다음: 이벤트 로그 퍼널, 대조 실행, `.cursor/` 승격
 
 ### 다음 후보
 
