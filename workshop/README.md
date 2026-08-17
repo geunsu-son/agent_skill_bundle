@@ -45,9 +45,10 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 ### 커리어 매니지먼트 — ver0 draft
 
 - ver0 예시: [`examples/career-management-ver0/`](../../examples/career-management-ver0/README.md)
-- Rule: 커리어 매니저 역할·트렌드·이력 해석·조언 윤리
-- Skill: 시장 조사, 이력·강점 발굴, 통합 상담 세션
-- 다음: 실제 이력·목표 직무로 상담 품질 관찰, JD fit·면접 스토리 Skill 분리 여부 검토
+- Rule: 커리어 매니저 역할·트렌드·이력 해석·조언 윤리·**웹 포트폴리오**
+- Skill: 시장 조사, 이력·강점 발굴, 통합 상담, **스택 선택·디자인 조사·사이트 빌드**
+- 스택: Next.js+Vercel, HTML+Cloudflare
+- 다음: 실제 이력·목표 직무로 상담·배포 품질 관찰
 
 ### 다음 후보
 
