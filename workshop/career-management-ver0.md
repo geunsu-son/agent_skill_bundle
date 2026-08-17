@@ -15,7 +15,7 @@
 ## 기대 결과물
 
 - Rule: 커리어 매니저 판단·표현·윤리·웹 포트폴리오 원칙
-- Skill: 시장 조사, 이력·강점 발굴, 통합 상담, 스택 선택, 디자인 조사, 사이트 빌드·배포
+- Skill: 시장 조사, 이력·강점 발굴, 통합 상담, 웹 포트폴리오 3종, **지원·성장 6종** (job-posting-fit, interview-story-crafting, profile-optimization, learning-path-planning, networking-outreach, compensation-research)
 - 예시 README와 검증·확장 Skill 후보 목록
 
 ## 가정과 아직 결정하지 못한 점

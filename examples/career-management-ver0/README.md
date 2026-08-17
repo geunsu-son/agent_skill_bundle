@@ -31,6 +31,14 @@ Skill — 웹 포트폴리오
 → 배포 스택 선택 (portfolio-hosting-choice)
 → 디자인 시스템·톤 조사 (portfolio-design-research)
 → 사이트 구현·배포 (portfolio-site-build)
+
+Skill — 지원·성장
+→ JD 적합도·갭 (job-posting-fit)
+→ 면접 스토리 (interview-story-crafting)
+→ 프로필 재작성 (profile-optimization)
+→ 학습·프로젝트 경로 (learning-path-planning)
+→ 네트워킹 메시지 (networking-outreach)
+→ 보상 범위 조사 (compensation-research)
 ```
 
 - [`rules/career-management.mdc`](rules/career-management.mdc)
@@ -40,6 +48,12 @@ Skill — 웹 포트폴리오
 - [`skills/portfolio-hosting-choice/SKILL.md`](skills/portfolio-hosting-choice/SKILL.md)
 - [`skills/portfolio-design-research/SKILL.md`](skills/portfolio-design-research/SKILL.md)
 - [`skills/portfolio-site-build/SKILL.md`](skills/portfolio-site-build/SKILL.md)
+- [`skills/job-posting-fit/SKILL.md`](skills/job-posting-fit/SKILL.md)
+- [`skills/interview-story-crafting/SKILL.md`](skills/interview-story-crafting/SKILL.md)
+- [`skills/profile-optimization/SKILL.md`](skills/profile-optimization/SKILL.md)
+- [`skills/learning-path-planning/SKILL.md`](skills/learning-path-planning/SKILL.md)
+- [`skills/networking-outreach/SKILL.md`](skills/networking-outreach/SKILL.md)
+- [`skills/compensation-research/SKILL.md`](skills/compensation-research/SKILL.md)
 
 ## 웹 포트폴리오 권장 흐름
 
@@ -53,6 +67,21 @@ portfolio-design-research (다크/라이트, 톤, 참고 브랜드, tokens)
 portfolio-site-build (구현 + Vercel / Cloudflare 배포)
 ```
 
+## 지원·성장 권장 흐름
+
+```text
+resume-strength-discovery (+ career-market-research)
+    ↓
+job-posting-fit (특정 JD)
+    ├→ profile-optimization
+    ├→ interview-story-crafting
+    ├→ learning-path-planning (갭 있을 때)
+    ├→ networking-outreach
+    └→ compensation-research (협상·기대치)
+```
+
+단일 Skill만 요청된 경우 해당 Skill만 실행합니다. `career-management-session`은 통합 상담 시 위 Skill로 연계할 시점을 제안합니다.
+
 ## ver0에서 일부러 하지 않은 것
 
 - 특정 채용 API·이력서 파서 고정
@@ -64,19 +93,6 @@ portfolio-site-build (구현 + Vercel / Cloudflare 배포)
 - Netlify·GitHub Pages 등 제3 스택 (ver0는 Next+Vercel, HTML+Cloudflare만)
 
 먼저 Rule과 Skill만으로 상담·배포 품질이 충분한지 확인한 뒤, 반복 수집·정규화는 Script 후보로 분리합니다.
-
-## 추천 확장 Skill (아직 미구현)
-
-| Skill 후보 | 용도 |
-|---|---|
-| `job-posting-fit` | 특정 JD와 이력·강점의 적합도, 갭 분석 |
-| `interview-story-crafting` | 경험을 STAR·행동면접 스토리로 구조화 |
-| `profile-optimization` | 이력서·LinkedIn 섹션 재작성 초안 |
-| `learning-path-planning` | 갭을 메우는 학습·프로젝트 우선순위 |
-| `networking-outreach` | 커피챗·추천 요청 메시지 초안 |
-| `compensation-research` | 역할·지역별 보상 범위 조사 (출처 명시) |
-
-ver0에서는 위 Skill을 분리하지 않고, 필요 시 `career-management-session` 안에서 가볍게 다룹니다. 반복 요청이 확인되면 개별 Skill로 승격합니다.
 
 ## 관찰할 항목
 
@@ -90,6 +106,12 @@ ver0에서는 위 Skill을 분리하지 않고, 필요 시 `career-management-se
 - 포트폴리오가 템플릿과 동일해 보이지 않는가?
 - 웹 콘텐츠가 이력·어필 포인트와 일치하는가?
 - 배포 절차·수정 방법이 인수 가능한가?
+- JD fit이 이력 근거와 연결되고 합격 보장이 없는가?
+- 면접 스토리에 구체적 Action이 있는가?
+- 프로필 초안이 사실 변경 없이 개선되는가?
+- 학습 경로가 기간·시간 제약을 반영하는가?
+- 아웃리치 메시지가 부담 최소·윤리를 지키는가?
+- 보상 조사에 출처·범위·한계가 있는가?
 
 ## 예시 출력 골격
 
