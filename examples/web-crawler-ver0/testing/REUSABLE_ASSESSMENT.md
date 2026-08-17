@@ -9,12 +9,13 @@
 |---|---|---|---|---|
 | [kr.investing.com](investing-kr-news/README.md) | RSS + HTML fallback | ✅ RSS | ⚠️ GUI/로컬 | ❌ 클라우드 403 |
 | [yozm.wishket.com](yozm-wishket/README.md) | RSS full content | ✅ RSS | ✅ RSS | ✅ 클라우드 |
+| [Velog · Tistory](velog-tistory/README.md) | 블로그 RSS + Velog GraphQL | ✅ RSS | ✅ RSS / GraphQL | ✅ 클라우드 |
 
 ## reusable 승격 기준 (공방 정의)
 
 | 기준 | 현재 |
 |---|---|
-| 실제 작업 2건 이상 testing | ✅ 2사이트 |
+| 실제 작업 2건 이상 testing | ✅ 3사이트 (Investing, yozm, Velog/Tistory) |
 | 관찰 기록 (도움/과함/다음 수정) | ✅ 각 testing README |
 | 반복 사용으로 가치 확인 | ❌ 아직 1회성 testing |
 | Rule·Skill 책임 분리 유지 | ✅ |
@@ -37,8 +38,8 @@
 
 ## 권장 다음 단계 (reusable 전)
 
-1. **제3 사이트** testing (정적 HTML만 / 로그인 필요 등 다른 유형 1건)
-2. 같은 Rule·Skill로 **사용자 실제 작업 1건** (Agent가 Skill만 읽고 수행)
+1. ~~**제3 사이트** testing (정적 HTML만 / 로그인 필요 등 다른 유형 1건)~~ → Velog/Tistory (블로그 RSS·GraphQL) 완료
+2. 같은 Rule·Skill로 **사용자 실제 작업 1건** (Agent가 Skill만 읽고 수행) — 예: **자신의 Tistory RSS** 백업
 3. 관찰 3회 누적 후:
    - Skill 단계 **축약판** (RSS 충분 / HTML만 / 강한 차단)
    - `reusable` 표시 + `.cursor/` 승격 여부 결정
