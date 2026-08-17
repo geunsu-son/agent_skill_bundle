@@ -48,16 +48,7 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 실제로 시험할 수 있는 최소 예시를 만들어줘.
 ```
 
-번들을 설치·정리할 때:
-
-```text
-Agent Skill Bundle 저장소의 Bundle Catalog 번들을 설치해줘.
-workshop-kit/rules/bundle-catalog.mdc와
-workshop-kit/skills/manage-agent-bundles/SKILL.md를
-.cursor/의 rules·skills 위치로 복사하고,
-workshop-kit/catalog.md의 활성 번들 목록과 일치하는지 확인해줘.
-설치 후 어떤 번들이 활성 상태인지 요약해줘.
-```
+저장소를 Cursor에 처음 적용할 때는 루트 [README의 시작하기](../README.md#시작하기) 프롬프트를 사용합니다.
 
 ## 현재 상태
 

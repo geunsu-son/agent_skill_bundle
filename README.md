@@ -21,6 +21,23 @@ Agent 작업 아이디어
 
 아직 구조와 규칙을 확정하지 않습니다. 문서와 예시는 언제든 이동·통합·폐기될 수 있습니다. 실제 업무에서 반복 사용해보고 유용한 패턴만 남깁니다.
 
+## 시작하기
+
+저장소를 clone한 뒤 Cursor에서 열었지만, **아직 `.cursor/`에 공방 설정이 반영되지 않은 상태**라면 Agent에게 아래 프롬프트를 입력합니다.
+
+```text
+이 Agent Skill Bundle 저장소를 Cursor에서 처음 쓸 수 있게 설정해줘.
+아직 이 저장소의 Rule·Skill이 .cursor/에 반영되지 않은 상태라고 가정해.
+
+1. README와 workshop-kit/ 구조를 확인해
+2. workshop-kit/catalog.md에 등록된 공방 키트 번들을 .cursor/rules, .cursor/skills에 설치해
+3. examples/의 예시 번들은 설치하지 마
+4. catalog의 활성 번들 목록과 .cursor/ 상태가 일치하는지 확인해
+5. 설치한 번들과, 이 저장소에서 바로 할 수 있는 다음 작업을 요약해
+```
+
+이 프롬프트는 공방 운영용 번들(Agent Skill Workshop)과 번들 총관리 번들(Bundle Catalog)을 함께 적용합니다. 예시 번들은 실제로 쓸 때만 별도로 설치합니다.
+
 ## 용어: 에이전트 번들
 
 이 저장소에서 아이디어를 구현한 rule-skill 세트의 공식 단위는 **에이전트 번들(Agent Bundle, 줄여서 번들)** 입니다.
@@ -137,26 +154,7 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 - Skill: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
 - 카탈로그: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
 
-#### 번들 총관리 Rule·Skill 설치 프롬프트
-
-`.cursor/`에 아직 없거나, 다른 프로젝트에 이 번들을 옮길 때 아래처럼 요청합니다.
-
-```text
-Agent Skill Bundle 저장소의 Bundle Catalog 번들을 설치해줘.
-workshop-kit/rules/bundle-catalog.mdc와
-workshop-kit/skills/manage-agent-bundles/SKILL.md를
-.cursor/의 rules·skills 위치로 복사하고,
-workshop-kit/catalog.md의 활성 번들 목록과 일치하는지 확인해줘.
-설치 후 어떤 번들이 활성 상태인지 요약해줘.
-```
-
-번들 목록 점검·정리만 필요할 때는 다음처럼 요청합니다.
-
-```text
-이 저장소의 에이전트 번들을 점검하고,
-bundle-catalog 규칙에 맞춰 설치·업데이트·삭제가 필요한 항목을 정리해줘.
-catalog와 .cursor/ 상태를 맞춘 뒤, 무엇을 바꿨는지 요약해줘.
-```
+처음 적용할 때는 위 [시작하기](#시작하기) 프롬프트에 포함됩니다. 저장소를 이미 적용한 뒤 번들을 추가·정리할 때는 `manage-agent-bundles` Skill 절차를 따릅니다.
 
 ## 작업 아이디어 인터뷰
 
