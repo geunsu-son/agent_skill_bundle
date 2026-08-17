@@ -21,6 +21,27 @@ Agent 작업 아이디어
 
 아직 구조와 규칙을 확정하지 않습니다. 문서와 예시는 언제든 이동·통합·폐기될 수 있습니다. 실제 업무에서 반복 사용해보고 유용한 패턴만 남깁니다.
 
+## 용어: 에이전트 번들
+
+이 저장소에서 아이디어를 구현한 rule-skill 세트의 공식 단위는 **에이전트 번들(Agent Bundle, 줄여서 번들)** 입니다.
+
+| 용어 | 의미 |
+|---|---|
+| Agent 작업 아이디어 | Agent에게 맡길 작업과 기대 결과에 대한 생각 |
+| **에이전트 번들(번들)** | 하나의 Agent 작업 아이디어를 Rule·Skill(+ Script·Automation)으로 묶은 단위 |
+| 구성 요소 | 번들 안의 Rule, Skill, Script, Automation |
+| 공방 키트 번들 | 공방 운영·총관리용 번들. 원본은 `workshop-kit/` |
+| 예시 번들 | 특정 업무를 시험하는 번들. 원본은 `examples/<bundle-name>/` |
+| 활성 번들 | `.cursor/`에 설치되어 Cursor가 읽는 번들 |
+
+```text
+Agent 작업 아이디어
+→ 에이전트 번들 (Rule + Skill [+ Script] [+ Automation])
+→ 필요 시 .cursor/에 설치해 활성화
+```
+
+예시 번들은 `examples/`에 두고, 실제로 쓸 때만 `.cursor/`에 설치합니다. 등록 목록은 [`workshop-kit/catalog.md`](workshop-kit/catalog.md)에서 관리합니다.
+
 ## 기본 관점
 
 - **Rule**: Agent가 지속적으로 지켜야 할 판단 기준, 역할, 제약
@@ -108,6 +129,35 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 실제로 시험할 수 있는 최소 예시를 만들어줘.
 ```
 
+### 번들 총관리 Rule과 Skill
+
+번들이 늘어날수록 어떤 세트를 설치·업데이트·삭제할지 판단하는 **총관리 번들**도 둡니다.
+
+- Rule: [`workshop-kit/rules/bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc)
+- Skill: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
+- 카탈로그: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
+
+#### 번들 총관리 Rule·Skill 설치 프롬프트
+
+`.cursor/`에 아직 없거나, 다른 프로젝트에 이 번들을 옮길 때 아래처럼 요청합니다.
+
+```text
+Agent Skill Bundle 저장소의 Bundle Catalog 번들을 설치해줘.
+workshop-kit/rules/bundle-catalog.mdc와
+workshop-kit/skills/manage-agent-bundles/SKILL.md를
+.cursor/의 rules·skills 위치로 복사하고,
+workshop-kit/catalog.md의 활성 번들 목록과 일치하는지 확인해줘.
+설치 후 어떤 번들이 활성 상태인지 요약해줘.
+```
+
+번들 목록 점검·정리만 필요할 때는 다음처럼 요청합니다.
+
+```text
+이 저장소의 에이전트 번들을 점검하고,
+bundle-catalog 규칙에 맞춰 설치·업데이트·삭제가 필요한 항목을 정리해줘.
+catalog와 .cursor/ 상태를 맞춘 뒤, 무엇을 바꿨는지 요약해줘.
+```
+
 ## 작업 아이디어 인터뷰
 
 Agent가 요청을 받자마자 파일부터 만드는 것을 막기 위해, 핵심 정보가 부족한 경우 짧은 인터뷰를 먼저 수행합니다.
@@ -185,17 +235,23 @@ ver0에서는 자동 동기화 도구를 만들지 않습니다. 구조가 안�
 └── skills/
 
 docs/                     개념과 설계 기록
-examples/                 아직 검증되지 않은 업무별 최소 구현 예시
+examples/                 아직 검증되지 않은 예시 번들
 workshop/                 다음에 다듬을 아이디어와 관찰 메모
-workshop-kit/             공방 운영용 Rule·Skill의 관리 원본
+workshop-kit/             공방 키트 번들의 관리 원본
+├── catalog.md            등록된 에이전트 번들 목록
+├── rules/
+└── skills/
 ```
 
 현재 주요 파일:
 
 - [Rule과 Skill의 차이](docs/rule-vs-skill.md)
 - [Workshop Kit](workshop-kit/README.md)
+- [에이전트 번들 카탈로그](workshop-kit/catalog.md)
 - [공방 운영용 Rule](workshop-kit/rules/agent-skill-workshop.mdc)
 - [아이디어 구현 Skill](workshop-kit/skills/idea-to-agent-artifact/SKILL.md)
+- [번들 총관리 Rule](workshop-kit/rules/bundle-catalog.mdc)
+- [번들 관리 Skill](workshop-kit/skills/manage-agent-bundles/SKILL.md)
 - [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
 - [작업대 메모](workshop/README.md)
