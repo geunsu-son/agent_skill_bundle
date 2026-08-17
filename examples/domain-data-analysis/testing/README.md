@@ -16,3 +16,4 @@
 - [case-03-olist-funnel.md](case-03-olist-funnel.md)
 - [case-04-oulad-trajectory.md](case-04-oulad-trajectory.md)
 - [observations.md](observations.md)
+- [efficiency-evaluation.md](efficiency-evaluation.md)

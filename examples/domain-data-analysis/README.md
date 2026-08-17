@@ -58,7 +58,7 @@ Automation은 두지 않습니다. 분석 요청이 있을 때 실행합니다. 
 | 3 주문 이행 | 어디서 막히는가 | 시각 퍼널 | 상태값 나열, customer_id 세그먼트 | 도착 97%. 병목은 승인→출고. 상태 컬럼만으로는 퍼널이 아님 |
 | 4 학습 이탈 | 개인 기록으로 언제 보나 | 조기 궤적 | 제출 횟수 개입(누수) | 과제 없음 이탈 79% vs 있음 21% |
 
-상세: [`testing/README.md`](testing/README.md), 관찰: [`testing/observations.md`](testing/observations.md)
+상세: [`testing/README.md`](testing/README.md), 관찰: [`testing/observations.md`](testing/observations.md), 효율 평가: [`testing/efficiency-evaluation.md`](testing/efficiency-evaluation.md)
 
 테스트 후 Rule·Skill에 반영한 것: 상태 컬럼 ≠ 단계 로그, ID 이름 ≠ 사람 단위, 결과 재정의 변수를 개입 레버로 쓰지 않기.
 
@@ -77,7 +77,7 @@ Automation은 두지 않습니다. 분석 요청이 있을 때 실행합니다. 
 실행 결과는 [`testing/observations.md`](testing/observations.md)에 있다. 남아 있는 항목:
 
 - view→cart→purchase 이벤트 로그에서도 퍼널이 과잉 적용되지 않는가
-- 소비자·학습자용 문장을 같은 숫자에 한 번 더 쓸 가치가 있는가
+- Skill 없는 대조 실행에서 우회 단계가 실제로 줄는지
 
 ## 예시 출력 골격
 

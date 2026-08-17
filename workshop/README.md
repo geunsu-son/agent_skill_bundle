@@ -47,8 +47,8 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 작업 정의: [`domain-data-analysis.md`](domain-data-analysis.md)
 - 예시: [`examples/domain-data-analysis/`](../examples/domain-data-analysis/README.md) — 상태 `testing`
 - 실행 4건: [`testing/`](../examples/domain-data-analysis/testing/README.md)
-- 확인: 질문·입도가 기법을 바꿈. 도메인 카드를 더 늘리지는 않음
-- 다음: view→cart 이벤트 로그, 소비자 문장 레이어. `.cursor/` 승격은 보류
+- 확인: 질문·입도가 기법을 바꿈. 과정 단축은 부분, 기법 선정은 충족, 대중 표현은 부분
+- 다음: Skill 없는 대조 실행, 이벤트 로그 퍼널. `.cursor/` 승격은 보류
 
 ### 다음 후보
 
