@@ -21,6 +21,76 @@ Agent 작업 아이디어
 
 아직 구조와 규칙을 확정하지 않습니다. 문서와 예시는 언제든 이동·통합·폐기될 수 있습니다. 실제 업무에서 반복 사용해보고 유용한 패턴만 남깁니다.
 
+## 시작하기
+
+**작업 중인 저장소**에 Agent Skill Bundle을 연결할 때 Agent에게 아래 프롬프트를 입력합니다. 번들 소스 저장소를 clone하지 않고, 현재 저장소의 `.cursor/`만 다룹니다.
+
+번들 소스: https://github.com/geunsu-son/agent_skill_bundle
+
+```text
+지금 작업 중인 이 저장소에 Agent Skill Bundle을 연결해줘.
+번들 소스: https://github.com/geunsu-son/agent_skill_bundle
+
+1. Bundle Catalog gate(총괄 rule)를 먼저 .cursor/에 설치하거나 보완한다
+   - bundle-catalog.mdc
+   - audit-installed-bundles Skill
+   - manage-agent-bundles Skill
+2. audit-installed-bundles Skill로 .cursor/와 catalog를 조사해
+   어떤 번들이 이미 설치되어 있는지 확인한다
+3. **이번 연결 turn 안에서만** 조사 결과를 보여 준 뒤, 추가로 설치할 번들이 무엇인지 나에게 물어본다
+4. 내가 고른 번들만 .cursor/에 설치한다 (추가하지 않음을 선택해도 됨)
+5. .cursor/agent-bundles/catalog.md를 갱신하고 최종 상태를 요약한다
+6. 연결이 끝난 뒤에는 내가 다시 요청하기 전까지 추가 번들 설치를 묻지 않는다
+```
+
+### gate 흐름
+
+```text
+작업 중인 저장소
+→ Bundle Catalog gate 선설치 (총괄 rule)
+→ audit-installed-bundles로 설치 상태 조사
+→ gate가 **연결 turn 안에서만** 설치할 번들 질문
+→ 선택한 번들만 .cursor/에 설치
+→ 이후에는 사용자가 요청할 때만 추가 설치
+```
+
+이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다. 적용 여부를 추정하지 않고 먼저 조사합니다. **연결이 끝난 뒤에는 번들 추가를 다시 묻지 않습니다.**
+
+설치 상태만 조사할 때:
+
+```text
+audit-installed-bundles Skill로
+이 저장소에 설치된 Agent Skill Bundle 상태를 조사해줘.
+```
+
+추가 번들만 설치할 때:
+
+```text
+Agent Skill Bundle gate를 통해
+Agent Skill Workshop 번들만 추가로 설치해줘.
+```
+
+## 용어: 에이전트 번들
+
+이 저장소에서 아이디어를 구현한 rule-skill 세트의 공식 단위는 **에이전트 번들(Agent Bundle, 줄여서 번들)** 입니다.
+
+| 용어 | 의미 |
+|---|---|
+| Agent 작업 아이디어 | Agent에게 맡길 작업과 기대 결과에 대한 생각 |
+| **에이전트 번들(번들)** | 하나의 Agent 작업 아이디어를 Rule·Skill(+ Script·Automation)으로 묶은 단위 |
+| 구성 요소 | 번들 안의 Rule, Skill, Script, Automation |
+| 공방 키트 번들 | 공방 운영·총관리용 번들. 원본은 `workshop-kit/` |
+| 예시 번들 | 특정 업무를 시험하는 번들. 원본은 `examples/<bundle-name>/` |
+| 활성 번들 | `.cursor/`에 설치되어 Cursor가 읽는 번들 |
+
+```text
+Agent 작업 아이디어
+→ 에이전트 번들 (Rule + Skill [+ Script] [+ Automation])
+→ 필요 시 .cursor/에 설치해 활성화
+```
+
+예시 번들은 `examples/`에 두고, 실제로 쓸 때 gate를 통해 `.cursor/`에 설치합니다. 가져올 수 있는 번들 목록은 [`workshop-kit/catalog.md`](workshop-kit/catalog.md), 설치된 번들 목록은 소비 프로젝트의 `.cursor/agent-bundles/catalog.md`에서 관리합니다.
+
 ## 기본 관점
 
 - **Rule**: Agent가 지속적으로 지켜야 할 판단 기준, 역할, 제약
@@ -108,6 +178,17 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 실제로 시험할 수 있는 최소 예시를 만들어줘.
 ```
 
+### 번들 총관리 Rule과 Skill
+
+번들이 늘어날수록 어떤 세트를 가져오고·업데이트하고·삭제할지 판단하는 **gate 번들**입니다.
+
+- Rule: [`workshop-kit/rules/bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc)
+- Skill — 설치 조사: [`workshop-kit/skills/audit-installed-bundles/SKILL.md`](workshop-kit/skills/audit-installed-bundles/SKILL.md)
+- Skill — 설치·변경: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
+- 소스 catalog: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
+
+연결 흐름은 [시작하기](#시작하기)와 같습니다. 총괄 rule 선설치 → `audit-installed-bundles`로 조사 → gate가 설치할 번들 질문 → 선택분만 설치. 소비 프로젝트의 설치 기록은 `.cursor/agent-bundles/catalog.md`에 둡니다.
+
 ## 작업 아이디어 인터뷰
 
 Agent가 요청을 받자마자 파일부터 만드는 것을 막기 위해, 핵심 정보가 부족한 경우 짧은 인터뷰를 먼저 수행합니다.
@@ -185,18 +266,26 @@ ver0에서는 자동 동기화 도구를 만들지 않습니다. 구조가 안�
 └── skills/
 
 docs/                     개념과 설계 기록
-examples/                 아직 검증되지 않은 업무별 최소 구현 예시
+examples/                 아직 검증되지 않은 예시 번들
 workshop/                 다음에 다듬을 아이디어와 관찰 메모
-workshop-kit/             공방 운영용 Rule·Skill의 관리 원본
+workshop-kit/             공방 키트 번들의 관리 원본
+├── catalog.md            등록된 에이전트 번들 목록
+├── rules/
+└── skills/
 ```
 
 현재 주요 파일:
 
 - [Rule과 Skill의 차이](docs/rule-vs-skill.md)
 - [Workshop Kit](workshop-kit/README.md)
+- [에이전트 번들 카탈로그](workshop-kit/catalog.md)
 - [공방 운영용 Rule](workshop-kit/rules/agent-skill-workshop.mdc)
 - [아이디어 구현 Skill](workshop-kit/skills/idea-to-agent-artifact/SKILL.md)
+- [번들 총관리 Rule](workshop-kit/rules/bundle-catalog.mdc)
+- [번들 설치 조사 Skill](workshop-kit/skills/audit-installed-bundles/SKILL.md)
+- [번들 관리 Skill](workshop-kit/skills/manage-agent-bundles/SKILL.md)
 - [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
+- [커리어 매니지먼트 예시](examples/career-management-ver0/README.md)
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
 - [도메인 기반 데이터 분석 예시](examples/domain-data-analysis/README.md)
 - [작업대 메모](workshop/README.md)
@@ -294,7 +383,6 @@ ver0에서 새로 만드는 예시는 기본적으로 `draft` 또는 `testing` �
 
 ## 다음에 해볼 것
 
-- 도메인 기반 데이터 분석을 캐글 4건으로 실행하고 독자 gate(임원진/대중)를 넣음. 추후: 이벤트 로그 퍼널, 대조 실행
 - 인터뷰 질문이 과하거나 부족하지 않은지 관찰
 - 세션 경제 브리핑을 실제 출력과 비교해 Rule·Skill 수정
 - `observations.md` 형식 추가

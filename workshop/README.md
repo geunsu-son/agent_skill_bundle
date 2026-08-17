@@ -42,6 +42,15 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 3패턴 testing으로 절차 검증 완료 — 사이트별 스크립트·testing 기록은 예시에 보관하지 않음
 - 다음: 실제 크롤 요청에서 Skill만으로 수행되는지 관찰, 반복 시 Script·`.cursor/` 승격 검토
 
+### 커리어 매니지먼트 — ver0 이 저장소 작업 마감
+
+- ver0 예시: [`examples/career-management-ver0/`](../../examples/career-management-ver0/README.md)
+- Rule: 커리어 매니저 역할·트렌드·이력 해석·조언 윤리·웹 포트폴리오
+- Skill: 상담 3종, 웹 포트폴리오 3종, 지원·성장 6종
+- 스택: Next.js+Vercel, HTML+Cloudflare
+- 이 저장소에서는 draft 예시로 마감. `.cursor/` 승격·Script·Automation은 하지 않음
+- 다음 실험: 다른 저장소에 번들을 세팅해 실제 상담·배포 품질을 관찰하고 결과를 이 공방에 되돌림
+
 ### 도메인 기반 데이터 분석 — 이 저장소 작업 마감
 
 - 예시: [`examples/domain-data-analysis/`](../examples/domain-data-analysis/README.md) (Rule, Skill)
