@@ -42,6 +42,13 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 3패턴 testing으로 절차 검증 완료 — 사이트별 스크립트·testing 기록은 예시에 보관하지 않음
 - 다음: 실제 크롤 요청에서 Skill만으로 수행되는지 관찰, 반복 시 Script·`.cursor/` 승격 검토
 
+### 커리어 매니지먼트 — ver0 draft
+
+- ver0 예시: [`examples/career-management-ver0/`](../../examples/career-management-ver0/README.md)
+- Rule: 커리어 매니저 역할·트렌드·이력 해석·조언 윤리
+- Skill: 시장 조사, 이력·강점 발굴, 통합 상담 세션
+- 다음: 실제 이력·목표 직무로 상담 품질 관찰, JD fit·면접 스토리 Skill 분리 여부 검토
+
 ### 다음 후보
 
 - 데이터 검증 Skill
