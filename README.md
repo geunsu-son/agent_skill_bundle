@@ -23,7 +23,7 @@ Agent 작업 아이디어
 
 ## 시작하기
 
-**작업 중인 저장소**에 Agent Skill Bundle을 처음 연결할 때 Agent에게 아래 프롬프트를 입력합니다. 번들 소스 저장소를 clone하지 않고, 현재 저장소의 `.cursor/`에만 설치합니다.
+**작업 중인 저장소**에 Agent Skill Bundle을 연결할 때 Agent에게 아래 프롬프트를 입력합니다. 번들 소스 저장소를 clone하지 않고, 현재 저장소의 `.cursor/`만 다룹니다.
 
 번들 소스: https://github.com/geunsu-son/agent_skill_bundle
 
@@ -31,35 +31,41 @@ Agent 작업 아이디어
 지금 작업 중인 이 저장소에 Agent Skill Bundle을 연결해줘.
 번들 소스: https://github.com/geunsu-son/agent_skill_bundle
 
-아직 Agent Skill Bundle이 이 저장소에 적용되지 않은 상태라고 가정해.
-
-1. 번들 소스 저장소를 clone하지 말고, 현재 저장소의 .cursor/에만 설치한다
-2. 먼저 Bundle Catalog gate 번들만 가져온다
+1. Bundle Catalog gate(총괄 rule)를 먼저 .cursor/에 설치하거나 보완한다
    - bundle-catalog.mdc
+   - audit-installed-bundles Skill
    - manage-agent-bundles Skill
-3. .cursor/agent-bundles/catalog.md에 번들 소스 주소와 설치 이력을 기록한다
-4. bundle-catalog 규칙과 manage-agent-bundles Skill 절차에 따라,
-   번들 소스 catalog에서 다음에 가져올 번들 후보를 설명하고 내 선택을 받는다
-5. 내가 고른 번들만 .cursor/에 설치한다
-6. gate 상태, 설치한 번들, 아직 가져오지 않은 후보를 요약한다
+2. audit-installed-bundles Skill로 .cursor/와 catalog를 조사해
+   어떤 번들이 이미 설치되어 있는지 확인한다
+3. 조사 결과를 보여 준 뒤, 추가로 설치할 번들이 무엇인지 나에게 물어본다
+4. 내가 고른 번들만 .cursor/에 설치한다
+5. .cursor/agent-bundles/catalog.md를 갱신하고 최종 상태를 요약한다
 ```
 
 ### gate 흐름
 
 ```text
 작업 중인 저장소
-→ Bundle Catalog gate 설치 (첫 단계)
-→ gate가 소스 catalog의 후보를 설명
-→ 사용자가 필요한 번들 선택
+→ Bundle Catalog gate 선설치 (총괄 rule)
+→ audit-installed-bundles로 설치 상태 조사
+→ gate가 결과를 보여 주고 설치할 번들 질문
 → 선택한 번들만 .cursor/에 설치
 ```
 
-예시 번들은 gate를 통해 필요할 때만 가져옵니다. Agent Skill Workshop 번들은 이 저장소에서 아이디어를 구현할 때 gate를 통해 추가합니다.
+이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다. 적용 여부를 추정하지 않고 먼저 조사합니다.
+
+설치 상태만 조사할 때:
+
+```text
+audit-installed-bundles Skill로
+이 저장소에 설치된 Agent Skill Bundle 상태를 조사해줘.
+```
 
 추가 번들만 설치할 때:
 
 ```text
-Agent Skill Bundle gate를 통해 Agent Skill Workshop 번들만 추가로 설치해줘.
+Agent Skill Bundle gate를 통해
+Agent Skill Workshop 번들만 추가로 설치해줘.
 ```
 
 ## 용어: 에이전트 번들
@@ -175,10 +181,11 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 번들이 늘어날수록 어떤 세트를 가져오고·업데이트하고·삭제할지 판단하는 **gate 번들**입니다.
 
 - Rule: [`workshop-kit/rules/bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc)
-- Skill: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
+- Skill — 설치 조사: [`workshop-kit/skills/audit-installed-bundles/SKILL.md`](workshop-kit/skills/audit-installed-bundles/SKILL.md)
+- Skill — 설치·변경: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
 - 소스 catalog: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
 
-다른 저장소에 연결할 때는 [시작하기](#시작하기) 프롬프트로 **Bundle Catalog gate만** 먼저 설치하고, gate가 다음 번들 선택을 안내합니다. 소비 프로젝트의 설치 기록은 `.cursor/agent-bundles/catalog.md`에 둡니다.
+연결 흐름은 [시작하기](#시작하기)와 같습니다. 총괄 rule 선설치 → `audit-installed-bundles`로 조사 → gate가 설치할 번들 질문 → 선택분만 설치. 소비 프로젝트의 설치 기록은 `.cursor/agent-bundles/catalog.md`에 둡니다.
 
 ## 작업 아이디어 인터뷰
 
@@ -273,6 +280,7 @@ workshop-kit/             공방 키트 번들의 관리 원본
 - [공방 운영용 Rule](workshop-kit/rules/agent-skill-workshop.mdc)
 - [아이디어 구현 Skill](workshop-kit/skills/idea-to-agent-artifact/SKILL.md)
 - [번들 총관리 Rule](workshop-kit/rules/bundle-catalog.mdc)
+- [번들 설치 조사 Skill](workshop-kit/skills/audit-installed-bundles/SKILL.md)
 - [번들 관리 Skill](workshop-kit/skills/manage-agent-bundles/SKILL.md)
 - [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
