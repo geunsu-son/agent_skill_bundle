@@ -17,8 +17,9 @@
 ```text
 총괄 rule(Bundle Catalog gate) 선설치
 → audit-installed-bundles로 설치 상태 조사
-→ gate가 결과를 보여 주고 설치할 번들 질문
+→ gate가 **연결 turn 안에서만** 설치할 번들 질문
 → manage-agent-bundles로 선택한 번들만 설치
+→ 이후에는 사용자가 요청할 때만 추가 설치
 ```
 
 ## 등록 번들
