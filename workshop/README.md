@@ -42,6 +42,13 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 3패턴 testing으로 절차 검증 완료 — 사이트별 스크립트·testing 기록은 예시에 보관하지 않음
 - 다음: 실제 크롤 요청에서 Skill만으로 수행되는지 관찰, 반복 시 Script·`.cursor/` 승격 검토
 
+### 도메인 기반 데이터 분석
+
+- 작업 정의: [`domain-data-analysis.md`](domain-data-analysis.md)
+- ver0 예시: [`examples/domain-data-analysis/`](../examples/domain-data-analysis/README.md) (Rule, Skill)
+- 가설: 범용 EDA·모델보다 질문·입도·변수 설계를 먼저 고정하면 검증과 보고서 품질이 달라진다
+- 다음: 캐글 마케팅·학습 데이터로 Skill을 한 번씩 실행하고 관찰 기록
+
 ### 다음 후보
 
 - 데이터 검증 Skill

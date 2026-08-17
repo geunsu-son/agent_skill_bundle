@@ -198,6 +198,7 @@ workshop-kit/             공방 운영용 Rule·Skill의 관리 원본
 - [아이디어 구현 Skill](workshop-kit/skills/idea-to-agent-artifact/SKILL.md)
 - [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
+- [도메인 기반 데이터 분석 예시](examples/domain-data-analysis/README.md)
 - [작업대 메모](workshop/README.md)
 
 ## 첫 예시: 세션 경제 브리핑
@@ -293,7 +294,7 @@ ver0에서 새로 만드는 예시는 기본적으로 `draft` 또는 `testing` �
 
 ## 다음에 해볼 것
 
-- 새 인터뷰 절차로 두 번째 Agent 작업 아이디어 구체화
+- 도메인 기반 데이터 분석을 캐글 두 건(마케팅·학습)으로 실행해 관찰 기록
 - 인터뷰 질문이 과하거나 부족하지 않은지 관찰
 - 세션 경제 브리핑을 실제 출력과 비교해 Rule·Skill 수정
 - `observations.md` 형식 추가
