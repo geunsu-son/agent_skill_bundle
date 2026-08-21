@@ -31,8 +31,11 @@
 | Session Market Briefing | 예시 | `testing` | `examples/session-market-briefing/` | 3 — 선택 | `market-briefing.mdc` | `session-market-briefing` | 세션 경제 브리핑 |
 | Web Crawler Craft | 예시 | `draft` | `examples/web-crawler-ver0/` | 3 — 선택 | `crawler-craft.mdc` | `web-crawler-craft` | 웹 크롤러 제작 |
 | Domain Data Analysis | 예시 | `testing` | `examples/domain-data-analysis/` | 3 — 선택 | `domain-data-analysis.mdc` | `domain-data-analysis` | 도메인 기반 데이터 분석 설계·보고 |
+| MCP Server Craft | 예시 | `draft` | `examples/mcp-server-craft-ver0/` | 3 — 선택 | `mcp-server-craft.mdc` | `mcp-server-craft`, `mcp-server-scope`, `mcp-server-auth`, `mcp-tool-implement`, `mcp-server-connect` | MCP 서버 설계·권한·구현·연결 |
 
 ## 마지막 관리 기록
 
+- 2026-08-21: MCP Server Craft 인증 Skill을 `mcp-server-auth`로 바꿈. 참고 README 기준으로 호출자(GWS)·워크로드(IRSA) 분리. `.cursor/` 미승격.
+- 2026-08-21: MCP Server Craft 예시 번들 등록. GWS/GCP 경로를 1순위로 둔 draft. `.cursor/` 미승격.
 - 2026-08-17: Domain Data Analysis 예시 번들 등록. 케이스별 testing 파일은 예시에 두지 않음.
 - 2026-08-17: `audit-installed-bundles` Skill 추가. gate 흐름을 선설치 → 조사 → 질문 → 설치로 정리.

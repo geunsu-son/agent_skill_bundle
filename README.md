@@ -288,6 +288,7 @@ workshop-kit/             공방 키트 번들의 관리 원본
 - [커리어 매니지먼트 예시](examples/career-management-ver0/README.md)
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
 - [도메인 기반 데이터 분석 예시](examples/domain-data-analysis/README.md)
+- [MCP 서버 제작 예시](examples/mcp-server-craft-ver0/README.md)
 - [작업대 메모](workshop/README.md)
 
 ## 첫 예시: 세션 경제 브리핑
@@ -389,5 +390,6 @@ ver0에서 새로 만드는 예시는 기본적으로 `draft` 또는 `testing` �
 - 방향 판단 기준과 유력도 표현 방식 실험
 - 뉴스·경제 일정 수집 중 반복 가능한 부분을 Script 후보로 분리
 - `.cursor/`와 `workshop-kit/` 이중 관리가 실제로 유용한지 검토
+- MCP 서버 제작 예시를 실제 요청에서 쓰고, README에 없는 구현 세부만 추가로 대조
 
 > 이 저장소의 목표는 좋은 지침을 한 번에 만드는 것이 아니라, 반복해서 더 나은 작업 방식을 발견하는 것입니다.
