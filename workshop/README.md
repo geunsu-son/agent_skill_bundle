@@ -63,9 +63,9 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 예시: [`examples/mcp-server-craft-ver0/`](../examples/mcp-server-craft-ver0/README.md)
 - 정의: [`mcp-server-craft.md`](mcp-server-craft.md)
 - Rule: MCP 작업 표면·최소 권한·시크릿·전송 원칙
-- Skill: 범위, GWS/GCP 인증, 도구 구현, 연결·검증 + 오케스트레이션
-- 참고 `purple-context-mcp`는 이 환경에서 비공개라 코드를 대조하지 못함
-- 다음: 실제 MCP 제작 요청에서 절차 관찰, 사내 서버와 transport·인증 경로 대조, `.cursor/` 승격은 보류
+- Skill: 범위, 호출자·워크로드 인증, 도구 구현, 연결·검증 + 오케스트레이션
+- 참고: `purple-context-mcp` README로 경로를 수정 (GWS=신원, 데이터=공유 검색, IRSA, `retrieve` 하나)
+- 다음: 실제 MCP 제작 요청에서 절차 관찰, `.cursor/` 승격은 보류
 
 ### 다음 후보
 
