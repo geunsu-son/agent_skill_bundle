@@ -58,6 +58,15 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 해석·보고서는 임원진/대중 gate 후 작성
 - 다음: 이벤트 로그 퍼널, 대조 실행, `.cursor/` 승격
 
+### MCP 서버 제작 — draft 예시 작성
+
+- 예시: [`examples/mcp-server-craft-ver0/`](../examples/mcp-server-craft-ver0/README.md)
+- 정의: [`mcp-server-craft.md`](mcp-server-craft.md)
+- Rule: MCP 작업 표면·최소 권한·시크릿·전송 원칙
+- Skill: 범위, GWS/GCP 인증, 도구 구현, 연결·검증 + 오케스트레이션
+- 참고 `purple-context-mcp`는 이 환경에서 비공개라 코드를 대조하지 못함
+- 다음: 실제 MCP 제작 요청에서 절차 관찰, 사내 서버와 transport·인증 경로 대조, `.cursor/` 승격은 보류
+
 ### 다음 후보
 
 - 데이터 검증 Skill
