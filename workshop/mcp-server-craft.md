@@ -54,3 +54,9 @@ Agent에게 MCP 서버를 맡기면 다음이 반복된다.
 - 어드민 명단·감사 Mongo 스키마는 이 예시의 공통 Skill로 올리지 않는다
 - SDK 파일 구조는 README만으로는 미확인
 - `.cursor/` 승격·실제 서버 구현은 하지 않는다
+
+## 이 저장소 마감
+
+- 상태: `testing`. 이 저장소 구현 작업은 여기서 종료
+- 원본: [`examples/mcp-server-craft-ver0/`](../examples/mcp-server-craft-ver0/README.md)
+- 다음 실험: 실제 MCP 제작 요청에서 Skill 순서를 검증하고 관찰을 되돌림. `.cursor/` 승격은 그 이후

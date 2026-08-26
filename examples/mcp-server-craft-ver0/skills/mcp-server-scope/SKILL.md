@@ -2,7 +2,7 @@
 
 ## 상태
 
-`ver0` draft. 실제 제작 요청에서 도구 수와 transport 선택 기준을 수정할 예정입니다.
+`ver0` testing. 실제 제작 요청에서 도구 수와 transport 선택 기준을 수정할 예정입니다.
 
 ## 목적
 

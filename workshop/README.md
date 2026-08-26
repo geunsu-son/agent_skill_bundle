@@ -58,14 +58,16 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 해석·보고서는 임원진/대중 gate 후 작성
 - 다음: 이벤트 로그 퍼널, 대조 실행, `.cursor/` 승격
 
-### MCP 서버 제작 — draft 예시 작성
+### MCP 서버 제작 — ver0 이 저장소 작업 마감
 
 - 예시: [`examples/mcp-server-craft-ver0/`](../examples/mcp-server-craft-ver0/README.md)
 - 정의: [`mcp-server-craft.md`](mcp-server-craft.md)
-- Rule: MCP 작업 표면·최소 권한·시크릿·전송 원칙
+- 상태: `testing`. 이 저장소 구현은 여기서 종료
+- Rule: 작업 표면, 공유 서버 여부, 두 겹 신원, 전송·품질
 - Skill: 범위, 호출자·워크로드 인증, 도구 구현, 연결·검증 + 오케스트레이션
-- 참고: `purple-context-mcp` README로 경로를 수정 (GWS=신원, 데이터=공유 검색, IRSA, `retrieve` 하나)
-- 다음: 실제 MCP 제작 요청에서 절차 관찰, `.cursor/` 승격은 보류
+- 참고: `purple-context-mcp` README (GWS=신원, 데이터=공유 검색, IRSA, `retrieve` 하나)
+- `.cursor/` 승격·서버 복제·Script는 하지 않음
+- 다음 실험: 실제 MCP 제작 요청에서 절차를 검증하고 관찰을 이 공방에 되돌림
 
 ### 다음 후보
 

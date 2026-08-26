@@ -2,7 +2,7 @@
 
 ## 상태
 
-`ver0` draft. `purple-context-mcp` README로 참고 경로를 맞춘 뒤, 범위→인증→구현→연결 순서를 검증할 예정입니다.
+`ver0` testing. `purple-context-mcp` README로 참고 경로를 맞췄습니다. 실제 제작 요청에서 범위→인증→구현→연결 순서를 검증할 예정입니다.
 
 ## 목적
 

@@ -2,7 +2,7 @@
 
 ## 상태
 
-`ver0` draft. Cursor `mcp.json`과 MCP Inspector를 1순위 검증 수단으로 둡니다. 참고 서버의 운영 배포(클러스터·차트)는 복제하지 않습니다.
+`ver0` testing. Cursor `mcp.json`과 MCP Inspector를 1순위 검증 수단으로 둡니다. 참고 서버의 운영 배포(클러스터·차트)는 복제하지 않습니다.
 
 ## 목적
 

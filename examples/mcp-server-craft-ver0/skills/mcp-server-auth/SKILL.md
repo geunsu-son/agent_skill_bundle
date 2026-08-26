@@ -2,7 +2,7 @@
 
 ## 상태
 
-`ver0` draft. `purple-context-mcp` README로 확인한 참고 경로: 호출자는 Google Workspace 신원, 서버는 클라우드 워크로드 신원(IRSA 등), 데이터는 공유 검색 백엔드. GCP Drive 위임이 기본 경로가 아니다.
+`ver0` testing. `purple-context-mcp` README로 확인한 참고 경로: 호출자는 Google Workspace 신원, 서버는 클라우드 워크로드 신원(IRSA 등), 데이터는 공유 검색 백엔드. GCP Drive 위임이 기본 경로가 아니다.
 
 ## 목적
 
