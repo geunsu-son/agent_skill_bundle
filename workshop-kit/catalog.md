@@ -32,9 +32,11 @@
 | Web Crawler Craft | 예시 | `draft` | `examples/web-crawler-ver0/` | 3 — 선택 | `crawler-craft.mdc` | `web-crawler-craft` | 웹 크롤러 제작 |
 | Domain Data Analysis | 예시 | `testing` | `examples/domain-data-analysis/` | 3 — 선택 | `domain-data-analysis.mdc` | `domain-data-analysis` | 도메인 기반 데이터 분석 설계·보고 |
 | MCP Server Craft | 예시 | `testing` | `examples/mcp-server-craft-ver0/` | 3 — 선택 | `mcp-server-craft.mdc` | `mcp-server-craft`, `mcp-server-scope`, `mcp-server-auth`, `mcp-tool-implement`, `mcp-server-connect` | MCP 서버 설계·권한·구현·연결 |
+| Blog Style Writing | 예시 | `draft` | `examples/blog-style-writing-ver0/` | 3 — 선택 | `blog-style-writing.mdc` | `blog-style-writing`, `collect-blog-corpus`, `build-style-context`, `write-blog-manuscript` | 기존 블로그 문체 팩 구축·초고·첨삭. 수집은 Web Crawler Craft에 의존 |
 
 ## 마지막 관리 기록
 
+- 2026-08-26: Blog Style Writing 예시 번들 등록. 실제 블로그 URL 수집·게시 품질은 미검증. `.cursor/` 미승격.
 - 2026-08-26: MCP Server Craft 상태를 `testing`으로 두고 이 저장소 구현을 마감. 실제 제작 테스트는 추후. `.cursor/` 미승격.
 - 2026-08-21: MCP Server Craft 인증 Skill을 `mcp-server-auth`로 바꿈. 참고 README 기준으로 호출자(GWS)·워크로드(IRSA) 분리. `.cursor/` 미승격.
 - 2026-08-21: MCP Server Craft 예시 번들 등록. GWS/GCP 경로를 1순위로 둔 draft. `.cursor/` 미승격.

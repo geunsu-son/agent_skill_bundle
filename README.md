@@ -289,6 +289,7 @@ workshop-kit/             공방 키트 번들의 관리 원본
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
 - [도메인 기반 데이터 분석 예시](examples/domain-data-analysis/README.md)
 - [MCP 서버 제작 예시](examples/mcp-server-craft-ver0/README.md)
+- [블로그 스타일 학습·원고 예시](examples/blog-style-writing-ver0/README.md)
 - [작업대 메모](workshop/README.md)
 
 ## 첫 예시: 세션 경제 브리핑

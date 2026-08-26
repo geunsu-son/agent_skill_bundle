@@ -58,6 +58,15 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 해석·보고서는 임원진/대중 gate 후 작성
 - 다음: 이벤트 로그 퍼널, 대조 실행, `.cursor/` 승격
 
+### 블로그 스타일 학습·원고 작성 — ver0 draft
+
+- 정의: [`blog-style-writing.md`](blog-style-writing.md)
+- 예시: [`examples/blog-style-writing-ver0/`](../examples/blog-style-writing-ver0/README.md)
+- Rule: 문체 근거, 내용 날조 금지, 미게시
+- Skill: 수집(Web Crawler Craft 의존), 스타일 팩, 초고·첨삭, 오케스트레이션
+- 이 저장소 검증: fixture 3편으로 스타일 팩 1회 추출 (`fixtures/sample-style-pack/`). 실제 URL 크롤은 다음 실험
+- `.cursor/` 승격·게시 API·미세조정은 하지 않음
+
 ### MCP 서버 제작 — ver0 이 저장소 작업 마감
 
 - 예시: [`examples/mcp-server-craft-ver0/`](../examples/mcp-server-craft-ver0/README.md)
@@ -71,6 +80,7 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 
 ### 다음 후보
 
+- 블로그 스타일 팩을 실제 본인 URL로 한 번 돌려 문체 일치 관찰
 - 데이터 검증 Skill
 - 주간 리포트 Skill
 - 분석 결과 검토 Rule
