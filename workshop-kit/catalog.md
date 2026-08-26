@@ -36,6 +36,7 @@
 
 ## 마지막 관리 기록
 
+- 2026-08-26: Blog Style Writing 실제 실험을 소비 저장소 `blog_agnet`로 두고, 이 공방에는 관찰만 되돌리기로 함. `.cursor/` 미승격.
 - 2026-08-26: Blog Style Writing 예시 번들 등록. 실제 블로그 URL 수집·게시 품질은 미검증. `.cursor/` 미승격.
 - 2026-08-26: MCP Server Craft 상태를 `testing`으로 두고 이 저장소 구현을 마감. 실제 제작 테스트는 추후. `.cursor/` 미승격.
 - 2026-08-21: MCP Server Craft 인증 Skill을 `mcp-server-auth`로 바꿈. 참고 README 기준으로 호출자(GWS)·워크로드(IRSA) 분리. `.cursor/` 미승격.

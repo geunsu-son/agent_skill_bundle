@@ -22,7 +22,7 @@ Agent에게 글을 맡기면 흔히 다음이 일어납니다.
 
 ## 상태
 
-`draft` — Rule·Skill·템플릿·fixture만 있습니다. 실제 블로그 URL 수집과 게시 품질은 아직 이 저장소에서 돌리지 않았습니다.
+`draft` — Rule·Skill·템플릿·fixture만 있습니다. 실제 URL 수집·원고 실험은 소비 저장소 `blog_agnet`에서 하고, 이 공방에는 관찰만 되돌립니다.
 
 의존: [Web Crawler Craft](../web-crawler-ver0/README.md). 크롤 절차는 여기 복제하지 않습니다.
 
@@ -82,6 +82,8 @@ blog-style/
 - 맞춤법 검사 스크립트
 
 같은 블로그 스키마·문장 길이 집계가 반복될 때만 Script를 검토합니다.
+
+실제 글·스타일 팩·원고는 `blog_agnet`에 둡니다. 이 공방으로 되돌릴 것은 아래 관찰 항목과, Rule·Skill을 고칠 근거뿐입니다. 원문 전문은 가져오지 않습니다.
 
 ## 가정
 
