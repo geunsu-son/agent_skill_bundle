@@ -26,13 +26,14 @@ workshop-kit/
 └── skills/
     ├── audit-installed-bundles/
     ├── idea-to-agent-artifact/
-    └── manage-agent-bundles/
+    ├── manage-agent-bundles/
+    └── report-bundle-feedback/
 ```
 
 | 번들 | Rule | Skill | 역할 |
 |---|---|---|---|
 | Agent Skill Workshop | `agent-skill-workshop.mdc` | `idea-to-agent-artifact` | 아이디어를 번들로 구현 |
-| Bundle Catalog | `bundle-catalog.mdc` | `audit-installed-bundles`, `manage-agent-bundles` | gate — 조사·선택·설치 |
+| Bundle Catalog | `bundle-catalog.mdc` | `audit-installed-bundles`, `manage-agent-bundles`, `report-bundle-feedback` | gate — 조사·선택·사용 기록 Issue |
 
 ## 사용 예시
 

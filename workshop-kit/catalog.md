@@ -11,6 +11,7 @@
 | Rule | `bundle-catalog.mdc` |
 | Skill — 설치 조사 | `audit-installed-bundles` |
 | Skill — 설치·변경 | `manage-agent-bundles` |
+| Skill — 사용 기록·피드백 | `report-bundle-feedback` |
 
 ## gate 흐름
 
@@ -26,7 +27,7 @@
 
 | 번들 | 유형 | 상태 | 원본 | gate | Rule | Skill | Agent 작업 목적 |
 |---|---|---|---|---|---|---|---|
-| Bundle Catalog | 공방 키트 | `draft` | `workshop-kit/` | 1 — 선설치 | `bundle-catalog.mdc` | `audit-installed-bundles`, `manage-agent-bundles` | gate — 조사·선택·설치 관리 |
+| Bundle Catalog | 공방 키트 | `draft` | `workshop-kit/` | 1 — 선설치 | `bundle-catalog.mdc` | `audit-installed-bundles`, `manage-agent-bundles`, `report-bundle-feedback` | gate — 조사·선택·사용 기록 Issue |
 | Agent Skill Workshop | 공방 키트 | `draft` | `workshop-kit/` | 2 — 선택 | `agent-skill-workshop.mdc` | `idea-to-agent-artifact` | Agent 작업 아이디어를 번들로 구현 |
 | Session Market Briefing | 예시 | `testing` | `examples/session-market-briefing/` | 3 — 선택 | `market-briefing.mdc` | `session-market-briefing` | 세션 경제 브리핑 |
 | Web Crawler Craft | 예시 | `draft` | `examples/web-crawler-ver0/` | 3 — 선택 | `crawler-craft.mdc` | `web-crawler-craft` | 웹 크롤러 제작 |
@@ -36,6 +37,7 @@
 
 ## 마지막 관리 기록
 
+- 2026-08-27: #11. `report-bundle-feedback` 초안을 사용 기록 중심으로 바꿈. 소비 특수 규칙은 다른 예시 Skill에 넣지 않음.
 - 2026-08-26: Blog Style Writing 실제 실험을 소비 저장소 `blog_agnet`로 두고, 이 공방에는 관찰만 되돌리기로 함. `.cursor/` 미승격.
 - 2026-08-26: Blog Style Writing 예시 번들 등록. 실제 블로그 URL 수집·게시 품질은 미검증. `.cursor/` 미승격.
 - 2026-08-26: MCP Server Craft 상태를 `testing`으로 두고 이 저장소 구현을 마감. 실제 제작 테스트는 추후. `.cursor/` 미승격.

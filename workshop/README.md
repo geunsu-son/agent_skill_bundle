@@ -66,6 +66,7 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - Skill: 수집(Web Crawler Craft 의존), 스타일 팩, 초고·첨삭, 오케스트레이션
 - 이 저장소 검증: fixture 3편으로 스타일 팩 1회 추출 (`fixtures/sample-style-pack/`)
 - 실제 URL 수집·원고는 소비 저장소 `blog_agnet`에서 진행. 공방에는 관찰만 되돌림
+- 2026-08-27: [Issue #11](https://github.com/geunsu-son/agent_skill_bundle/issues/11) 사용 기록 수신. Blog Style Writing 본문은 수정하지 않음. `report-bundle-feedback`만 기록형으로 수정
 - `.cursor/` 승격·게시 API·미세조정은 하지 않음
 
 ### MCP 서버 제작 — ver0 이 저장소 작업 마감

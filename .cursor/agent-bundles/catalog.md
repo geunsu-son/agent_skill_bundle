@@ -26,3 +26,4 @@ https://github.com/geunsu-son/agent_skill_bundle
 |---|---|---|
 | 2026-08-27 | gate-update | Bundle Catalog gate를 소스 main에서 재설치. 참여 설정은 pending |
 | 2026-08-27 | participation | enabled |
+| 2026-08-27 | issue-11 | report-bundle-feedback 초안을 사용 기록 중심으로 수정 |
