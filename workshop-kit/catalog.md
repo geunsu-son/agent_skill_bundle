@@ -6,12 +6,14 @@
 
 ## Bundle Catalog gate 구성
 
-| 구성 요소 | 파일 |
-|---|---|
-| Rule | `bundle-catalog.mdc` |
-| Skill — 설치 조사 | `audit-installed-bundles` |
-| Skill — 설치·변경 | `manage-agent-bundles` |
-| Skill — 사용 기록·피드백 | `report-bundle-feedback` |
+**Bundle Catalog는 하나의 번들**입니다. `bundle-catalog` Rule 아래 **하위 Skill** 세 개로 나뉩니다. Issue 피드백은 **별도 번들이 아닙니다.**
+
+| 계층 | 이름 | 역할 |
+|---|---|---|
+| Rule | `bundle-catalog.mdc` | 총관리·gate·피드백 원칙 |
+| 하위 Skill | `audit-installed-bundles` | 설치 상태 조사 |
+| 하위 Skill | `manage-agent-bundles` | gate 설치, 번들 선택·변경, 피드백 참여 설정 |
+| 하위 Skill | `report-bundle-feedback` | 사용 기록 Issue 초안·2차 gate·전송 |
 
 ## gate 흐름
 
@@ -20,8 +22,13 @@
 → audit-installed-bundles로 설치 상태 조사
 → gate가 **연결 turn 안에서만** 설치할 번들 질문
 → manage-agent-bundles로 선택한 번들만 설치
-→ 이후에는 사용자가 요청할 때만 추가 설치
+→ connect turn에서 피드백 참여(enabled/disabled) 설정
+→ (enabled) 작업 완료·Skill 사용 PR 시 report-bundle-feedback
 ```
+
+## 피드백 Issue (선택)
+
+`enabled`일 때만 **작업 완료** 또는 **Skill 사용 PR 작성** 시 1차 gate → 초안 공개 → 2차 전송 승인 → Issue 생성. 본문 기본은 사용 기록이다.
 
 ## 등록 번들
 
@@ -38,8 +45,8 @@
 ## 마지막 관리 기록
 
 - 2026-08-27: #11. `report-bundle-feedback` 초안을 사용 기록 중심으로 바꿈. 소비 특수 규칙은 다른 예시 Skill에 넣지 않음.
-- 2026-08-26: Blog Style Writing 실제 실험을 소비 저장소 `blog_agnet`로 두고, 이 공방에는 관찰만 되돌리기로 함. `.cursor/` 미승격.
-- 2026-08-26: Blog Style Writing 예시 번들 등록. 실제 블로그 URL 수집·게시 품질은 미검증. `.cursor/` 미승격.
+- 2026-08-27: Blog Style Writing 예시 번들 등록. 실제 실험은 `blog_agnet`에서 하고 공방에는 관찰만 되돌림.
+- 2026-08-27: `report-bundle-feedback` Skill 추가. connect 시 참여 설정, 2차 gate Issue 전송.
 - 2026-08-26: MCP Server Craft 상태를 `testing`으로 두고 이 저장소 구현을 마감. 실제 제작 테스트는 추후. `.cursor/` 미승격.
 - 2026-08-21: MCP Server Craft 인증 Skill을 `mcp-server-auth`로 바꿈. 참고 README 기준으로 호출자(GWS)·워크로드(IRSA) 분리. `.cursor/` 미승격.
 - 2026-08-21: MCP Server Craft 예시 번들 등록. GWS/GCP 경로를 1순위로 둔 draft. `.cursor/` 미승격.
