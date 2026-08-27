@@ -8,10 +8,10 @@ https://github.com/geunsu-son/agent_skill_bundle
 
 | 항목 | 값 |
 |---|---|
-| status | pending |
-| set_at | — |
+| status | enabled |
+| set_at | 2026-08-27 |
 
-`connect` turn 끝에 `enabled` 또는 `disabled`로 기록한다.
+작업 완료·Skill 사용 PR 시에만 `report-bundle-feedback`으로 Issue 피드백을 가끔 묻는다. 전송 전 초안 공개와 2차 승인을 거친다.
 
 ## Installed Bundles
 
@@ -25,3 +25,4 @@ https://github.com/geunsu-son/agent_skill_bundle
 | date | action | note |
 |---|---|---|
 | 2026-08-27 | gate-update | Bundle Catalog gate를 소스 main에서 재설치. 참여 설정은 pending |
+| 2026-08-27 | participation | enabled |
