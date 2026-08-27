@@ -40,7 +40,9 @@ Agent 작업 아이디어
    어떤 번들이 이미 설치되어 있는지 확인한다
 3. **이번 연결 turn 안에서만** 조사 결과를 보여 준 뒤, 추가로 설치할 번들이 무엇인지 나에게 물어본다
 4. 내가 고른 번들만 .cursor/에 설치한다 (추가하지 않음을 선택해도 됨)
-5. **개선 피드백 참여 여부**를 물어보고 enabled/disabled를 catalog에 기록한다
+5. **번들 개선 피드백 참여 여부**를 한 번 물어보고 catalog에 기록한다
+   - enabled: 작업 완료·Skill 사용 PR 시 개선 제안 Issue 전송을 **가끔** 물어봄 (전송 전 초안·2차 확인)
+   - disabled: 피드백을 **다시 묻지 않음**
 6. .cursor/agent-bundles/catalog.md를 갱신하고 최종 상태를 요약한다
 7. 연결이 끝난 뒤에는 내가 다시 요청하기 전까지 추가 번들 설치를 묻지 않는다
 ```
@@ -49,27 +51,62 @@ Agent 작업 아이디어
 
 ```text
 작업 중인 저장소
-→ Bundle Catalog gate 선설치 (총괄 rule)
+→ Bundle Catalog gate 선설치 (총괄 rule + 3 Skill)
 → audit-installed-bundles로 설치 상태 조사
 → gate가 **연결 turn 안에서만** 설치할 번들 질문
 → 선택한 번들만 .cursor/에 설치
 → connect turn에서 피드백 참여(enabled/disabled) 설정
 → 이후에는 사용자가 요청할 때만 추가 설치
+→ (enabled) 작업 완료·Skill 사용 PR 시 report-bundle-feedback
 ```
 
-### 피드백 Issue (선택)
+이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다. 적용 여부를 추정하지 않고 먼저 조사합니다.
 
-연결 turn에서 **개선 참여**를 `enabled`로 두면, **작업 완료** 또는 **Skill 사용 PR 작성** 시에만 개선 제안 Issue 전송을 묻습니다.
+### 번들 개선 피드백 Issue (선택)
 
-1. **1차 gate** — Issue로 보내도 될지
-2. Issue 초안 작성 (Skill·Rule **개선 제안 + 이유** 중심, 민감 정보 제외)
-3. **2차 gate** — 초안 전체 확인 후 정말 보낼지
-4. 승인 시 `agent_skill_bundle` repo에 Issue 생성
-5. 실패 시 직접 Issue 작성 URL 안내 (선택, 강요 없음)
+다른 repo에서 번들 Skill을 쓰다가 **Rule·Skill·gate에 추가·개선하면 좋겠다는 제안**이 생기면, 번들 소스 repo(`agent_skill_bundle`)에 Issue로 되돌릴 수 있습니다. **필수가 아니며**, 연결 turn에서 참여 여부를 미리 정합니다.
 
-`disabled`이면 피드백을 묻지 않습니다.
+| 설정 | 의미 |
+|---|---|
+| `enabled` | 아래 **트리거**가 발생했을 때만 1차 gate로 “Issue로 보낼까요?”를 묻습니다 |
+| `disabled` | 피드백 전송을 **묻지 않습니다** |
 
-이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다.
+설정은 `.cursor/agent-bundles/catalog.md`의 `Feedback Participation`에 기록됩니다.
+
+#### 언제 물어보나 (`enabled`일 때만)
+
+- 사용자가 **작업 완료**를 알렸을 때
+- **번들 Skill을 사용한 PR**을 작성했을 때
+
+그 외 일반 turn에서는 피드백·추가 번들 설치를 **먼저 꺼내지 않습니다**.
+
+#### Issue에 담기는 내용 (중심)
+
+- 사용한 **번들·Skill·Rule** 이름
+- Skill·Rule·gate에 **추가·개선 제안**
+- **그렇게 제안하는 이유** (어떤 작업 맥락에서 불편·부족·과했는지)
+- (선택) 바로 도움이 된 점
+
+#### 보내지 않는 내용
+
+- API key, token, password 등 **비밀값**
+- 내부 전용 URL·IP, 고객·개인 식별 정보, 민감 업무 데이터
+- consumer repo **소스 코드 전체**·대용량 로그
+
+#### 2차 gate (전송 전 반드시 확인)
+
+```text
+1차 gate — Issue로 보내도 될까요?
+→ Issue 초안 작성 (민감 정보 제외)
+→ 초안 전체를 사용자에게 보여 줌
+2차 gate — 정말 agent_skill_bundle repo에 보낼까요?
+→ 승인 시 Issue 생성 (gh issue create)
+→ 실패 시 Issue 작성 URL 안내 (선택, 강요 없음)
+```
+
+Issue 전송 절차: [`report-bundle-feedback` Skill](workshop-kit/skills/report-bundle-feedback/SKILL.md)
+
+#### 관련 프롬프트
 
 설치 상태만 조사할 때:
 
@@ -83,6 +120,14 @@ audit-installed-bundles Skill로
 ```text
 Agent Skill Bundle gate를 통해
 Agent Skill Workshop 번들만 추가로 설치해줘.
+```
+
+작업 완료 후 피드백 Issue 초안까지 (`enabled`일 때):
+
+```text
+이번 작업에서 Skill 번들 개선 제안이 있으면
+report-bundle-feedback Skill 절차로 Issue 초안을 만들고,
+보내기 전에 초안 전체를 보여 준 뒤 전송 여부를 다시 확인해줘.
 ```
 
 ## 용어: 에이전트 번들
@@ -195,15 +240,17 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 
 ### 번들 총관리 Rule과 Skill
 
-번들이 늘어날수록 어떤 세트를 가져오고·업데이트하고·삭제할지 판단하는 **gate 번들**입니다.
+번들이 늘어날수록 어떤 세트를 가져오고·업데이트하고·삭제할지 판단하는 **gate 번들**입니다. 다른 repo에서 연결할 때는 [시작하기](#시작하기) 프롬프트로 gate를 먼저 세팅합니다.
 
-- Rule: [`workshop-kit/rules/bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc)
-- Skill — 설치 조사: [`workshop-kit/skills/audit-installed-bundles/SKILL.md`](workshop-kit/skills/audit-installed-bundles/SKILL.md)
-- Skill — 설치·변경: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
-- Skill — 피드백 Issue: [`workshop-kit/skills/report-bundle-feedback/SKILL.md`](workshop-kit/skills/report-bundle-feedback/SKILL.md)
-- 소스 catalog: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
+| 구성 | 파일 | 역할 |
+|---|---|---|
+| Rule | [`bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc) | gate 원칙, 피드백·보안 기준 |
+| Skill | [`audit-installed-bundles`](workshop-kit/skills/audit-installed-bundles/SKILL.md) | `.cursor/` 설치 상태 조사 |
+| Skill | [`manage-agent-bundles`](workshop-kit/skills/manage-agent-bundles/SKILL.md) | gate 설치, 번들 선택·변경, **피드백 참여 설정** |
+| Skill | [`report-bundle-feedback`](workshop-kit/skills/report-bundle-feedback/SKILL.md) | 개선 제안 Issue 초안·**2차 gate**·전송 |
+| catalog | [`catalog.md`](workshop-kit/catalog.md) | 가져올 수 있는 번들 목록 |
 
-연결 흐름은 [시작하기](#시작하기)와 같습니다. connect turn에서 **피드백 참여**(`enabled`/`disabled`)를 설정하고, `enabled`일 때만 작업 완료·Skill 사용 PR 시 `report-bundle-feedback`으로 Issue 전송을 2차 gate까지 확인합니다.
+소비 repo의 설치·피드백 설정은 `.cursor/agent-bundles/catalog.md`에 기록합니다. 피드백 Issue 흐름은 [번들 개선 피드백 Issue (선택)](#번들-개선-피드백-issue-선택)을 참고하세요.
 
 ## 작업 아이디어 인터뷰
 
