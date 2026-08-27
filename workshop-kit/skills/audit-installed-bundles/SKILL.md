@@ -60,7 +60,7 @@ description: 현재 저장소의 .cursor/와 로컬 catalog를 조사해 어떤 
 Bundle Catalog gate 번들은 아래 파일로 판정한다.
 
 - Rule: `bundle-catalog.mdc`
-- Skill: `audit-installed-bundles`, `manage-agent-bundles`
+- Skill: `audit-installed-bundles`, `manage-agent-bundles`, `report-bundle-feedback`
 
 ### 5. 이상 징후 찾기
 

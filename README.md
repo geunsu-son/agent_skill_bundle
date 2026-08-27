@@ -35,12 +35,14 @@ Agent 작업 아이디어
    - bundle-catalog.mdc
    - audit-installed-bundles Skill
    - manage-agent-bundles Skill
+   - report-bundle-feedback Skill
 2. audit-installed-bundles Skill로 .cursor/와 catalog를 조사해
    어떤 번들이 이미 설치되어 있는지 확인한다
 3. **이번 연결 turn 안에서만** 조사 결과를 보여 준 뒤, 추가로 설치할 번들이 무엇인지 나에게 물어본다
 4. 내가 고른 번들만 .cursor/에 설치한다 (추가하지 않음을 선택해도 됨)
-5. .cursor/agent-bundles/catalog.md를 갱신하고 최종 상태를 요약한다
-6. 연결이 끝난 뒤에는 내가 다시 요청하기 전까지 추가 번들 설치를 묻지 않는다
+5. **개선 피드백 참여 여부**를 물어보고 enabled/disabled를 catalog에 기록한다
+6. .cursor/agent-bundles/catalog.md를 갱신하고 최종 상태를 요약한다
+7. 연결이 끝난 뒤에는 내가 다시 요청하기 전까지 추가 번들 설치를 묻지 않는다
 ```
 
 ### gate 흐름
@@ -51,10 +53,23 @@ Agent 작업 아이디어
 → audit-installed-bundles로 설치 상태 조사
 → gate가 **연결 turn 안에서만** 설치할 번들 질문
 → 선택한 번들만 .cursor/에 설치
+→ connect turn에서 피드백 참여(enabled/disabled) 설정
 → 이후에는 사용자가 요청할 때만 추가 설치
 ```
 
-이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다. 적용 여부를 추정하지 않고 먼저 조사합니다. **연결이 끝난 뒤에는 번들 추가를 다시 묻지 않습니다.**
+### 피드백 Issue (선택)
+
+연결 turn에서 **개선 참여**를 `enabled`로 두면, **작업 완료** 또는 **Skill 사용 PR 작성** 시에만 개선 제안 Issue 전송을 묻습니다.
+
+1. **1차 gate** — Issue로 보내도 될지
+2. Issue 초안 작성 (Skill·Rule **개선 제안 + 이유** 중심, 민감 정보 제외)
+3. **2차 gate** — 초안 전체 확인 후 정말 보낼지
+4. 승인 시 `agent_skill_bundle` repo에 Issue 생성
+5. 실패 시 직접 Issue 작성 URL 안내 (선택, 강요 없음)
+
+`disabled`이면 피드백을 묻지 않습니다.
+
+이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다.
 
 설치 상태만 조사할 때:
 
@@ -185,9 +200,10 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 - Rule: [`workshop-kit/rules/bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc)
 - Skill — 설치 조사: [`workshop-kit/skills/audit-installed-bundles/SKILL.md`](workshop-kit/skills/audit-installed-bundles/SKILL.md)
 - Skill — 설치·변경: [`workshop-kit/skills/manage-agent-bundles/SKILL.md`](workshop-kit/skills/manage-agent-bundles/SKILL.md)
+- Skill — 피드백 Issue: [`workshop-kit/skills/report-bundle-feedback/SKILL.md`](workshop-kit/skills/report-bundle-feedback/SKILL.md)
 - 소스 catalog: [`workshop-kit/catalog.md`](workshop-kit/catalog.md)
 
-연결 흐름은 [시작하기](#시작하기)와 같습니다. 총괄 rule 선설치 → `audit-installed-bundles`로 조사 → gate가 설치할 번들 질문 → 선택분만 설치. 소비 프로젝트의 설치 기록은 `.cursor/agent-bundles/catalog.md`에 둡니다.
+연결 흐름은 [시작하기](#시작하기)와 같습니다. connect turn에서 **피드백 참여**(`enabled`/`disabled`)를 설정하고, `enabled`일 때만 작업 완료·Skill 사용 PR 시 `report-bundle-feedback`으로 Issue 전송을 2차 gate까지 확인합니다.
 
 ## 작업 아이디어 인터뷰
 
@@ -284,6 +300,7 @@ workshop-kit/             공방 키트 번들의 관리 원본
 - [번들 총관리 Rule](workshop-kit/rules/bundle-catalog.mdc)
 - [번들 설치 조사 Skill](workshop-kit/skills/audit-installed-bundles/SKILL.md)
 - [번들 관리 Skill](workshop-kit/skills/manage-agent-bundles/SKILL.md)
+- [번들 피드백 Issue Skill](workshop-kit/skills/report-bundle-feedback/SKILL.md)
 - [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
 - [커리어 매니지먼트 예시](examples/career-management-ver0/README.md)
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
