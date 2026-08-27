@@ -250,7 +250,7 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 | Rule | [`bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc) | 총관리·gate·피드백·보안 원칙 |
 | 하위 Skill | [`audit-installed-bundles`](workshop-kit/skills/audit-installed-bundles/SKILL.md) | `.cursor/` 설치 상태 조사 |
 | 하위 Skill | [`manage-agent-bundles`](workshop-kit/skills/manage-agent-bundles/SKILL.md) | gate 설치, 번들 선택·변경, 피드백 참여 설정 |
-| 하위 Skill | [`report-bundle-feedback`](workshop-kit/skills/report-bundle-feedback/SKILL.md) | 개선 제안 Issue 초안·2차 gate·전송 |
+| 하위 Skill | [`report-bundle-feedback`](workshop-kit/skills/report-bundle-feedback/SKILL.md) | 사용 기록 Issue 초안·2차 gate·전송 |
 | catalog | [`catalog.md`](workshop-kit/catalog.md) | 가져올 수 있는 **다른** 번들 목록 (예시 번들 등) |
 
 소비 repo의 설치·피드백 설정은 `.cursor/agent-bundles/catalog.md`에 기록합니다. Issue 피드백 흐름은 [Bundle Catalog 총관리 rule — 하위 Skill로 Issue 피드백 (선택)](#bundle-catalog-총관리-rule--하위-skill로-issue-피드백-선택)을 참고하세요.
@@ -353,6 +353,7 @@ workshop-kit/             공방 키트 번들의 관리 원본
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
 - [도메인 기반 데이터 분석 예시](examples/domain-data-analysis/README.md)
 - [MCP 서버 제작 예시](examples/mcp-server-craft-ver0/README.md)
+- [블로그 스타일 학습·원고 예시](examples/blog-style-writing-ver0/README.md)
 - [작업대 메모](workshop/README.md)
 
 ## 첫 예시: 세션 경제 브리핑
