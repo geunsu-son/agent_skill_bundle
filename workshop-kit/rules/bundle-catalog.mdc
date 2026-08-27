@@ -11,6 +11,8 @@ alwaysApply: false
 
 이 Rule은 번들을 새로 만드는 방법이 아니라, **현재 작업 중인 저장소의 `.cursor/`에 어떤 번들을 두고 어떻게 관리할지**를 정한다. 번들 선택의 **gate** 역할을 한다.
 
+Bundle Catalog gate는 **하나의 번들**이며, 이 Rule과 아래 **하위 Skill**(`audit-installed-bundles`, `manage-agent-bundles`, `report-bundle-feedback`)로 구성된다. Issue 피드백은 별도 번들이 아니라 총관리 Rule의 하위 Skill이다.
+
 ## 용어
 
 - **Agent 작업 아이디어**: Agent에게 맡길 작업과 기대 결과에 대한 생각

@@ -5,6 +5,9 @@ description: 번들 Skill 사용 후 개선 제안을 Issue 초안으로 정리�
 
 # Report Bundle Feedback
 
+`bundle-catalog` **총관리 Rule의 하위 Skill**입니다. 별도 번들이 아닙니다.  
+Rule·Skill·gate 개선 제안을 번들 소스 repo Issue로 되돌릴 때 이 절차를 따른다.
+
 ## 사용 시점
 
 다음 **모두**를 만족할 때만 시작한다.

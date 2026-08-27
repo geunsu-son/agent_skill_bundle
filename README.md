@@ -62,9 +62,11 @@ Agent 작업 아이디어
 
 이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다. 적용 여부를 추정하지 않고 먼저 조사합니다.
 
-### 번들 개선 피드백 Issue (선택)
+### Bundle Catalog 총관리 rule — 하위 Skill로 Issue 피드백 (선택)
 
-다른 repo에서 번들 Skill을 쓰다가 **Rule·Skill·gate에 추가·개선하면 좋겠다는 제안**이 생기면, 번들 소스 repo(`agent_skill_bundle`)에 Issue로 되돌릴 수 있습니다. **필수가 아니며**, 연결 turn에서 참여 여부를 미리 정합니다.
+**별도 번들이 아닙니다.** `bundle-catalog` Rule 하나 아래 하위 Skill로 Issue 전송 절차가 포함됩니다.
+
+다른 repo에서 예시·업무 **번들** Skill을 쓰다가, **총관리 Rule·gate·하위 Skill**에 대한 개선 제안이 생기면 번들 소스 repo에 Issue로 되돌릴 수 있습니다.
 
 | 설정 | 의미 |
 |---|---|
@@ -142,6 +144,7 @@ report-bundle-feedback Skill 절차로 Issue 초안을 만들고,
 | 공방 키트 번들 | 공방 운영·총관리용 번들. 원본은 `workshop-kit/` |
 | 예시 번들 | 특정 업무를 시험하는 번들. 원본은 `examples/<bundle-name>/` |
 | 활성 번들 | `.cursor/`에 설치되어 Cursor가 읽는 번들 |
+| 피드백 참여 | connect turn에 정하는 `enabled` / `disabled`. Issue 되돌림 여부 |
 
 ```text
 Agent 작업 아이디어
@@ -238,19 +241,19 @@ Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
 실제로 시험할 수 있는 최소 예시를 만들어줘.
 ```
 
-### 번들 총관리 Rule과 Skill
+### 번들 총관리 Rule과 하위 Skill
 
-번들이 늘어날수록 어떤 세트를 가져오고·업데이트하고·삭제할지 판단하는 **gate 번들**입니다. 다른 repo에서 연결할 때는 [시작하기](#시작하기) 프롬프트로 gate를 먼저 세팅합니다.
+**Bundle Catalog gate는 하나의 번들**입니다. Rule 하나와 하위 Skill 세 개로 구성됩니다. Issue 피드백용 Skill은 **별도 번들이 아닙니다.**
 
-| 구성 | 파일 | 역할 |
+| 계층 | 파일 | 역할 |
 |---|---|---|
-| Rule | [`bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc) | gate 원칙, 피드백·보안 기준 |
-| Skill | [`audit-installed-bundles`](workshop-kit/skills/audit-installed-bundles/SKILL.md) | `.cursor/` 설치 상태 조사 |
-| Skill | [`manage-agent-bundles`](workshop-kit/skills/manage-agent-bundles/SKILL.md) | gate 설치, 번들 선택·변경, **피드백 참여 설정** |
-| Skill | [`report-bundle-feedback`](workshop-kit/skills/report-bundle-feedback/SKILL.md) | 개선 제안 Issue 초안·**2차 gate**·전송 |
-| catalog | [`catalog.md`](workshop-kit/catalog.md) | 가져올 수 있는 번들 목록 |
+| Rule | [`bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc) | 총관리·gate·피드백·보안 원칙 |
+| 하위 Skill | [`audit-installed-bundles`](workshop-kit/skills/audit-installed-bundles/SKILL.md) | `.cursor/` 설치 상태 조사 |
+| 하위 Skill | [`manage-agent-bundles`](workshop-kit/skills/manage-agent-bundles/SKILL.md) | gate 설치, 번들 선택·변경, 피드백 참여 설정 |
+| 하위 Skill | [`report-bundle-feedback`](workshop-kit/skills/report-bundle-feedback/SKILL.md) | 개선 제안 Issue 초안·2차 gate·전송 |
+| catalog | [`catalog.md`](workshop-kit/catalog.md) | 가져올 수 있는 **다른** 번들 목록 (예시 번들 등) |
 
-소비 repo의 설치·피드백 설정은 `.cursor/agent-bundles/catalog.md`에 기록합니다. 피드백 Issue 흐름은 [번들 개선 피드백 Issue (선택)](#번들-개선-피드백-issue-선택)을 참고하세요.
+소비 repo의 설치·피드백 설정은 `.cursor/agent-bundles/catalog.md`에 기록합니다. Issue 피드백 흐름은 [Bundle Catalog 총관리 rule — 하위 Skill로 Issue 피드백 (선택)](#bundle-catalog-총관리-rule--하위-skill로-issue-피드백-선택)을 참고하세요.
 
 ## 작업 아이디어 인터뷰
 
@@ -344,10 +347,7 @@ workshop-kit/             공방 키트 번들의 관리 원본
 - [에이전트 번들 카탈로그](workshop-kit/catalog.md)
 - [공방 운영용 Rule](workshop-kit/rules/agent-skill-workshop.mdc)
 - [아이디어 구현 Skill](workshop-kit/skills/idea-to-agent-artifact/SKILL.md)
-- [번들 총관리 Rule](workshop-kit/rules/bundle-catalog.mdc)
-- [번들 설치 조사 Skill](workshop-kit/skills/audit-installed-bundles/SKILL.md)
-- [번들 관리 Skill](workshop-kit/skills/manage-agent-bundles/SKILL.md)
-- [번들 피드백 Issue Skill](workshop-kit/skills/report-bundle-feedback/SKILL.md)
+- [Bundle Catalog 총관리 Rule](workshop-kit/rules/bundle-catalog.mdc) — 하위 Skill: audit / manage / report-bundle-feedback
 - [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
 - [커리어 매니지먼트 예시](examples/career-management-ver0/README.md)
 - [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)

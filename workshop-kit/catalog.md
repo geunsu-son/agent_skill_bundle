@@ -6,12 +6,14 @@
 
 ## Bundle Catalog gate 구성
 
-| 구성 요소 | 파일 |
-|---|---|
-| Rule | `bundle-catalog.mdc` |
-| Skill — 설치 조사 | `audit-installed-bundles` |
-| Skill — 설치·변경 | `manage-agent-bundles` |
-| Skill — 피드백 Issue | `report-bundle-feedback` |
+**Bundle Catalog는 하나의 번들**입니다. `bundle-catalog` Rule 아래 **하위 Skill** 세 개로 나뉩니다. Issue 피드백은 **별도 번들이 아닙니다.**
+
+| 계층 | 이름 | 역할 |
+|---|---|---|
+| Rule | `bundle-catalog.mdc` | 총관리·gate·피드백 원칙 |
+| 하위 Skill | `audit-installed-bundles` | 설치 상태 조사 |
+| 하위 Skill | `manage-agent-bundles` | gate 설치, 번들 선택·변경, 피드백 참여 설정 |
+| 하위 Skill | `report-bundle-feedback` | 개선 제안 Issue 초안·2차 gate·전송 |
 
 ## gate 흐름
 
