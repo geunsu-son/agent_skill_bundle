@@ -40,8 +40,37 @@ gate가 `missing` 또는 `partial`이면 아래 Bundle Catalog 번들 파일을 
 - `workshop-kit/rules/bundle-catalog.mdc` → `.cursor/rules/bundle-catalog.mdc`
 - `workshop-kit/skills/audit-installed-bundles/SKILL.md` → `.cursor/skills/audit-installed-bundles/SKILL.md`
 - `workshop-kit/skills/manage-agent-bundles/SKILL.md` → `.cursor/skills/manage-agent-bundles/SKILL.md`
+- `workshop-kit/skills/report-bundle-feedback/SKILL.md` → `.cursor/skills/report-bundle-feedback/SKILL.md`
 
-로컬 catalog가 없으면 만든다. gate 보완만으로 다른 번들은 아직 설치하지 않는다.
+로컬 catalog가 없으면 아래 템플릿으로 만든다. gate 보완만으로 다른 번들은 아직 설치하지 않는다.
+
+```md
+# Local Agent Bundle Catalog
+
+## Bundle Source
+
+https://github.com/geunsu-son/agent_skill_bundle
+
+## Feedback Participation
+
+| 항목 | 값 |
+|---|---|
+| status | pending |
+| set_at | — |
+
+`connect` turn 끝에 `enabled` 또는 `disabled`로 기록한다.
+
+## Installed Bundles
+
+| 번들 | 상태 | Rule | Skill | 메모 |
+|---|---|---|---|---|
+| Bundle Catalog | active | bundle-catalog.mdc | audit-installed-bundles, manage-agent-bundles, report-bundle-feedback | gate |
+
+## Feedback Log
+
+| date | action | note |
+|---|---|---|
+```
 
 파일 가져오기 예시:
 
@@ -51,6 +80,7 @@ REF=main
 curl -fsSL "$SOURCE/raw/$REF/workshop-kit/rules/bundle-catalog.mdc" -o .cursor/rules/bundle-catalog.mdc
 curl -fsSL "$SOURCE/raw/$REF/workshop-kit/skills/audit-installed-bundles/SKILL.md" -o .cursor/skills/audit-installed-bundles/SKILL.md
 curl -fsSL "$SOURCE/raw/$REF/workshop-kit/skills/manage-agent-bundles/SKILL.md" -o .cursor/skills/manage-agent-bundles/SKILL.md
+curl -fsSL "$SOURCE/raw/$REF/workshop-kit/skills/report-bundle-feedback/SKILL.md" -o .cursor/skills/report-bundle-feedback/SKILL.md
 ```
 
 ### 3. 설치 상태 조사
@@ -114,7 +144,24 @@ examples/<bundle-name>/skills/<skill>/SKILL.md → .cursor/skills/<skill>/SKILL.
 
 설치·삭제·업데이트 후 로컬 catalog를 갱신한다.
 
-### 6. 재조사와 요약
+### 6. 피드백 참여 설정 (`connect`만)
+
+`Feedback Participation`이 `pending`이거나 없을 때 **한 번** 묻는다.
+
+```text
+Agent Skill Bundle 개선에 참여하시겠습니까?
+
+작업을 마치거나 Skill을 사용한 PR을 작성했을 때,
+Rule·Skill에 추가·개선하면 좋겠다는 제안이 있으면 Issue로 보낼지 물어볼 수 있습니다.
+보내기 전에는 Issue 초안을 보여 드리고, 정말 보낼지 다시 확인합니다.
+
+- 예 → enabled
+- 아니오 → disabled (이후 피드백 전송을 묻지 않음)
+```
+
+선택 결과를 `.cursor/agent-bundles/catalog.md`의 `Feedback Participation`에 기록한다. 이미 `enabled`/`disabled`이면 다시 묻지 않는다.
+
+### 7. 재조사와 요약
 
 변경이 있었다면 `audit-installed-bundles` Skill을 다시 실행한다.
 
@@ -145,7 +192,10 @@ examples/<bundle-name>/skills/<skill>/SKILL.md → .cursor/skills/<skill>/SKILL.
 - Bundle Catalog gate가 `installed` 상태다.
 - 요청 유형(`connect` / `add` / `audit` / `update` / `remove`) 범위를 벗어나지 않았다.
 - `connect`/`add` turn에서만 설치 질문을 했고, 그 외 turn에서는 추가 설치를 묻지 않았다.
+- `connect` turn에서 피드백 참여(`enabled`/`disabled`)가 기록되었다.
 - 재조사 후 로컬 catalog와 `.cursor/` 상태가 일치한다.
+
+피드백 전송은 `report-bundle-feedback` Skill을 따른다. 작업 완료·Skill 사용 PR 작성 시, `enabled`일 때만 1차 gate를 연다.
 
 ## 기본 요청 예시
 
