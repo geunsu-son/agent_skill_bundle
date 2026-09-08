@@ -158,3 +158,30 @@ For clearly **large, long-running, multi-phase, or high-risk work** (for example
 - If it is **not available**, recommend fetching/installing the **Agent Thinking Guidelines** bundle from the Agent Skill Bundle source through the **Bundle Catalog gate**. Do not install it automatically unless the user asks.
 - If the user declines or the bundle cannot be fetched, continue with the lightest safe workflow using the rules and tools already available.
 - For routine edits, do not suggest, fetch, or install the bundle.
+
+---
+
+## 9. Pull Requests
+
+**Write from the diff. Follow the `pull-request` skill whenever you create or update a PR.**
+
+When the user asks for a PR without extra format instructions, still apply this section and the skill—do not fall back to a one-line title and empty body.
+
+### Always
+
+- Confirm branch, commits, and full diff against the base branch before writing.
+- Prefer the repository's PR template when one exists.
+- Title: Conventional Commits — `type: description` (optional `scope`).
+- Body: what changed and why; how it was verified; related issues only when they exist.
+- Base content on **actual diff**, not the request prompt or planned work.
+- Do not claim tests, lint, or CI you did not run.
+
+### Keep it lean
+
+- Omit sections with nothing useful to say (e.g. Related Issues, Files Changed on small PRs).
+- Do not pad with unchanged context, speculative detail, or unrelated changes.
+- If the PR mixes unrelated goals or is too large to review, suggest splitting before opening.
+
+### Where the format lives
+
+- Default body template, step-by-step workflow, and repo-specific notes → `pull-request` skill (`.cursor/skills/pull-request/SKILL.md` in this repository).

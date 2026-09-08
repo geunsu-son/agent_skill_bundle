@@ -92,6 +92,7 @@ Multi-agent review, orchestrator, reviewer loop 같은 방식은 큰 작업에�
 ## Repository contents
 
 - [`user_rule.md`](./user_rule.md) — Cursor / coding agent에 적용하는 실제 user rule
+- PR 작성 절차 Skill: 이 저장소의 [`.cursor/skills/pull-request/SKILL.md`](../../.cursor/skills/pull-request/SKILL.md) (`user_rule.md` §9에서 참조)
 
 ## Updating this rule
 
