@@ -1,0 +1,14 @@
+---
+description: 데이터 분석, 대량 파일 처리, SQL 쿼리, pandas 작업 시 적용하는 검증 프로토콜
+globs: **/*.sql,**/*.ipynb,**/*.csv,**/*.tsv,**/*.parquet,**/*.xlsx,**/*.xls
+alwaysApply: false
+---
+
+# 대규모 분석 프로토콜 (포인터)
+
+이 rule은 데이터 파일을 열 때 분석 프로토콜을 적용하도록 유도하는 **트리거**일 뿐이다.
+프로토콜 전문(SSOT)은 skill로 관리한다:
+
+**→ `.cursor/skills/analysis-protocol/SKILL.md`**
+
+내용이 갈라지면 `SKILL.md`가 우선한다. 규칙을 고칠 때는 여기가 아니라 `SKILL.md`(그 상위는 `docs/`)를 수정한다.
