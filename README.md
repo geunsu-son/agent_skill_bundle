@@ -88,6 +88,7 @@ GitHub 첫 화면에서도 현재 가지고 있는 bundle을 바로 확인할 �
 - 검증 가능한 목표
 - notebook → verify → script 승격
 - 불필요한 heavy workflow 억제
+- PR 작성 시 diff 기반·일관된 형식 (`pull-request` skill)
 
 자세한 배경과 변경 관리 방식은 [`core/user-rule/README.md`](core/user-rule/README.md)를 봅니다.
 
