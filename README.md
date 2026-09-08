@@ -39,6 +39,12 @@ GitHub 첫 화면에서도 현재 가지고 있는 bundle을 바로 확인할 �
 |---|---|---|
 | [Agent Thinking Guidelines](bundles/agent-thinking-guidelines/README.md) | `bundles/agent-thinking-guidelines/` | 대규모·장기·다단계·고위험 작업의 사고·검증·review/orchestration |
 
+### Draft (정식 번들 초안)
+
+| Bundle | 위치 | 용도 |
+|---|---|---|
+| [Core User Rule](bundles/core-user-rule/README.md) | `bundles/core-user-rule/` | 일상 작업 기본 원칙 + PR 작성 (`user_rule` SSOT는 `core/`, Rule은 설치 시 생성) |
+
 ### Testing
 
 | Bundle | 위치 | 용도 |
@@ -67,10 +73,13 @@ GitHub 첫 화면에서도 현재 가지고 있는 bundle을 바로 확인할 �
 │       └── user_rule.md
 │
 ├── bundles/                               # 검증·승격된 재사용 번들 원본
-│   └── agent-thinking-guidelines/
+│   ├── agent-thinking-guidelines/
+│   │   ├── README.md
+│   │   ├── docs/                          # 사고·검증 지침 SSOT
+│   │   └── cursor/                        # Cursor 배포본
+│   └── core-user-rule/
 │       ├── README.md
-│       ├── docs/                          # 사고·검증 지침 SSOT
-│       └── cursor/                        # Cursor 배포본
+│       └── cursor/                        # pull-request skill 배포본 (rule은 core/ SSOT에서 설치 시 생성)
 │
 ├── workshop-kit/                          # Bundle Catalog gate와 공방 관리 도구의 원본
 ├── workshop/                              # 아직 구조가 확정되지 않은 아이디어·작업 노트

@@ -147,6 +147,22 @@ bundles/<bundle>/docs/*
 
 **Agent Thinking Guidelines**의 경우 `docs/agent-thinking-guidelines.md`가 호출 SSOT이므로 `docs/`도 함께 확인·설치한다.
 
+**Core User Rule**은 Rule 복사본을 bundle repo에 두지 않는다. Skill은 일반 정식 번들 매핑을 따르고, Rule은 설치·업데이트 시 `core/user-rule/user_rule.md`를 읽어 `.cursor/rules/user-rule.mdc`로 변환 생성한다.
+
+```text
+bundles/core-user-rule/cursor/.cursor/skills/pull-request/
+  → .cursor/skills/pull-request/
+
+core/user-rule/user_rule.md
+  → .cursor/rules/user-rule.mdc
+```
+
+변환 규칙:
+
+- frontmatter: `description` (일상 Cursor/agent 작업 원칙), `globs: "**/*"`, `alwaysApply: true`
+- body: `user_rule.md` 본문 전체 유지
+- 기존 `.cursor/rules/user-rule.mdc`가 있으면 diff 후 사용자 확인 후 갱신
+
 #### 예시 번들
 
 ```text
