@@ -2,6 +2,8 @@
 
 > repo에 구현된 지침 세트가 **실제로 어떻게 동작하는지** 설명한다.
 > 세부 규약은 [`agent-thinking-guidelines.md`](agent-thinking-guidelines.md)(기본 지침)과 [`multi-agent-orchestration.md`](multi-agent-orchestration.md)(멀티에이전트 확장)을 참조한다.
+>
+> 현재 `agent_skill_bundle`에서 공식적으로 배포·관리하는 실행 target은 **Cursor**다. `docs/`의 원칙은 가능한 한 플랫폼 중립적으로 유지하지만, 실제 Rule·Skill·Agent·memory/state 경로는 Cursor 구현을 기준으로 설명한다.
 
 ---
 
@@ -79,29 +81,27 @@ sequenceDiagram
 
 ---
 
-## 4. 지침 계층과 운용 모드
+## 4. Cursor 지침 계층과 운용 모드
 
-repo는 Cursor·Claude Code 두 버전으로 매핑되어 있으며, 역할 구조는 동일하다.
+| 계층 | Cursor 구현 | 적용 (기본 = 옵트인) |
+|---|---|---|
+| **기본 원칙** | `.cursor/skills/agent-thinking-guidelines` + `.cursor/rules/core-principles.mdc` | `/agent-thinking-guidelines` 또는 `@docs/agent-thinking-guidelines.md` |
+| **작업 규율** | `.cursor/rules/worker-conduct.mdc` | opt-in Rule |
+| **상황별 프로토콜** | `.cursor/skills/analysis-protocol`, `.cursor/skills/design-protocol` | 해당 작업·명시 호출 시 |
+| **플래너** | `.cursor/agents/orchestrator.md` | `/orchestrator` |
+| **승인자** | `.cursor/agents/reviewer.md` | `/reviewer` |
+| **세션 간 기억** | `.cursor/memory/` | 수동 참조 |
+| **루프 상태** | `.cursor/state/loop-status.md` | 루프 실행 시 |
 
-| 계층 | Cursor | Claude Code | 적용 (기본 = 옵트인) |
-|---|---|---|---|
-| **기본 원칙** | `skills/agent-thinking-guidelines` + `core-principles.mdc` | `skills/agent-thinking-guidelines` + `CLAUDE.always.md` (스텁은 `CLAUDE.md`) | `/agent-thinking-guidelines` 또는 `@docs/agent-thinking-guidelines.md` 또는 항상 적용 전환 후 |
-| **작업 규율** | `worker-conduct.mdc` | 위와 동일 | 동일 |
-| **상황별 프로토콜** | `skills/analysis-protocol`, `skills/design-protocol` | 동일 경로 | 해당 작업·명시 호출 시 |
-| **플래너** | `agents/orchestrator.md` | `agents/orchestrator.md` | `/orchestrator` |
-| **승인자** | `agents/reviewer.md` | `agents/reviewer.md` | `/reviewer` |
-| **세션 간 기억** | `.cursor/memory/` | `.claude/memory/` | 수동 참조 |
-| **루프 상태** | `.cursor/state/loop-status.md` | `.claude/state/loop-status.md` | 루프 실행 시 |
-
-기본 설치는 **호출 시에만** 지침을 켠다(토큰 절약). 설치 완료 시 에이전트가 호출법을 안내하고 **"항상 적용되도록 적용할까요?"** 를 묻는다.
+기본 설치는 **호출 시에만** 지침을 켠다(토큰 절약). 필요하면 `core-principles.mdc`, `worker-conduct.mdc`의 `alwaysApply`를 `true`로 바꿔 항상 적용할 수 있다.
 
 | 모드 | 구성 | 적합한 작업 |
 |---|---|---|
 | **일상 (옵트인 끔)** | 메인 에이전트만 | 가벼운 질문·소규모 수정 |
-| **지침 켜기** | `@docs/…` + 메인 | 설계·분석·규율이 필요한 작업 |
+| **지침 켜기** | `/agent-thinking-guidelines` 또는 `@docs/…` | 설계·분석·규율이 필요한 작업 |
 | **검증** | + `/reviewer` | 수치 보고, 되돌리기 어려운 변경 |
 | **풀 루프** | + `/orchestrator` + state | 대규모 리팩터링, 다단계 설계 |
-| **항상 적용** | Cursor `alwaysApply: true` / Claude `CLAUDE.always.md`→`CLAUDE.md` | 토큰 비용을 감수하고 매 세션 자동 적용 |
+| **항상 적용** | `alwaysApply: true` | 토큰 비용을 감수하고 매 세션 자동 적용 |
 
 도입은 단계적으로 권장한다: **(1)** 메인 + reviewer → **(2)** 체크리스트 보정 → **(3)** orchestrator 추가. 처음부터 3-에이전트를 완전 자동으로 켜면 어느 층에서 문제가 생겼는지 진단하기 어렵다. ([`multi-agent-orchestration.md` 9장](multi-agent-orchestration.md#9-도입-순서-권장))
 
@@ -111,8 +111,8 @@ repo는 Cursor·Claude Code 두 버전으로 매핑되어 있으며, 역할 구�
 
 | 저장소 | 용도 | 핵심 규칙 |
 |---|---|---|
-| `memory/` | 프로젝트별 교훈 축적 | 한 교훈 = 한 파일, `요약:` 한 줄로 스캔, `docs/` 지침이 우선 |
-| `state/loop-status.md` | 루프 작업 상태·반려 횟수 | 매 판정 후 즉시 갱신, 세션 재개 시 컨텍스트보다 파일을 먼저 읽음 |
+| `.cursor/memory/` | 프로젝트별 교훈 축적 | 한 교훈 = 한 파일, `요약:` 한 줄로 스캔, `docs/` 지침이 우선 |
+| `.cursor/state/loop-status.md` | 루프 작업 상태·반려 횟수 | 매 판정 후 즉시 갱신, 세션 재개 시 컨텍스트보다 파일을 먼저 읽음 |
 
 상태 값: `대기` / `진행` / `검토중` / `반려(n회)` / `통과` / `에스컬레이션`
 
@@ -128,7 +128,6 @@ repo는 Cursor·Claude Code 두 버전으로 매핑되어 있으며, 역할 구�
 | 멀티에이전트 **규약·메시지 형식·역할 지침** | [`multi-agent-orchestration.md`](multi-agent-orchestration.md) |
 | **전체 동작 흐름** (이 문서) | `agent-system-overview.md` |
 | Cursor 설치·프롬프트 템플릿 | [`../cursor/README.md`](../cursor/README.md) |
-| Claude Code 설치·프롬프트 템플릿 | [`../claude/README.md`](../claude/README.md) |
 
 ---
 
@@ -137,3 +136,4 @@ repo는 Cursor·Claude Code 두 버전으로 매핑되어 있으며, 역할 구�
 - 지침은 행동 패턴을 교정하지만 **모델의 판단 능력 자체**를 올리지는 못한다.
 - reviewer와 Worker가 같은 모델이면 맹점을 공유할 수 있다. 통과된 산출물도 주기적으로 사람이 샘플 검수해야 한다.
 - 되돌리기 어려운 작업(DB 변경, 외부 전달물)은 지침·reviewer와 무관하게 **사람이 최종 확인**한다.
+- Cursor의 Rule / Skill / Agent 동작은 버전에 따라 달라질 수 있으므로 실제 적용 시점의 Cursor 기능을 확인한다.
