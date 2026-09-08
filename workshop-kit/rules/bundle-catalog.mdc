@@ -1,5 +1,5 @@
 ---
-description: Agent Skill Bundle 저장소에서 에이전트 번들의 설치·업데이트·삭제·보관을 판단할 때 적용하는 총관리 원칙
+description: Agent Skill Bundle 저장소에서 Cursor 에이전트 번들의 설치·업데이트·삭제·보관을 판단할 때 적용하는 총관리 원칙
 alwaysApply: false
 ---
 
@@ -9,9 +9,11 @@ alwaysApply: false
 
 에이전트 번들이 많아질수록 어떤 번들을 가져오고·유지하고·업데이트하고·삭제할지 일관되게 판단한다.
 
-이 Rule은 번들을 새로 만드는 방법이 아니라, **현재 작업 중인 저장소의 `.cursor/`에 어떤 번들을 두고 어떻게 관리할지**를 정한다. 번들 선택의 gate 역할을 한다.
+**현재 Agent Skill Bundle의 공식 target은 Cursor다.** 이 Rule은 번들을 새로 만드는 방법이 아니라, **현재 작업 중인 Cursor 저장소의 `.cursor/`에 어떤 번들을 두고 어떻게 관리할지**를 정한다. 번들 선택의 gate 역할을 한다.
 
 Bundle Catalog gate는 하나의 번들이며, 이 Rule과 하위 Skill(`audit-installed-bundles`, `manage-agent-bundles`, `report-bundle-feedback`)로 구성된다. Issue 피드백은 별도 번들이 아니라 총관리 Rule의 하위 Skill이다.
+
+다른 AI coding platform용 artifact를 추정하거나 자동 생성하지 않는다. 실제 지원 필요가 생기면 source의 공통 `docs/`와 bundle 설계를 기준으로 별도 target을 명시적으로 추가한다.
 
 ## 용어
 
@@ -25,7 +27,7 @@ Bundle Catalog gate는 하나의 번들이며, 이 Rule과 하위 Skill(`audit-i
 - **정식 번들**: 반복 사용과 배포를 전제로 검증·승격된 번들. 원본은 `bundles/<bundle-name>/`
 - **예시 번들**: 특정 업무를 시험하는 draft/testing 번들. 원본은 `examples/<bundle-name>/`
 - **core rule**: 번들보다 상위의 개인 기본 원칙. `core/`에 보관하며 catalog 설치 대상과 구분한다.
-- **설치**: 번들의 실행 artifact를 현재 저장소의 `.cursor/`와 필요한 docs 위치에 두는 것
+- **설치**: 번들의 Cursor 실행 artifact를 현재 저장소의 `.cursor/`와 필요한 docs 위치에 두는 것
 - **활성 번들**: 현재 프로젝트에 설치되어 사용 중인 번들
 - **gate**: Bundle Catalog가 설치 상태를 확인하고 다음 번들 선택을 받는 관문
 - **피드백 참여**: 연결 turn에 사용자가 정한 개선 Issue 전송 여부 (`enabled` / `disabled`)
@@ -147,6 +149,7 @@ bundles/<bundle>/cursor/.cursor/      = 소비 프로젝트에 배포할 Cursor 
 - 피드백 `disabled`인데 Issue 전송을 묻지 않는다.
 - 2차 gate 없이 Issue를 생성하지 않는다.
 - 민감 정보가 포함된 Issue 초안을 사용자 확인 없이 보내지 않는다.
+- Cursor 외 platform용 artifact를 이 catalog 규칙에서 임의로 설치하지 않는다.
 
 ## 완료 기준
 

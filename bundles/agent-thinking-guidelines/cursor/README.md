@@ -1,224 +1,166 @@
-# Cursor 버전
+# Cursor implementation
 
-에이전트 지침을 Cursor Rules(.mdc)로 매핑한 버전.
-원본 지침 문서(bundle 루트의 `docs/`)를 Cursor 환경에 맞게 분할·압축한 것이다.
+Agent Thinking Guidelines의 공통 지침(`../docs/`)을 Cursor의 Rules / Skills / Agents 구조로 매핑한 공식 구현입니다.
 
-**기본 적용 모드: 옵트인.** 토큰·리소스 비용이 커서, 설치 직후 core/worker rule은 `alwaysApply: false`다. 호출했을 때만 지침이 켜진다.
+**현재 Agent Thinking Guidelines가 유지하는 실행 target은 Cursor 하나입니다.** 다른 platform 구현은 이 디렉터리와 병렬로 유지하지 않습니다.
 
----
+기본 적용 모드는 **opt-in**입니다. 설치 직후 `core-principles.mdc`, `worker-conduct.mdc`의 `alwaysApply`는 `false`이며, 필요한 작업에서 명시적으로 호출합니다.
 
-## 1. 구성
+## 구성
 
-```
+```text
 cursor/
 ├── .cursor/
 │   ├── rules/
-│   │   ├── core-principles.mdc     # 핵심 사고 원칙 (옵트인, alwaysApply: false)
-│   │   ├── worker-conduct.mdc      # 작업 수행·제출 규율 (옵트인)
-│   │   ├── analysis-protocol.mdc   # 데이터 분석 시 트리거 (전문은 skill, 포인터)
-│   │   └── design-protocol.mdc     # 설계 작업 시 트리거 (전문은 skill, 포인터)
+│   │   ├── core-principles.mdc
+│   │   ├── worker-conduct.mdc
+│   │   ├── analysis-protocol.mdc
+│   │   └── design-protocol.mdc
 │   ├── skills/
-│   │   ├── agent-thinking-guidelines/ # 기본 지침 Skill (호출 진입점 → docs/ SSOT)
-│   │   ├── analysis-protocol/      # 분석 Skill (Claude Code와 동일 내용)
-│   │   └── design-protocol/        # 설계 Skill
+│   │   ├── agent-thinking-guidelines/
+│   │   ├── analysis-protocol/
+│   │   └── design-protocol/
 │   ├── agents/
-│   │   ├── orchestrator.md         # 루프 계획 플래너 서브에이전트 (산출물·직접 호출 금지)
-│   │   └── reviewer.md             # 산출물 검증 서브에이전트 (별도 컨텍스트)
-│   ├── memory/                     # 세션 간 교훈 축적
-│   └── state/                      # 루프 상태표 영속화
+│   │   ├── orchestrator.md
+│   │   └── reviewer.md
+│   ├── memory/
+│   └── state/
 └── README.md
 ```
 
 | 구성 | 적용 방식 | 역할 |
 |---|---|---|
-| agent-thinking-guidelines | 명시 호출 `/agent-thinking-guidelines` | 기본 지침 적용 (docs/ 1~7장 읽기) |
-| core-principles | `alwaysApply: false` (옵트인) | 모호함 처리, 불확실성 표기, 자체 검토, 금지 행동 |
-| worker-conduct | `alwaysApply: false` (옵트인) | 가정 자기신고, 수정 범위 준수, 체크포인트, 진행 보고 검증 |
-| analysis-protocol | globs 트리거(.mdc) → 전문은 Skill | 샘플 검증 → 전체 확장, 행 수 추적, 역산 검증 |
-| design-protocol | description 트리거(.mdc) → 전문은 Skill | 구조 먼저 합의, 결정/미결정 구분, 범위 최소화 |
-| orchestrator (서브에이전트) | 명시 호출 `/orchestrator` | 작업 분해·위험등급·라우팅 **계획**을 메인 에이전트에 반환 |
-| reviewer (서브에이전트) | 명시 호출 `/reviewer` | 산출물 승인·검증 (작성자와 별도 컨텍스트) |
-| memory/ | 수동 참조 | 프로젝트별 교훈 파일 (한 교훈 = 한 파일) |
-| state/ | 수동 참조 | 3-에이전트 루프 상태표 (`loop-status.md` 런타임 생성) |
+| `agent-thinking-guidelines` | `/agent-thinking-guidelines` | 기본 사고·행동 지침 적용 |
+| `core-principles` | opt-in Rule | 모호함 처리, 불확실성 표기, 자체 검토 |
+| `worker-conduct` | opt-in Rule | 가정 자기신고, 수정 범위, 체크포인트 규율 |
+| `analysis-protocol` | Rule trigger + Skill | 샘플 검증 → 전체 확장, 행 수 추적, 역산 검증 |
+| `design-protocol` | Rule trigger + Skill | 구조 먼저, 결정/미결정 구분, 범위 최소화 |
+| `orchestrator` | `/orchestrator` | 작업 분해·위험 등급·라우팅 계획 반환 |
+| `reviewer` | `/reviewer` | 산출물 체크리스트 검증 |
+| `memory/` | 수동 참조 | 프로젝트별 교훈 저장 |
+| `state/` | 루프 시 사용 | 반려 횟수·작업 상태 영속화 |
 
-### 호출 방법 (기본)
+## 호출 방법
 
-1. **`/agent-thinking-guidelines`** — 지침 적용 (권장. Cursor·Cloud Agent 공통)
-2. **`@docs/agent-thinking-guidelines.md`** — Desktop 등 파일 첨부가 편한 환경에서 동일 효과
-3. **`/reviewer …`** — 산출물 검증 (필요 시 `/orchestrator …` 로 계획)
+1. **`/agent-thinking-guidelines`** — heavy guideline 적용
+2. **`@docs/agent-thinking-guidelines.md`** — SSOT 전문 직접 참조
+3. **`/reviewer …`** — 결과 검증
+4. **`/orchestrator …`** — 큰 작업 계획
 
-항상 적용이 필요하면 설치 완료 안내에서 **"항상 적용되도록 적용할까요?"** 에 `예` → `core-principles.mdc`·`worker-conduct.mdc`의 `alwaysApply`를 `true`로 바꾼다.
+항상 적용이 필요할 때만 `core-principles.mdc`, `worker-conduct.mdc`의 `alwaysApply`를 `true`로 바꿉니다.
 
-**Claude Code 버전과의 차이**: Cursor도 서브에이전트(`.cursor/agents/`)와 Skills(`.cursor/skills/`)를 지원한다. 기본은 옵트인 Rules + 명시 호출 Subagent. 서브에이전트 도구 제한은 `readonly` 필드(`tools:` 화이트리스트 대신).
+## 설치
 
----
+가능하면 Agent Skill Bundle의 **Bundle Catalog gate**를 통해 설치합니다.
 
-## 2. 설치
-
-> **AI 채팅으로 설치**: 대상 프로젝트를 연 Agent 채팅에 붙여넣을 Cursor용 프롬프트는 [루트 README — AI 채팅으로 설치](../README.md#ai-채팅으로-설치-권장) 참조.
->
-> **업데이트**: upstream 버전 반영은 [루트 README — 업데이트](../README.md#업데이트-버전-반영) 참조.
+수동 설치 기준은 다음과 같습니다.
 
 ```bash
-# 대상 프로젝트 루트에서
-mkdir -p docs
-cp <bundle-root>/docs/agent-thinking-guidelines.md docs/   # SSOT (스킬이 Read로 참조)
-cp -r <bundle-root>/cursor/.cursor .cursor
+# bundle root를 알고 있다는 전제
+mkdir -p <your-project>/docs
+cp <bundle-root>/docs/agent-thinking-guidelines.md <your-project>/docs/
+
+# .cursor/가 이미 있으면 통째로 덮어쓰지 말고 내용을 병합
+cp -r <bundle-root>/cursor/.cursor/* <your-project>/.cursor/
 ```
 
-**적용 확인**:
-- `Settings → Rules`에 4개 rule이 보이면 정상. 기본은 alwaysApply=false라서, 채팅에 rule이 자동으로 붙지 않는 것이 정상이다.
-- `/agent-thinking-guidelines` 또는 `@docs/agent-thinking-guidelines.md`로 지침을 켠다. `/reviewer`로 검증한다.
-- 서브에이전트는 `.cursor/agents/*.md`로 자동 인식된다.
-  - reviewer: `/reviewer …` 또는 "reviewer 서브에이전트로 검증해줘"
-  - orchestrator: `/orchestrator …` 또는 "orchestrator로 작업 분해해줘"
-- memory: `.cursor/memory/` 디렉터리가 존재하면 정상.
-- state: `.cursor/state/` 디렉터리가 존재하면 정상.
+### 설치 시 보존
 
-### 설치 직후 안내 (에이전트 필수)
+- 같은 이름의 프로젝트 custom Rule / Skill / Agent
+- `.cursor/memory/`의 프로젝트별 교훈
+- `.cursor/state/loop-status.md`
+- 사용자가 직접 조정한 `alwaysApply` 설정
 
-파일 복사가 끝나면 에이전트는 사용자에게 다음을 안내하고 **반드시** 질문한다:
+같은 이름의 upstream 파일과 local 파일이 다르면 먼저 diff를 확인하고 사용자가 선택합니다.
 
-```
-설치 완료. 기본 모드는 호출 시에만 지침을 씁니다 (토큰 절약).
+## 설치 확인
 
-호출 방법:
-1. /agent-thinking-guidelines  (권장)
-2. @docs/agent-thinking-guidelines.md  (Desktop 등)
-3. /reviewer …  (검증)
-4. /orchestrator …  (계획)
+- `.cursor/rules/`에 4개 guideline rule이 존재하는지 확인
+- `.cursor/skills/`에 `agent-thinking-guidelines`, `analysis-protocol`, `design-protocol`이 존재하는지 확인
+- `.cursor/agents/`에 `orchestrator.md`, `reviewer.md`가 존재하는지 확인
+- `.cursor/memory/`, `.cursor/state/` 규약 파일이 존재하는지 확인
+- `docs/agent-thinking-guidelines.md`가 존재하는지 확인
+- 기본 opt-in 상태라면 `alwaysApply: false`인지 확인
 
-항상 적용되도록 적용할까요?
-(예: core-principles·worker-conduct의 alwaysApply를 true / 아니오: 옵트인 유지)
-```
+## 작업 예시
 
----
+### 데이터 분석
 
-## 3. 지시하는 법 (프롬프트 가이드)
-
-### 3.1 기본 골격 — 4요소를 앞에 담는다
-
-```
-[목적] 왜 필요한지
-[작업] 무엇을 해달라는지 한 문장
-[입력] 참고할 파일·데이터 (@파일명 으로 첨부)
-[제약] 형식·범위·제외할 것
-```
-
-옵트인 모드에서는 지침이 필요할 때 프롬프트 맨 앞에 `/agent-thinking-guidelines`를 붙이거나, `[입력]`에 `@docs/agent-thinking-guidelines.md`를 첨부한다.
-
-### 3.2 복사해서 쓰는 프롬프트 템플릿
-
-**① 데이터 분석 작업**
-```
+```text
 /agent-thinking-guidelines
 
 [목적] 이번 주 팀 회의 공유용
-[작업] @sales_2025Q2.csv 에서 채널별 매출 추이와 Q1 대비 변화를 분석해줘
-[제약] pandas 사용, 결과는 markdown 표
+[작업] @sales.csv에서 채널별 매출 변화 분석
+[제약] pandas 사용, Markdown 표
 
-먼저 데이터의 행 수·컬럼 구조·결측 현황을 보고하고,
-100행 샘플로 처리 로직을 검증한 뒤 전체에 적용해.
-각 단계의 행 수 변화를 로그로 남기고, 최종 집계 1건은 원본으로 역산 검증해.
-완료되면 reviewer 서브에이전트로 검증받고, 판정표와 함께 결과를 제출해.
+먼저 데이터 행 수·컬럼·결측을 확인하고,
+샘플로 처리 로직을 검증한 뒤 전체에 적용해.
+각 단계 행 수를 기록하고 최종 집계 하나는 원본으로 역산 검증해.
+완료되면 reviewer로 검증해.
 ```
 
-**② 설계 작업**
-```
+### 설계
+
+```text
 /agent-thinking-guidelines
 
-[목적] 사용자 역할 기능 추가 대응
-[작업] @schema.sql 기준으로 role_permissions 테이블 설계
-[제약] 기존 users.role 값은 변경 불가
+[작업] @schema.sql 기준으로 권한 테이블 설계
+[제약] 기존 users 구조는 변경하지 않음
 
-바로 구현하지 말고, 먼저 설계 구조(변경 대상 테이블 / 마이그레이션 순서 /
-영향받는 코드)만 제안해서 내 확인을 받아.
-결정한 것과 미결정인 것을 구분하고, 미결정 항목은 옵션과 트레이드오프를 함께 제시해.
+바로 구현하지 말고 먼저 구조와 영향 범위를 제안해.
+결정한 것과 미결정인 것을 나누고, 미결정 항목은 옵션과 trade-off를 보여줘.
 ```
 
-**③ 코드 수정 작업**
-```
-[작업] @payment_service.py 의 환불 처리에서 부분 환불 케이스 버그 수정
-[제약] 이 함수 외 리팩터링 금지
+### 대규모 변경
 
-수정 전에 원인 진단을 먼저 보고해.
-수정 후에는: 변경 내용 / 채택한 가정 / 확신 없는 부분을 함께 보고해.
-```
-
-**④ 대량 파일 변경 작업**
-```
-[작업] src/ 전체에서 구 API 호출을 신규 API로 마이그레이션
-[제약] 테스트 파일은 제외
-
-전체를 바로 바꾸지 말고:
-1. 대상 파일 목록과 변경 패턴을 먼저 보여줘
-2. 파일 1개에 적용한 diff를 샘플로 보여줘
-3. 내가 승인하면 전체 진행해
-```
-
-**⑤ 결과물 수정 요청**
-```
-[수정] 3번 섹션: 어조가 너무 단정적 → 추정 표현으로 완화
-[수정] 집계 표: 합계가 본문 수치와 불일치 → 재검증
-지적한 두 항목만 수정하고, 다른 부분은 건드리지 마.
-```
-
-**⑥ 3-에이전트 루프 (orchestrator + Worker + reviewer)**
-```
+```text
 /agent-thinking-guidelines
 
-[목적] 대규모 리팩터링을 단계별로 안전하게 진행
-[작업] @src/ 의 구 API 호출을 신규 API로 마이그레이션
-[제약] 테스트 파일 제외, 되돌리기 어려운 DB 변경 없음
-
-/orchestrator 이 작업의 분해·위험 등급(하/중/상)·라우팅 계획을 만들어줘.
-그 계획을 내가 승인하면, 메인 에이전트가 계획대로 Worker를 진행시키고 각 단계 산출물은 reviewer로 검증해.
-반려는 최대 3회, 같은 사유 2연속 반려 시 멈추고 나에게 에스컬레이션해.
+/orchestrator
+src/의 구 API 호출을 신규 API로 옮기는 작업을 분해하고
+위험 등급·순서·완료 기준·reviewer 검증 지점을 계획해줘.
 ```
-→ orchestrator는 **계획을 반환**하고, 실제 루프(Worker 진행·reviewer 호출·상태 추적)는 메인 에이전트가 돈다. 반려 횟수·작업 상태는 `.cursor/state/loop-status.md`에 기록하고 **매 판정 후 갱신**한다 (상세: `.cursor/state/README.md`). 처음에는 **reviewer만** 쓰고, 루프가 안정되면 orchestrator 플래너를 추가하는 것을 권장 (`../docs/multi-agent-orchestration.md` 9장).
 
-### 3.3 모호함 처리 모드 지정
+`orchestrator`는 계획을 반환합니다. 실제 작업·reviewer 호출·상태 추적은 메인 에이전트가 수행합니다.
 
-작업 성격에 따라 지시문에 한 줄 추가:
+## 3-agent loop
 
-- 정밀 우선: `애매한 게 있으면 진행하지 말고 질문해.`
-- 속도 우선: `애매한 건 합리적으로 가정하고, 가정 목록을 결과에 명시해.`
+```text
+orchestrator → 계획
+      ↓
+main agent / Worker → 작업
+      ↓
+reviewer → 통과 / 반려
+      ↓
+main agent → 수정·다음 단계·에스컬레이션
+```
 
-지정하지 않으면 (지침이 켜진 경우) rule의 기본 판단 기준(틀리면 재작업인가?)을 따른다.
+반려 횟수와 작업 상태는 `.cursor/state/loop-status.md`에 기록합니다. 자세한 규약은 [`../docs/multi-agent-orchestration.md`](../docs/multi-agent-orchestration.md)를 참조합니다.
 
-### 3.4 하지 말아야 할 지시
+처음부터 모든 역할을 자동화하기보다 **reviewer부터 사용하고**, 검증 루프가 안정된 뒤 orchestrator를 추가하는 것을 권장합니다.
 
-| 나쁜 지시 | 왜 |
-|---|---|
-| "이 데이터 분석해줘" | 분석 질문이 없으면 방향 없는 탐색이 됨 |
-| "알아서 잘 고쳐줘" | "잘"은 기준이 아님. 완료 기준을 줄 것 |
-| "표로 만들지 마" (부정형만) | 원하는 형태를 긍정형으로 지시할 것 |
-| 요구사항을 여러 턴에 걸쳐 추가 | 한 번에 정리해서 전달. 뒤늦은 조건은 앞 작업과 충돌 |
+## 업데이트
 
----
+upstream bundle이 바뀌면:
 
-## 5. 병렬 Worker 가이드
+1. `../docs/`와 현재 프로젝트 `docs/`를 비교
+2. upstream rules / skills / agents를 local과 비교
+3. 변경 요약을 먼저 확인
+4. upstream 관리 파일만 갱신
+5. 프로젝트 memory / runtime state / custom artifact는 보존
+6. 설치 상태를 다시 audit
 
-의존 관계 없는 하위 작업은 **병렬 서브에이전트**에 위임하고, 메인 에이전트는 다른 작업을 계속한다.
+## 운영·보수
 
-- **병렬에 적합**: 서로 독립된 조사·분석·파일 탐색 (예: A 모듈 분석 + B 모듈 분석)
-- **병렬에 부적합**: 이전 결과에 의존하는 작업, 같은 파일을 동시에 수정하는 작업
-- **reviewer는 완료 후**: 병렬 Worker가 각자 산출물을 제출한 뒤, 통합·검증 단계에서 reviewer를 호출한다. 병렬 진행 중간에 reviewer를 돌리지 않는다.
-- **3-에이전트 루프**: orchestrator + Worker + reviewer 전체 루프를 쓸 때, orchestrator 플래너는 분해·라우팅 **계획**을 반환하고, 실제 상태 추적·라우팅·서브에이전트 호출은 **메인 에이전트**가 수행한다. orchestrator는 산출물을 직접 만들지 않는다.
+1. 원칙 변경은 먼저 `../docs/`에 반영합니다.
+2. Rule은 항상 로드될 가능성이 있으므로 짧게 유지합니다.
+3. 반복해서 어기는 사례는 나쁨/좋음 대비 예시로 보강합니다.
+4. routine edit에는 heavy guideline을 자동 적용하지 않습니다.
+5. 되돌리기 어려운 작업은 reviewer와 별개로 사람이 최종 확인합니다.
 
-## 6. 운영·보수
+## 알려진 한계
 
-이 rule 세트는 한 번 만들고 끝나는 게 아니라 사용하며 보정하는 문서다.
-
-1. **어긴 항목은 예시로 승격**: 에이전트가 자주 어기는 규칙이 보이면, 그 사례를 나쁨/좋음 대비 예시로 해당 rule의 "판단 예시" 섹션에 추가한다. 추가 위치: 원칙 → `core-principles.mdc`, 상황 한정(분석·설계) → 해당 skill.
-2. **항상 적용은 선택**: 기본은 옵트인. 반복 위반이 심하고 토큰 비용을 감수할 때만 `alwaysApply: true`로 올린다.
-3. **rule은 짧게 유지**: rule이 길수록 준수율이 떨어진다. 항목을 추가할 때마다 덜 중요한 항목을 빼는 것을 함께 고려한다.
-4. **원본 문서와 동기화**: 기준 변경은 `docs/`의 원본에 먼저 반영하고 rule로 내려보낸다. 원본이 단일 진실 공급원(SSOT).
-
-## 7. 알려진 한계
-
-- Rule은 행동 패턴을 교정하지만 모델의 판단 능력 자체를 올리지는 못한다. 사용하는 모델 성능에 따라 준수 품질이 달라진다.
-- 옵트인 모드에서는 `/agent-thinking-guidelines` 또는 `@docs/…`를 빼먹으면 지침이 적용되지 않는다.
-- 되돌리기 어려운 작업(DB 변경, 외부 전달물)은 rule·reviewer와 무관하게 사람이 최종 확인한다.
-- reviewer와 작성자가 같은 모델이면 맹점을 공유할 수 있다. 통과된 산출물도 주기적으로 사람이 샘플 검수하고, 오판 사례를 `reviewer.md` 체크리스트에 반영한다.
-- 멀티에이전트(작업자/승인자/오케스트레이터 분리) 구조의 전체 오케스트레이션 규약은 `../docs/multi-agent-orchestration.md`를 참조한다. Cursor 버전에는 Worker 규율(worker-conduct.mdc), 승인자(reviewer.md), 오케스트레이터(orchestrator.md)가 반영되어 있다.
+- guideline은 모델 성능 자체를 높이지 않습니다.
+- 같은 모델이 Worker와 reviewer를 맡으면 공통 맹점이 생길 수 있습니다.
+- opt-in 상태에서는 호출하지 않으면 지침이 적용되지 않습니다.
+- Cursor 기능과 파일 형식은 버전에 따라 달라질 수 있으므로 실제 사용 시점의 Cursor 문서를 확인합니다.

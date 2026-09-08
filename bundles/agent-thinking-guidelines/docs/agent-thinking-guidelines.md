@@ -5,10 +5,12 @@
 > 전체 시스템 동작 흐름은 [`agent-system-overview.md`](agent-system-overview.md)를 참조한다.
 >
 > **적용 방식 (기본 = 옵트인):** 토큰·리소스 비용이 크므로 매 세션 자동 적용하지 않는다.
-> - 호출1: `/agent-thinking-guidelines` (권장 — Cursor·Cloud Agent·Claude Code 공통)
-> - 호출2: 채팅에 `@docs/agent-thinking-guidelines.md` 첨부 (Desktop 등 파일 첨부 편한 환경)
+> - 호출1: `/agent-thinking-guidelines` (권장 — 현재 공식 구현 target은 Cursor)
+> - 호출2: 채팅에 `@docs/agent-thinking-guidelines.md` 첨부
 > - 호출3: `/reviewer …` (검증) · `/orchestrator …` (계획)
-> - 항상 적용은 설치 직후 안내에 답할 때만 켠다 (Cursor: `alwaysApply: true` / Claude: `CLAUDE.always.md` → `CLAUDE.md`).
+> - 항상 적용은 설치 직후 안내에 답할 때만 켠다 (`core-principles.mdc`, `worker-conduct.mdc`의 `alwaysApply: true`).
+>
+> 이 문서의 사고·검증 원칙은 가능한 한 플랫폼에 종속되지 않게 유지하지만, 현재 `agent_skill_bundle`에서 배포·관리하는 실행 artifact는 Cursor용이다.
 
 ---
 
@@ -19,7 +21,7 @@
 
 ```
 [목적] 왜 이 작업이 필요한지 (예: 팀 공유용 / PR·배포 전 검토용 / 의사결정 자료)
-[작업] 무엇을 해달라는 것인지 한 문장으로
+[작업] 무엇을 해달라는 것인지 한 문장
 [자료] 참고할 파일·데이터 (통째로 첨부, 요약해서 주지 않기)
 [제약] 형식·분량·톤·제외할 것·마감 기준
 ```
@@ -193,10 +195,8 @@
 프로젝트별로 반복되는 교훈을 파일로 축적한다. 세션마다 처음부터 같은 실수를 반복하지 않도록 한다.
 
 ### 8.1 저장 위치
-| 환경 | 경로 |
-|---|---|
-| Cursor | `.cursor/memory/` |
-| Claude Code | `.claude/memory/` |
+
+현재 공식 Cursor 구현에서는 `.cursor/memory/`를 사용한다.
 
 ### 8.2 파일 규칙
 - **한 교훈 = 한 파일.** 파일명은 주제를 나타내는 짧은 식별자 (예: `timestamp-column.md`).
@@ -205,7 +205,7 @@
 - 틀린 교훈은 삭제한다. 오래된 메모가 남아 있으면 오히려 해가 된다.
 
 ### 8.3 부트스트랩
-- 새 프로젝트에 지침을 설치할 때 `memory/` 디렉터리를 함께 만든다 (비어 있어도 됨).
+- 새 프로젝트에 지침을 설치할 때 `.cursor/memory/` 디렉터리를 함께 만든다 (비어 있어도 됨).
 - 세션 종료 전, 이번에 새로 배운 교훈이 있으면 메모 파일로 남긴다.
 - 세션 시작 시 `memory/`를 훑되, **각 파일의 `요약:` 한 줄만 먼저 읽는다.** 지금 작업과 관련된 주제만 본문을 연다. (파일이 쌓여도 스캔 비용을 낮게 유지)
 - 메모는 SSOT가 아니다. `docs/` 지침과 충돌하면 지침이 우선한다.

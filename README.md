@@ -4,6 +4,15 @@ Agent에게 일을 맡기는 **기본 규칙, 재사용 가능한 번들, 실험
 
 이 저장소의 목표는 Rule·Skill을 많이 만드는 것이 아니라, 실제 작업에서 반복해서 유용한 패턴을 **한 곳에서 개선하고 필요한 프로젝트에 선택적으로 적용**하는 것입니다.
 
+## 공식 지원 환경
+
+**현재 공식 target은 Cursor입니다.**
+
+- `core/`, `workshop-kit/`, `examples/`, `bundles/`에서 관리하는 실행 artifact는 Cursor의 `.cursor/` 구조를 기준으로 합니다.
+- 각 bundle의 `docs/`는 가능한 한 플랫폼에 종속되지 않는 사고 원칙·설계 문서를 SSOT로 유지합니다.
+- 실제 설치·배포 가능한 구현은 `cursor/.cursor/`만 관리합니다.
+- Claude Code 등 다른 환경용 구현은 현재 유지하지 않습니다. 필요해지는 시점에 공통 `docs/`를 기준으로 별도 target을 다시 추가합니다.
+
 ```text
 기본 작업 원칙
         ↓
@@ -20,6 +29,34 @@ workshop/ → examples/ → 검증 → bundles/
                   workshop-kit/
 ```
 
+## Bundle overview
+
+GitHub 첫 화면에서도 현재 가지고 있는 bundle을 바로 확인할 수 있도록 상태별로 정리합니다. 상세 구성과 설치 metadata의 SSOT는 [`workshop-kit/catalog.md`](workshop-kit/catalog.md)입니다.
+
+### Stable
+
+| Bundle | 위치 | 용도 |
+|---|---|---|
+| [Agent Thinking Guidelines](bundles/agent-thinking-guidelines/README.md) | `bundles/agent-thinking-guidelines/` | 대규모·장기·다단계·고위험 작업의 사고·검증·review/orchestration |
+
+### Testing
+
+| Bundle | 위치 | 용도 |
+|---|---|---|
+| [Session Market Briefing](examples/session-market-briefing/) | `examples/session-market-briefing/` | 세션 경제 브리핑 |
+| [Domain Data Analysis](examples/domain-data-analysis/) | `examples/domain-data-analysis/` | 도메인 기반 데이터 분석 설계·보고 |
+| [MCP Server Craft](examples/mcp-server-craft-ver0/) | `examples/mcp-server-craft-ver0/` | MCP 서버 설계·권한·구현·연결 |
+
+### Draft
+
+| Bundle | 위치 | 용도 |
+|---|---|---|
+| [Web Crawler Craft](examples/web-crawler-ver0/) | `examples/web-crawler-ver0/` | 웹 크롤러 제작 |
+| [Blog Style Writing](examples/blog-style-writing-ver0/) | `examples/blog-style-writing-ver0/` | 기존 블로그 문체 팩 구축·초고·첨삭 |
+| [Career Management](examples/career-management-ver0/) | `examples/career-management-ver0/` | 커리어 상담·이력 강점 발굴·포트폴리오 지원 |
+
+`Bundle Catalog`와 `Agent Skill Workshop`은 위 업무 번들을 만들고 설치·관리하기 위한 **공방 키트**이므로 별도 상태 목록으로 분리하지 않습니다.
+
 ## Repository structure
 
 ```text
@@ -32,9 +69,8 @@ workshop/ → examples/ → 검증 → bundles/
 ├── bundles/                               # 검증·승격된 재사용 번들 원본
 │   └── agent-thinking-guidelines/
 │       ├── README.md
-│       ├── docs/                          # 지침 SSOT
-│       ├── cursor/                        # Cursor 배포본
-│       └── claude/                        # Claude Code 배포본
+│       ├── docs/                          # 사고·검증 지침 SSOT
+│       └── cursor/                        # Cursor 배포본
 │
 ├── workshop-kit/                          # Bundle Catalog gate와 공방 관리 도구의 원본
 ├── workshop/                              # 아직 구조가 확정되지 않은 아이디어·작업 노트
@@ -59,11 +95,7 @@ workshop/ → examples/ → 검증 → bundles/
 
 반복해서 사용할 가치가 확인된 Rule·Skill·Agent 세트의 **SSOT**입니다.
 
-현재 정식 번들:
-
-- [`Agent Thinking Guidelines`](bundles/agent-thinking-guidelines/README.md) — 대규모·장기·다단계·고위험 작업에서 선택적으로 사용하는 사고·검증·review/orchestration 프로토콜
-
-`bundles/` 아래 원본은 소비 프로젝트에 직접 실행되는 파일이 아닙니다. Bundle Catalog를 통해 필요한 파일만 대상 프로젝트의 `.cursor/` 등에 설치합니다.
+`bundles/` 아래 원본은 소비 프로젝트에 직접 실행되는 파일이 아닙니다. Bundle Catalog를 통해 필요한 Cursor artifact만 대상 프로젝트의 `.cursor/` 등에 설치합니다.
 
 ### `workshop/` + `examples/` — 실험 공간
 
@@ -98,9 +130,9 @@ agent-thinking-guidelines bundle
 
 번들이 현재 프로젝트에 없으면 자동으로 설치하지 않고, Bundle Catalog gate를 통해 가져올 것을 제안합니다.
 
-## Bundle Catalog로 프로젝트에 연결
+## Bundle Catalog로 Cursor 프로젝트에 연결
 
-작업 중인 다른 저장소에서 이 toolkit의 번들을 사용할 때는 전체 repo를 소비 프로젝트 안에 복사하지 않습니다.
+작업 중인 다른 Cursor 저장소에서 이 toolkit의 번들을 사용할 때는 전체 repo를 소비 프로젝트 안에 복사하지 않습니다.
 
 먼저 Bundle Catalog gate를 설치·점검한 다음, 필요한 번들만 선택합니다.
 
@@ -119,13 +151,13 @@ agent-thinking-guidelines bundle
 
 ## Bundle Catalog gate
 
-Bundle Catalog는 별도 제품이 아니라 이 저장소의 관리용 번들입니다.
+Bundle Catalog는 별도 제품이 아니라 **Cursor 프로젝트에 bundle을 설치·업데이트·제거하기 위한 관리용 bundle**입니다.
 
 | 구성 | 역할 |
 |---|---|
 | `bundle-catalog.mdc` | 설치·업데이트·삭제 판단과 gate 원칙 |
-| `audit-installed-bundles` | 현재 설치 상태 조사 |
-| `manage-agent-bundles` | 선택한 번들의 설치·업데이트·제거 |
+| `audit-installed-bundles` | 현재 `.cursor/` 설치 상태 조사 |
+| `manage-agent-bundles` | 선택한 bundle의 설치·업데이트·제거 |
 | `report-bundle-feedback` | 사용 중 발견한 개선점을 source repo로 되돌리는 선택적 피드백 절차 |
 
 원본은 `workshop-kit/`에 있고, 루트 `.cursor/`의 같은 파일은 **이 저장소 자체에서 실제로 사용하는 활성 복사본**입니다.
@@ -136,7 +168,7 @@ workshop-kit/      = 관리 도구 SSOT
 .cursor/           = 이 monorepo에서 활성화된 복사본
 
 bundles/.../cursor/.cursor/
-                   = 소비 프로젝트에 배포할 번들 원본
+                   = 소비 Cursor 프로젝트에 배포할 bundle 원본
 ```
 
 세 위치를 같은 것으로 취급하지 않습니다.
@@ -179,11 +211,12 @@ source 수정
 
 ## 현재 상태
 
-이 저장소는 완성된 범용 framework보다 **개인적으로 실제 사용하면서 계속 다듬는 toolkit**에 가깝습니다.
+이 저장소는 완성된 범용 framework보다 **개인적으로 실제 사용하면서 계속 다듬는 Cursor toolkit**에 가깝습니다.
 
 - `core/`와 `bundles/`는 반복 사용을 전제로 관리합니다.
 - `examples/`와 `workshop/`은 언제든 이동·통합·폐기될 수 있습니다.
 - 복잡한 workflow는 필요한 상황에만 opt-in으로 사용합니다.
+- 다른 AI coding platform 지원은 실제 필요가 생겼을 때 추가합니다.
 
 핵심 원칙은 단순합니다.
 

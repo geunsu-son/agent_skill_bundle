@@ -2,6 +2,8 @@
 
 이 파일은 **번들 소스 저장소**에 등록된 에이전트 번들의 원본 위치, 상태, 설치 구성요소를 기록한다.
 
+**현재 공식 target은 Cursor다.** Bundle Catalog gate와 이 catalog가 정의하는 설치 artifact는 소비 프로젝트의 `.cursor/` 구조를 기준으로 한다. 공통 `docs/`는 플랫폼 중립적인 원칙 문서로 유지할 수 있지만, 다른 AI coding platform용 실행 artifact는 현재 관리하지 않는다.
+
 다른 저장소에서 Agent Skill Bundle을 쓸 때는 이 파일을 직접 복사하지 않는다. Bundle Catalog gate를 먼저 설치하고, `audit-installed-bundles` Skill로 설치 상태를 조사한 뒤 gate가 이 catalog를 참고해 필요한 번들을 선택한다.
 
 ## Bundle 유형
@@ -27,7 +29,7 @@
 
 ```text
 총괄 rule(Bundle Catalog gate) 선설치
-→ audit-installed-bundles로 설치 상태 조사
+→ audit-installed-bundles로 .cursor/ 설치 상태 조사
 → gate가 연결/add turn에서만 설치할 번들 질문
 → manage-agent-bundles로 선택한 번들만 설치
 → connect turn에서 피드백 참여(enabled/disabled) 설정
@@ -50,8 +52,9 @@
 | Domain Data Analysis | 예시 | `testing` | `examples/domain-data-analysis/` | 3 — 선택 | `domain-data-analysis.mdc` | `domain-data-analysis` | — | 도메인 기반 데이터 분석 설계·보고 |
 | MCP Server Craft | 예시 | `testing` | `examples/mcp-server-craft-ver0/` | 3 — 선택 | `mcp-server-craft.mdc` | `mcp-server-craft`, `mcp-server-scope`, `mcp-server-auth`, `mcp-tool-implement`, `mcp-server-connect` | — | MCP 서버 설계·권한·구현·연결 |
 | Blog Style Writing | 예시 | `draft` | `examples/blog-style-writing-ver0/` | 3 — 선택 | `blog-style-writing.mdc` | `blog-style-writing`, `collect-blog-corpus`, `build-style-context`, `write-blog-manuscript` | — | 기존 블로그 문체 팩 구축·초고·첨삭. 수집은 Web Crawler Craft에 의존 |
+| Career Management | 예시 | `draft` | `examples/career-management-ver0/` | 3 — 선택 | `career-management.mdc` | `career-management-session`, `career-market-research`, `resume-strength-discovery`, `portfolio-hosting-choice`, `portfolio-design-research`, `portfolio-site-build`, `job-posting-fit`, `interview-story-crafting`, `profile-optimization`, `learning-path-planning`, `networking-outreach`, `compensation-research` | — | 커리어 상담·이력 강점 발굴·포트폴리오·지원/성장 지원 |
 
-## 정식 번들 설치 규칙
+## Cursor 정식 번들 설치 규칙
 
 `bundles/<bundle-name>/`는 bundle 전체 원본이다. Cursor 소비 프로젝트에는 해당 bundle의 `cursor/.cursor/`와 필요한 공통 docs만 설치한다.
 
@@ -79,8 +82,11 @@ bundles/agent-thinking-guidelines/docs/*
 
 프로젝트 전용 memory, runtime state, 같은 이름의 커스텀 파일은 무조건 덮어쓰지 않는다. 차이를 확인한 뒤 사용자가 선택한다.
 
+다른 platform용 구현 경로를 추정하거나 자동 생성하지 않는다. 실제 지원 필요가 생기면 `docs/`를 기준으로 별도 target을 명시적으로 추가한다.
+
 ## 마지막 관리 기록
 
+- 2026-09-08: 공식 target을 Cursor로 정리. Agent Thinking Guidelines의 Claude Code 배포본을 제거하고 Cursor 구현만 유지. 루트 README에 bundle 상태 목록을 노출하고 Career Management를 `draft`로 catalog에 등록.
 - 2026-09-08: `my_cursor_user_rule`을 `core/user-rule/`, `agent-thinking-guidelines`를 `bundles/agent-thinking-guidelines/`로 통합. Agent Skill Bundle을 단일 SSOT로 정리하고 Agent Thinking Guidelines를 첫 정식 번들로 등록.
 - 2026-08-27: #11. `report-bundle-feedback` 초안을 사용 기록 중심으로 바꿈. 소비 특수 규칙은 다른 예시 Skill에 넣지 않음.
 - 2026-08-27: Blog Style Writing 예시 번들 등록. 실제 실험은 `blog_agnet`에서 하고 공방에는 관찰만 되돌림.
