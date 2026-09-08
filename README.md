@@ -1,167 +1,152 @@
 # Agent Skill Bundle
 
-Agent Rule, Skill, Script, Automation을 떠오르는 **Agent 작업 아이디어**부터 실제 구현까지 천천히 다듬어가는 작은 공방입니다.
+Agent에게 일을 맡기는 **기본 규칙, 재사용 가능한 번들, 실험 중인 아이디어와 관리 도구**를 한 곳에서 관리하는 개인 Agent toolkit monorepo입니다.
 
-이 저장소에서 말하는 아이디어는 제품 아이디어 전반이 아니라, **Agent에게 어떤 작업을 맡길지, 그 작업을 어떤 기준과 절차로 수행하게 할지에 대한 아이디어**를 의미합니다.
+이 저장소의 목표는 Rule·Skill을 많이 만드는 것이 아니라, 실제 작업에서 반복해서 유용한 패턴을 **한 곳에서 개선하고 필요한 프로젝트에 선택적으로 적용**하는 것입니다.
 
-이 저장소는 완성된 프레임워크를 선언하기보다 다음 과정을 기록하는 데 목적이 있습니다.
+```text
+기본 작업 원칙
+        ↓
+core/
+
+큰 작업에 필요한 재사용 프로토콜
+        ↓
+bundles/
+
+새 Agent 작업 아이디어
+        ↓
+workshop/ → examples/ → 검증 → bundles/
+                         ↑
+                  workshop-kit/
+```
+
+## Repository structure
+
+```text
+.
+├── core/
+│   └── user-rule/                         # 가볍게 유지하는 개인 기본 Agent rule
+│       ├── README.md
+│       └── user_rule.md
+│
+├── bundles/                               # 검증·승격된 재사용 번들 원본
+│   └── agent-thinking-guidelines/
+│       ├── README.md
+│       ├── docs/                          # 지침 SSOT
+│       ├── cursor/                        # Cursor 배포본
+│       └── claude/                        # Claude Code 배포본
+│
+├── workshop-kit/                          # Bundle Catalog gate와 공방 관리 도구의 원본
+├── workshop/                              # 아직 구조가 확정되지 않은 아이디어·작업 노트
+├── examples/                              # 실제 사용을 시험하는 draft/testing 번들
+├── docs/                                  # 공통 개념 문서
+└── .cursor/                               # 이 monorepo 자체에서 활성화된 공방 관리 도구
+```
+
+### `core/` — 항상 가까이 두는 기본 원칙
+
+[`core/user-rule/user_rule.md`](core/user-rule/user_rule.md)는 일상적인 Cursor/AI coding 작업에서 지킬 최소 원칙입니다.
+
+- 생각하고 코딩하기
+- 최소한의 변경
+- 검증 가능한 목표
+- notebook → verify → script 승격
+- 불필요한 heavy workflow 억제
+
+자세한 배경과 변경 관리 방식은 [`core/user-rule/README.md`](core/user-rule/README.md)를 봅니다.
+
+### `bundles/` — 검증되어 승격된 재사용 번들
+
+반복해서 사용할 가치가 확인된 Rule·Skill·Agent 세트의 **SSOT**입니다.
+
+현재 정식 번들:
+
+- [`Agent Thinking Guidelines`](bundles/agent-thinking-guidelines/README.md) — 대규모·장기·다단계·고위험 작업에서 선택적으로 사용하는 사고·검증·review/orchestration 프로토콜
+
+`bundles/` 아래 원본은 소비 프로젝트에 직접 실행되는 파일이 아닙니다. Bundle Catalog를 통해 필요한 파일만 대상 프로젝트의 `.cursor/` 등에 설치합니다.
+
+### `workshop/` + `examples/` — 실험 공간
+
+새 Agent 작업 아이디어는 바로 정식 번들로 만들지 않습니다.
 
 ```text
 Agent 작업 아이디어
-→ 짧은 인터뷰와 작업 정의
+→ workshop에서 작업 정의
 → Rule / Skill / Script / Automation 분리
-→ 작은 예시 구현
-→ 실제 사용
+→ examples에서 작은 구현·실사용 테스트
 → 관찰과 수정
+→ 반복 가치가 확인되면 bundles/로 승격
 ```
 
-## 현재 상태
+- `workshop/`: 인터뷰, 범위 정의, 설계 메모
+- `examples/`: 아직 `draft` / `testing` 상태인 실제 번들 후보
+- `bundles/`: 안정적으로 재사용할 정식 원본
 
-**ver0 — 공간 만들기와 첫 아이디어 배치**
+## Core rule과 heavy bundle의 관계
 
-아직 구조와 규칙을 확정하지 않습니다. 문서와 예시는 언제든 이동·통합·폐기될 수 있습니다. 실제 업무에서 반복 사용해보고 유용한 패턴만 남깁니다.
+일상 작업과 큰 작업을 같은 무게로 처리하지 않습니다.
 
-## 시작하기
+```text
+core/user-rule
+= 평소의 가벼운 기본 행동 규칙
 
-**작업 중인 저장소**에 Agent Skill Bundle을 연결할 때 Agent에게 아래 프롬프트를 입력합니다. 번들 소스 저장소를 clone하지 않고, 현재 저장소의 `.cursor/`만 다룹니다.
+agent-thinking-guidelines bundle
+= 필요할 때만 가져와 사용하는 heavy protocol
+```
 
-번들 소스: https://github.com/geunsu-son/agent_skill_bundle
+`user_rule.md`는 routine edit에 무거운 multi-agent workflow를 자동 적용하지 않습니다. 대신 작업이 **크고, 오래 걸리고, 여러 단계이거나, 되돌리기 어렵고 검증 비용이 큰 경우** `agent-thinking-guidelines` 번들 사용을 제안합니다.
+
+번들이 현재 프로젝트에 없으면 자동으로 설치하지 않고, Bundle Catalog gate를 통해 가져올 것을 제안합니다.
+
+## Bundle Catalog로 프로젝트에 연결
+
+작업 중인 다른 저장소에서 이 toolkit의 번들을 사용할 때는 전체 repo를 소비 프로젝트 안에 복사하지 않습니다.
+
+먼저 Bundle Catalog gate를 설치·점검한 다음, 필요한 번들만 선택합니다.
 
 ```text
 지금 작업 중인 이 저장소에 Agent Skill Bundle을 연결해줘.
 번들 소스: https://github.com/geunsu-son/agent_skill_bundle
 
-1. Bundle Catalog gate(총괄 rule)를 먼저 .cursor/에 설치하거나 보완한다
-   - bundle-catalog.mdc
-   - audit-installed-bundles Skill
-   - manage-agent-bundles Skill
-   - report-bundle-feedback Skill
-2. audit-installed-bundles Skill로 .cursor/와 catalog를 조사해
-   어떤 번들이 이미 설치되어 있는지 확인한다
-3. **이번 연결 turn 안에서만** 조사 결과를 보여 준 뒤, 추가로 설치할 번들이 무엇인지 나에게 물어본다
-4. 내가 고른 번들만 .cursor/에 설치한다 (추가하지 않음을 선택해도 됨)
-5. **번들 개선 피드백 참여 여부**를 한 번 물어보고 catalog에 기록한다
-   - enabled: 작업 완료·Skill 사용 PR 시 개선 제안 Issue 전송을 **가끔** 물어봄 (전송 전 초안·2차 확인)
-   - disabled: 피드백을 **다시 묻지 않음**
-6. .cursor/agent-bundles/catalog.md를 갱신하고 최종 상태를 요약한다
-7. 연결이 끝난 뒤에는 내가 다시 요청하기 전까지 추가 번들 설치를 묻지 않는다
+1. Bundle Catalog gate를 먼저 설치하거나 보완해
+2. audit-installed-bundles로 현재 .cursor/ 설치 상태를 조사해
+3. 이번 연결 turn 안에서만 추가 설치할 번들을 물어봐
+4. 내가 선택한 번들만 설치해
+5. 설치 후 catalog와 실제 파일 상태를 다시 확인해
 ```
 
-### gate 흐름
+가져올 수 있는 목록과 상태는 [`workshop-kit/catalog.md`](workshop-kit/catalog.md)에서 관리합니다.
 
-```text
-작업 중인 저장소
-→ Bundle Catalog gate 선설치 (총괄 rule + 3 Skill)
-→ audit-installed-bundles로 설치 상태 조사
-→ gate가 **연결 turn 안에서만** 설치할 번들 질문
-→ 선택한 번들만 .cursor/에 설치
-→ connect turn에서 피드백 참여(enabled/disabled) 설정
-→ 이후에는 사용자가 요청할 때만 추가 설치
-→ (enabled) 작업 완료·Skill 사용 PR 시 report-bundle-feedback
-```
+## Bundle Catalog gate
 
-이미 gate가 있거나 일부 번들이 설치되어 있어도 같은 흐름으로 점검합니다. 적용 여부를 추정하지 않고 먼저 조사합니다.
+Bundle Catalog는 별도 제품이 아니라 이 저장소의 관리용 번들입니다.
 
-### Bundle Catalog 총관리 rule — 하위 Skill로 Issue 피드백 (선택)
-
-**별도 번들이 아닙니다.** `bundle-catalog` Rule 하나 아래 하위 Skill로 Issue 전송 절차가 포함됩니다.
-
-다른 repo에서 예시·업무 **번들** Skill을 쓰다가, **총관리 Rule·gate·하위 Skill**에 대한 개선 제안이 생기면 번들 소스 repo에 Issue로 되돌릴 수 있습니다.
-
-| 설정 | 의미 |
+| 구성 | 역할 |
 |---|---|
-| `enabled` | 아래 **트리거**가 발생했을 때만 1차 gate로 “Issue로 보낼까요?”를 묻습니다 |
-| `disabled` | 피드백 전송을 **묻지 않습니다** |
+| `bundle-catalog.mdc` | 설치·업데이트·삭제 판단과 gate 원칙 |
+| `audit-installed-bundles` | 현재 설치 상태 조사 |
+| `manage-agent-bundles` | 선택한 번들의 설치·업데이트·제거 |
+| `report-bundle-feedback` | 사용 중 발견한 개선점을 source repo로 되돌리는 선택적 피드백 절차 |
 
-설정은 `.cursor/agent-bundles/catalog.md`의 `Feedback Participation`에 기록됩니다.
-
-#### 언제 물어보나 (`enabled`일 때만)
-
-- 사용자가 **작업 완료**를 알렸을 때
-- **번들 Skill을 사용한 PR**을 작성했을 때
-
-그 외 일반 turn에서는 피드백·추가 번들 설치를 **먼저 꺼내지 않습니다**.
-
-#### Issue에 담기는 내용 (중심)
-
-- 사용한 **번들·Skill·Rule** 이름
-- Skill·Rule·gate에 **추가·개선 제안**
-- **그렇게 제안하는 이유** (어떤 작업 맥락에서 불편·부족·과했는지)
-- (선택) 바로 도움이 된 점
-
-#### 보내지 않는 내용
-
-- API key, token, password 등 **비밀값**
-- 내부 전용 URL·IP, 고객·개인 식별 정보, 민감 업무 데이터
-- consumer repo **소스 코드 전체**·대용량 로그
-
-#### 2차 gate (전송 전 반드시 확인)
+원본은 `workshop-kit/`에 있고, 루트 `.cursor/`의 같은 파일은 **이 저장소 자체에서 실제로 사용하는 활성 복사본**입니다.
 
 ```text
-1차 gate — Issue로 보내도 될까요?
-→ Issue 초안 작성 (민감 정보 제외)
-→ 초안 전체를 사용자에게 보여 줌
-2차 gate — 정말 agent_skill_bundle repo에 보낼까요?
-→ 승인 시 Issue 생성 (gh issue create)
-→ 실패 시 Issue 작성 URL 안내 (선택, 강요 없음)
+workshop-kit/      = 관리 도구 SSOT
+       ↓ sync
+.cursor/           = 이 monorepo에서 활성화된 복사본
+
+bundles/.../cursor/.cursor/
+                   = 소비 프로젝트에 배포할 번들 원본
 ```
 
-Issue 전송 절차: [`report-bundle-feedback` Skill](workshop-kit/skills/report-bundle-feedback/SKILL.md)
+세 위치를 같은 것으로 취급하지 않습니다.
 
-#### 관련 프롬프트
-
-설치 상태만 조사할 때:
-
-```text
-audit-installed-bundles Skill로
-이 저장소에 설치된 Agent Skill Bundle 상태를 조사해줘.
-```
-
-추가 번들만 설치할 때:
-
-```text
-Agent Skill Bundle gate를 통해
-Agent Skill Workshop 번들만 추가로 설치해줘.
-```
-
-작업 완료 후 피드백 Issue 초안까지 (`enabled`일 때):
-
-```text
-이번 작업에서 Skill 번들 개선 제안이 있으면
-report-bundle-feedback Skill 절차로 Issue 초안을 만들고,
-보내기 전에 초안 전체를 보여 준 뒤 전송 여부를 다시 확인해줘.
-```
-
-## 용어: 에이전트 번들
-
-이 저장소에서 아이디어를 구현한 rule-skill 세트의 공식 단위는 **에이전트 번들(Agent Bundle, 줄여서 번들)** 입니다.
-
-| 용어 | 의미 |
-|---|---|
-| Agent 작업 아이디어 | Agent에게 맡길 작업과 기대 결과에 대한 생각 |
-| **에이전트 번들(번들)** | 하나의 Agent 작업 아이디어를 Rule·Skill(+ Script·Automation)으로 묶은 단위 |
-| 구성 요소 | 번들 안의 Rule, Skill, Script, Automation |
-| 공방 키트 번들 | 공방 운영·총관리용 번들. 원본은 `workshop-kit/` |
-| 예시 번들 | 특정 업무를 시험하는 번들. 원본은 `examples/<bundle-name>/` |
-| 활성 번들 | `.cursor/`에 설치되어 Cursor가 읽는 번들 |
-| 피드백 참여 | connect turn에 정하는 `enabled` / `disabled`. Issue 되돌림 여부 |
-
-```text
-Agent 작업 아이디어
-→ 에이전트 번들 (Rule + Skill [+ Script] [+ Automation])
-→ 필요 시 .cursor/에 설치해 활성화
-```
-
-예시 번들은 `examples/`에 두고, 실제로 쓸 때 gate를 통해 `.cursor/`에 설치합니다. 가져올 수 있는 번들 목록은 [`workshop-kit/catalog.md`](workshop-kit/catalog.md), 설치된 번들 목록은 소비 프로젝트의 `.cursor/agent-bundles/catalog.md`에서 관리합니다.
-
-## 기본 관점
+## 기본 관점: Rule → Skill → Script
 
 - **Rule**: Agent가 지속적으로 지켜야 할 판단 기준, 역할, 제약
 - **Skill**: 특정 업무를 수행하는 절차, 도구, 템플릿, 완료 조건
 - **Script**: 반복 가능하고 결정론적인 실행 로직
 - **Automation**: Skill을 언제 또는 어떤 조건에서 실행할지 정의
-
-권장 흐름은 다음과 같습니다.
 
 ```text
 Rule → Skill → Script
@@ -169,292 +154,37 @@ Rule → Skill → Script
      Automation
 ```
 
-Rule에는 공통 원칙을, Skill에는 상세 절차를, Script에는 반복 실행 로직을 둡니다. 이렇게 분리하면 긴 코드와 절차를 항상 컨텍스트에 넣지 않아도 되고, Agent는 판단과 예외 처리에 더 집중할 수 있습니다.
+Rule에는 공통 판단 원칙을, Skill에는 상세 절차를, Script에는 반복 실행 로직을 둡니다. 자세한 구분은 [`docs/rule-vs-skill.md`](docs/rule-vs-skill.md)를 봅니다.
 
-## 왜 공방 운영용 Agent Rule과 Skill을 두는가
+## Source of truth 원칙
 
-이 저장소에는 개별 업무를 수행하는 Rule과 Skill뿐 아니라, **Agent 작업 아이디어를 구체화하고 구현하는 Agent 자체를 위한 메타 Rule과 Skill**도 둡니다.
+중복된 실행본을 양방향으로 수정하지 않습니다.
 
-개별 업무용 Agent만 있으면 매번 다음을 사람이 다시 판단해야 합니다.
+- 개인 기본 rule: `core/user-rule/`
+- 정식 bundle: `bundles/<bundle-name>/`
+- 공방 관리 도구: `workshop-kit/`
+- 루트 `.cursor/`: `workshop-kit/`에서 내려온 이 repo의 활성 복사본
+- 소비 프로젝트의 `.cursor/`: source에서 설치된 실행본
 
-- 이 아이디어가 정확히 어떤 작업인지
-- 누구의 어떤 문제를 해결하려는지
-- 어떤 결과물이 나와야 하는지
-- 이 아이디어를 어디에 기록할지
-- Rule, Skill, Script, Automation 중 무엇으로 만들지
-- 어느 수준까지 구현할지
-- 언제 재사용 가능한 산출물로 승격할지
-- 변경 후 무엇을 기록할지
-
-공방 운영용 Agent는 이 판단 과정을 일정하게 만드는 역할을 합니다.
+개선은 항상 source에서 먼저 하고 필요한 실행 위치로 내려보냅니다.
 
 ```text
-공방 운영용 Agent
-→ 작업 아이디어를 인터뷰하고 필요한 산출물로 분해
-
-개별 업무용 Agent
-→ 세션 브리핑, 데이터 검증 등 실제 업무 수행
+source 수정
+→ 검증
+→ 설치/동기화
+→ 소비 프로젝트에서 사용
+→ 필요하면 feedback
+→ source 개선
 ```
 
-### 공방 운영용 Rule
+## 현재 상태
 
-`.cursor/rules/agent-skill-workshop.mdc`
+이 저장소는 완성된 범용 framework보다 **개인적으로 실제 사용하면서 계속 다듬는 toolkit**에 가깝습니다.
 
-공방에서 Agent가 작업할 때 지켜야 할 기준을 정의합니다.
+- `core/`와 `bundles/`는 반복 사용을 전제로 관리합니다.
+- `examples/`와 `workshop/`은 언제든 이동·통합·폐기될 수 있습니다.
+- 복잡한 workflow는 필요한 상황에만 opt-in으로 사용합니다.
 
-- 처음부터 범용 프레임워크를 만들지 않기
-- 작업 목적과 결과가 불명확하면 구현 전에 짧게 인터뷰하기
-- 사용자가 이미 제공한 정보는 다시 묻지 않기
-- 구현에 가장 큰 영향을 주는 질문부터 확인하기
-- 인터뷰가 목적이 되지 않도록 구현 가능한 상태에서 질문을 끝내기
-- 아이디어와 검증된 구현을 구분하기
-- Rule은 짧게 유지하기
-- 상세 절차는 Skill로 분리하기
-- 반복 로직은 Script로 분리하기
-- 과도한 리팩터링을 피하기
-- 변경 후 미완성과 다음 실험을 기록하기
+핵심 원칙은 단순합니다.
 
-### 공방 운영용 Skill
-
-`.cursor/skills/idea-to-agent-artifact/SKILL.md`
-
-떠오른 Agent 작업 아이디어를 짧게 인터뷰하고 실제로 시험할 수 있는 최소 산출물로 바꾸는 절차를 정의합니다.
-
-```text
-제공된 정보 확인
-→ 필요한 경우 짧은 인터뷰
-→ 작업 아이디어 정의
-→ 기존 자료 확인
-→ Rule / Skill / Script / Automation 분해
-→ 현재 상태 결정
-→ 최소 예시 구현
-→ 검증 방법 작성
-→ README와 관찰 기록 연결
-```
-
-기본 호출 예시는 다음과 같습니다.
-
-```text
-이 Agent 작업 아이디어를 공방 규칙에 맞춰 구체화해줘.
-이미 설명한 내용은 다시 묻지 말고, 구현에 꼭 필요한 정보만 짧게 확인한 뒤
-Rule·Skill·Script·Automation으로 필요한 만큼만 분해해서
-실제로 시험할 수 있는 최소 예시를 만들어줘.
-```
-
-### 번들 총관리 Rule과 하위 Skill
-
-**Bundle Catalog gate는 하나의 번들**입니다. Rule 하나와 하위 Skill 세 개로 구성됩니다. Issue 피드백용 Skill은 **별도 번들이 아닙니다.**
-
-| 계층 | 파일 | 역할 |
-|---|---|---|
-| Rule | [`bundle-catalog.mdc`](workshop-kit/rules/bundle-catalog.mdc) | 총관리·gate·피드백·보안 원칙 |
-| 하위 Skill | [`audit-installed-bundles`](workshop-kit/skills/audit-installed-bundles/SKILL.md) | `.cursor/` 설치 상태 조사 |
-| 하위 Skill | [`manage-agent-bundles`](workshop-kit/skills/manage-agent-bundles/SKILL.md) | gate 설치, 번들 선택·변경, 피드백 참여 설정 |
-| 하위 Skill | [`report-bundle-feedback`](workshop-kit/skills/report-bundle-feedback/SKILL.md) | 사용 기록 Issue 초안·2차 gate·전송 |
-| catalog | [`catalog.md`](workshop-kit/catalog.md) | 가져올 수 있는 **다른** 번들 목록 (예시 번들 등) |
-
-소비 repo의 설치·피드백 설정은 `.cursor/agent-bundles/catalog.md`에 기록합니다. Issue 피드백 흐름은 [Bundle Catalog 총관리 rule — 하위 Skill로 Issue 피드백 (선택)](#bundle-catalog-총관리-rule--하위-skill로-issue-피드백-선택)을 참고하세요.
-
-## 작업 아이디어 인터뷰
-
-Agent가 요청을 받자마자 파일부터 만드는 것을 막기 위해, 핵심 정보가 부족한 경우 짧은 인터뷰를 먼저 수행합니다.
-
-최소한 다음 세 가지가 명확해야 `draft` 구현을 시작합니다.
-
-1. Agent에게 맡길 작업
-2. 기대하는 최종 결과물
-3. 현재 방식에서 해결하려는 가장 큰 문제
-
-작업 성격에 따라 다음 내용을 추가로 확인할 수 있습니다.
-
-| 상황 | 확인할 내용 |
-|---|---|
-| 반복 업무 | 실행 시점과 주기 |
-| 판단 업무 | 사용하는 정보와 판단 기준 |
-| 자동화 업무 | 시작·중단 조건 |
-| 권한 또는 위험이 있는 작업 | 제약과 금지사항 |
-| 결과물 생성 | 대상 독자, 형식, 저장 위치 |
-| 품질 검증 필요 | 완료와 실패 조건 |
-
-모든 질문을 한 번에 묻지는 않습니다. 이미 제공된 정보는 재질문하지 않고, 구현 범위에 가장 큰 영향을 주는 질문부터 하나씩 확인합니다. 사소한 공백은 가정으로 명시하고 진행합니다.
-
-다음 상태가 되면 인터뷰를 종료합니다.
-
-- 작업 목적을 한두 문장으로 설명할 수 있음
-- Agent의 최종 출력 또는 행동이 구체적임
-- 최소 구현 범위를 정할 수 있음
-- 남은 불확실성을 가정이나 실험 항목으로 기록할 수 있음
-
-인터뷰 결과는 필요에 따라 다음 형태로 정리합니다.
-
-```text
-작업 이름
-해결하려는 문제
-Agent가 수행할 작업
-기대 결과물
-현재 방식과 불편한 점
-실행 시점 또는 조건
-판단 기준과 제약
-완료 조건
-가정과 아직 결정하지 못한 점
-```
-
-## `.cursor/`와 `workshop-kit/`을 함께 두는 이유
-
-메타 Rule과 Skill은 두 위치에 둡니다.
-
-```text
-workshop-kit/   관리·배포용 원본
-      ↓
-.cursor/        현재 저장소에서 Cursor가 사용하는 실행본
-```
-
-### `.cursor/`
-
-Cursor가 이 저장소에서 바로 읽고 적용하는 실행 위치입니다.
-
-### `workshop-kit/`
-
-Rule과 Skill을 저장소의 독립적인 결과물로 관리하는 원본 위치입니다.
-
-- 다른 프로젝트로 복사하기 쉬움
-- `.cursor` 설정과 별개로 내용을 검토하기 쉬움
-- 이후 패키지나 설치 스크립트로 발전시키기 쉬움
-- 이 저장소 자체를 위한 설정과 배포 가능한 산출물을 구분할 수 있음
-
-ver0에서는 자동 동기화 도구를 만들지 않습니다. 구조가 안정되기 전부터 자동화를 추가하면 관리 방식 자체가 실험 대상인데도 구현이 먼저 굳어질 수 있기 때문입니다. 당분간 두 위치를 함께 수정하며 중복 비용과 사용성을 관찰합니다.
-
-## 디렉터리
-
-```text
-.cursor/                  현재 저장소에서 사용하는 Agent 설정
-├── rules/
-└── skills/
-
-docs/                     개념과 설계 기록
-examples/                 아직 검증되지 않은 예시 번들
-workshop/                 다음에 다듬을 아이디어와 관찰 메모
-workshop-kit/             공방 키트 번들의 관리 원본
-├── catalog.md            등록된 에이전트 번들 목록
-├── rules/
-└── skills/
-```
-
-현재 주요 파일:
-
-- [Rule과 Skill의 차이](docs/rule-vs-skill.md)
-- [Workshop Kit](workshop-kit/README.md)
-- [에이전트 번들 카탈로그](workshop-kit/catalog.md)
-- [공방 운영용 Rule](workshop-kit/rules/agent-skill-workshop.mdc)
-- [아이디어 구현 Skill](workshop-kit/skills/idea-to-agent-artifact/SKILL.md)
-- [Bundle Catalog 총관리 Rule](workshop-kit/rules/bundle-catalog.mdc) — 하위 Skill: audit / manage / report-bundle-feedback
-- [세션 경제 브리핑 예시](examples/session-market-briefing/README.md)
-- [커리어 매니지먼트 예시](examples/career-management-ver0/README.md)
-- [웹 크롤러 제작 예시](examples/web-crawler-ver0/README.md)
-- [도메인 기반 데이터 분석 예시](examples/domain-data-analysis/README.md)
-- [MCP 서버 제작 예시](examples/mcp-server-craft-ver0/README.md)
-- [블로그 스타일 학습·원고 예시](examples/blog-style-writing-ver0/README.md)
-- [작업대 메모](workshop/README.md)
-
-## 첫 예시: 세션 경제 브리핑
-
-첫 예시는 직장인을 위한 **세션 경제 브리핑**입니다.
-
-단순히 뉴스와 경제 일정을 나열하지 않고 다음 질문에 답하는 것을 목표로 합니다.
-
-- 상승·하락·횡보 중 현재 무엇이 가장 유력한가
-- 그 판단의 핵심 근거는 무엇인가
-- 어떤 조건에서 판단이 바뀌는가
-- 다음 확인 시점까지 무엇만 보면 되는가
-
-이 예시는 다음 구분을 시험합니다.
-
-```text
-Rule
-→ 시장 판단과 표현에서 지켜야 할 원칙
-
-Skill
-→ 조사, 비교, 방향 판정, 출력 절차
-
-Automation
-→ 평일 07:30·20:30 실행 시점
-
-Script 후보
-→ 경제 일정과 시장 데이터의 반복 수집·정규화
-```
-
-아직 정답이나 완성품이 아니라 실제 브리핑 결과를 보며 수정할 첫 번째 실험입니다.
-
-## 이 공방에서 일하는 방식
-
-### 1. Agent 작업 아이디어를 먼저 남긴다
-
-분류가 확실하지 않아도 `workshop/`에 맡기려는 작업, 해결하려는 문제, 기대 결과, 아직 모르는 점을 적습니다.
-
-### 2. 필요한 경우 짧게 인터뷰한다
-
-작업 목적과 결과물이 불명확하면 구현에 필요한 최소 질문만 확인합니다. 질문을 위한 질문은 하지 않습니다.
-
-### 3. 작업 아이디어를 정의한다
-
-인터뷰 결과와 이미 제공된 내용을 바탕으로 어떤 작업을 왜 만드는지 한눈에 볼 수 있게 정리합니다.
-
-### 4. 시험할 가치가 있으면 최소 예시를 만든다
-
-`examples/` 아래에 필요한 Rule, Skill, Automation만 배치합니다. 코드가 아직 필요하지 않다면 빈 Script 구조를 만들지 않습니다.
-
-### 5. 실제 사용 결과를 기록한다
-
-기본 관찰 항목은 세 가지입니다.
-
-1. 바로 도움이 된 내용
-2. 불필요하거나 과도했던 내용
-3. 다음 실행에서 바꿀 한 가지
-
-### 6. 반복해서 유효한 것만 승격한다
-
-한두 번의 아이디어를 공통 원칙으로 만들지 않습니다. 여러 사례에서 반복해서 유효했던 기준만 재사용 Rule이나 Skill로 다듬습니다.
-
-### 7. 같은 코드가 반복되면 Script로 분리한다
-
-Agent가 같은 쿼리나 코드를 계속 생성하기 시작하면, 테스트 가능한 Script로 옮기고 Skill에는 실행 순서와 완료 조건만 남깁니다.
-
-## 산출물 상태
-
-각 아이디어와 예시는 다음 상태를 사용할 수 있습니다.
-
-| 상태 | 의미 |
-|---|---|
-| `idea` | 생각만 기록된 상태 |
-| `draft` | 최소 구조가 작성된 상태 |
-| `testing` | 실제 사용하며 검증 중인 상태 |
-| `reusable` | 반복 사용으로 재사용 가치가 확인된 상태 |
-| `archived` | 현재 사용하지 않지만 기록은 보존하는 상태 |
-
-ver0에서 새로 만드는 예시는 기본적으로 `draft` 또는 `testing` 상태로 둡니다.
-
-## 운영 원칙
-
-1. 처음부터 완성도를 요구하지 않는다.
-2. 사용자가 해결하려는 실제 문제부터 정의한다.
-3. 목적과 기대 결과가 불명확하면 구현 전에 짧게 인터뷰한다.
-4. 이미 제공된 정보는 다시 묻지 않는다.
-5. 인터뷰가 구현보다 커지지 않게 한다.
-6. 아이디어와 검증된 구현을 구분한다.
-7. 예시는 정답이 아니라 검증 대상이다.
-8. Rule은 짧게, 상세 절차는 Skill로, 반복 코드는 Script로 분리한다.
-9. 필요한 구성 요소만 만들고 빈 구조를 억지로 늘리지 않는다.
-10. 실제 사용 후 관찰한 문제를 다음 버전에 반영한다.
-11. 구조보다 사용 경험을 먼저 축적한다.
-
-## 다음에 해볼 것
-
-- 인터뷰 질문이 과하거나 부족하지 않은지 관찰
-- 세션 경제 브리핑을 실제 출력과 비교해 Rule·Skill 수정
-- `observations.md` 형식 추가
-- 방향 판단 기준과 유력도 표현 방식 실험
-- 뉴스·경제 일정 수집 중 반복 가능한 부분을 Script 후보로 분리
-- `.cursor/`와 `workshop-kit/` 이중 관리가 실제로 유용한지 검토
-- MCP 서버 제작 예시를 실제 요청에서 쓰고, README에 없는 구현 세부만 추가로 대조
-
-> 이 저장소의 목표는 좋은 지침을 한 번에 만드는 것이 아니라, 반복해서 더 나은 작업 방식을 발견하는 것입니다.
+> **AI에게 구현은 적극적으로 맡기되, 중요한 판단과 검증은 사람이 놓치지 않는다.**

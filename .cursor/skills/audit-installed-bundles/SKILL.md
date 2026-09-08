@@ -13,7 +13,7 @@ description: 현재 저장소의 .cursor/와 로컬 catalog를 조사해 어떤 
 
 ## 목표
 
-추정하지 않고 `.cursor/`, 로컬 catalog, 소스 catalog를 실제로 읽어 **현재 설치 상태**를 보고한다. 이 Skill은 파일을 설치·삭제하지 않는다.
+추정하지 않고 `.cursor/`, 필요한 `docs/`, 로컬 catalog, 소스 catalog를 실제로 읽어 **현재 설치 상태**를 보고한다. 이 Skill은 파일을 설치·삭제하지 않는다.
 
 ## 기본값
 
@@ -28,20 +28,26 @@ description: 현재 저장소의 .cursor/와 로컬 catalog를 조사해 어떤 
 - `workshop-kit/catalog.md`가 있으면 **번들 소스 저장소**다.
 - 없으면 **소비 프로젝트**다.
 
-### 2. `.cursor/` 스캔
+번들 소스 저장소에서는 `core/`, `bundles/`, `examples/`, `workshop-kit/`, 루트 `.cursor/`의 역할을 구분한다. 특히 `bundles/<bundle>/cursor/.cursor/`는 배포 source이고 루트 `.cursor/`는 이 repo의 활성 도구다.
+
+### 2. 실행 위치 스캔
 
 다음을 수집한다.
 
 - `.cursor/rules/*.mdc` — Rule 파일 목록
 - `.cursor/skills/*/SKILL.md` — Skill 디렉터리 목록
+- `.cursor/agents/*.md` — Agent 파일 목록
+- `.cursor/memory/` — 번들이 요구하는 규약/example 존재 여부만 확인
+- `.cursor/state/` — README/example 존재 여부와 runtime state를 구분
 - `.cursor/agent-bundles/catalog.md` 존재 여부
+- 소스 catalog에서 해당 번들이 필수 docs를 요구하면 `docs/`의 존재 여부
 
-각 Rule·Skill의 파일명과 경로를 적는다.
+각 artifact의 파일명과 경로를 적는다. 프로젝트 전용 memory/state 파일은 번들 소유 파일로 오인하지 않는다.
 
 ### 3. catalog 읽기
 
 - 로컬 catalog가 있으면 `Installed Bundles` 표를 읽는다.
-- 번들 소스의 `workshop-kit/catalog.md`를 읽어 등록 번들과 Rule·Skill 매핑을 확보한다.
+- 번들 소스의 `workshop-kit/catalog.md`를 읽어 등록 번들과 Rule·Skill·Agent·기타 필수 artifact 매핑을 확보한다.
 
 소비 프로젝트에서는 소스 catalog를 번들 소스 URL에서 가져온다.
 
@@ -51,23 +57,35 @@ description: 현재 저장소의 .cursor/와 로컬 catalog를 조사해 어떤 
 
 | 상태 | 의미 |
 |---|---|
-| `installed` | Rule과 Skill(필요 시 Script·Automation)이 `.cursor/`에 모두 있다 |
-| `partial` | 일부만 있다 |
-| `catalog-only` | 로컬 catalog에는 있으나 `.cursor/` 파일이 없거나 부족하다 |
-| `files-only` | `.cursor/`에 파일은 있으나 로컬 catalog에 없다 |
-| `missing` | `.cursor/`와 로컬 catalog 모두에 없다 |
+| `installed` | catalog가 요구하는 Rule·Skill·Agent·필수 docs 등이 모두 있다 |
+| `partial` | 필수 artifact 일부만 있다 |
+| `catalog-only` | 로컬 catalog에는 있으나 실제 파일이 없거나 부족하다 |
+| `files-only` | 실제 파일은 있으나 로컬 catalog에 없다 |
+| `missing` | 실제 파일과 로컬 catalog 모두에 없다 |
 
 Bundle Catalog gate 번들은 아래 파일로 판정한다.
 
 - Rule: `bundle-catalog.mdc`
 - Skill: `audit-installed-bundles`, `manage-agent-bundles`, `report-bundle-feedback`
 
+정식 번들은 소스 catalog의 Rule·Skill·Agent / 기타 열을 기준으로 판정한다.
+
+**Agent Thinking Guidelines**는 최소한 다음을 확인한다.
+
+- Rules: `core-principles.mdc`, `worker-conduct.mdc`, `analysis-protocol.mdc`, `design-protocol.mdc`
+- Skills: `agent-thinking-guidelines`, `analysis-protocol`, `design-protocol`
+- Agents: `orchestrator.md`, `reviewer.md`
+- docs: `docs/agent-thinking-guidelines.md`
+- memory/state 규약 파일은 설치된 버전의 보조 artifact로 확인하되, 프로젝트 runtime 파일 유무를 설치 판정에 요구하지 않는다.
+
 ### 5. 이상 징후 찾기
 
-- 같은 목적의 Rule·Skill이 중복 설치되었는지
-- 소스 catalog에 없는 orphan Rule·Skill이 `.cursor/`에 있는지
-- 로컬 catalog와 `.cursor/`가 어긋나는지
+- 같은 목적의 Rule·Skill·Agent가 중복 설치되었는지
+- 소스 catalog에 없는 orphan Rule·Skill·Agent가 `.cursor/`에 있는지
+- 로컬 catalog와 실제 artifact가 어긋나는지
 - Bundle Catalog gate가 없는데 다른 번들만 있는지
+- 정식 번들의 일부 component만 수동 설치되어 `partial` 상태인지
+- source template과 프로젝트 전용 memory/state를 혼동하고 있지 않은지
 
 ### 6. gate 판단 입력 만들기
 
@@ -107,7 +125,9 @@ Bundle Catalog gate 번들은 아래 파일로 판정한다.
 ## 완료 조건
 
 - `.cursor/`와 catalog를 실제로 읽었다.
-- 번들별 상태(`installed` / `partial` / `missing` 등)가 구분되어 있다.
+- 정식 번들의 경우 Rule·Skill뿐 아니라 Agent·필수 docs도 확인했다.
+- 프로젝트 전용 memory/state를 누락 artifact로 잘못 판정하지 않았다.
+- 번들별 상태가 구분되어 있다.
 - gate가 다음 설치 질문을 할 수 있을 만큼 상태와 불일치가 정리되어 있다.
 - `audit` 요청이면 설치 권유 없이 보고만 한다.
 - 이 Skill 단계에서 파일을 설치·삭제하지 않았다.

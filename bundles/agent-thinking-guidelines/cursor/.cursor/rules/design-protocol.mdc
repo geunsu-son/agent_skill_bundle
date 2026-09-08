@@ -1,0 +1,14 @@
+---
+description: 아키텍처 설계, 시스템 구조 변경, 신규 기능 설계, 기획 문서 작성 시 적용
+globs:
+alwaysApply: false
+---
+
+# 설계 작업 프로토콜 (포인터)
+
+이 rule은 설계·구조 변경 작업에서 프로토콜을 적용하도록 유도하는 **트리거**일 뿐이다.
+프로토콜 전문(SSOT)은 skill로 관리한다:
+
+**→ `.cursor/skills/design-protocol/SKILL.md`**
+
+내용이 갈라지면 `SKILL.md`가 우선한다. 규칙을 고칠 때는 여기가 아니라 `SKILL.md`(그 상위는 `docs/`)를 수정한다.
