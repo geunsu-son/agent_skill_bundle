@@ -47,6 +47,7 @@
 | Bundle Catalog | 공방 키트 | `draft` | `workshop-kit/` | 1 — 선설치 | `bundle-catalog.mdc` | `audit-installed-bundles`, `manage-agent-bundles`, `report-bundle-feedback` | — | gate — 조사·선택·사용 기록 Issue |
 | Agent Skill Workshop | 공방 키트 | `draft` | `workshop-kit/` | 2 — 선택 | `agent-skill-workshop.mdc` | `idea-to-agent-artifact` | — | Agent 작업 아이디어를 번들로 구현 |
 | **Agent Thinking Guidelines** | **정식 번들** | `stable` | `bundles/agent-thinking-guidelines/` | 3 — 선택 | `core-principles.mdc`, `worker-conduct.mdc`, `analysis-protocol.mdc`, `design-protocol.mdc` | `agent-thinking-guidelines`, `analysis-protocol`, `design-protocol` | `orchestrator`, `reviewer`, `docs/`, memory/state templates | 대규모·장기·다단계·고위험 작업의 사고·검증·review/orchestration |
+| **Core User Rule** | **정식 번들** | `draft` | `bundles/core-user-rule/` | 3 — 선택 | `user-rule.mdc` (설치 시 `core/user-rule/user_rule.md`에서 생성) | `pull-request` | — | 일상 작업 기본 원칙 + PR 작성 절차 |
 | Session Market Briefing | 예시 | `testing` | `examples/session-market-briefing/` | 3 — 선택 | `market-briefing.mdc` | `session-market-briefing` | — | 세션 경제 브리핑 |
 | Web Crawler Craft | 예시 | `draft` | `examples/web-crawler-ver0/` | 3 — 선택 | `crawler-craft.mdc` | `web-crawler-craft` | — | 웹 크롤러 제작 |
 | Domain Data Analysis | 예시 | `testing` | `examples/domain-data-analysis/` | 3 — 선택 | `domain-data-analysis.mdc` | `domain-data-analysis` | — | 도메인 기반 데이터 분석 설계·보고 |
@@ -82,10 +83,31 @@ bundles/agent-thinking-guidelines/docs/*
 
 프로젝트 전용 memory, runtime state, 같은 이름의 커스텀 파일은 무조건 덮어쓰지 않는다. 차이를 확인한 뒤 사용자가 선택한다.
 
+### Core User Rule (정식 번들, SSOT 분리)
+
+`user_rule` 원문은 `core/user-rule/user_rule.md`에만 둔다. 번들 repo 안에 `.mdc` 복사본을 상시 보관하지 않는다.
+
+```text
+bundles/core-user-rule/cursor/.cursor/skills/pull-request/
+  → .cursor/skills/pull-request/
+
+core/user-rule/user_rule.md
+  → .cursor/rules/user-rule.mdc   (설치·업데이트 시 변환 생성)
+```
+
+`user_rule.md` → `user-rule.mdc` 변환:
+
+- frontmatter 추가: `description`, `globs: "**/*"`, `alwaysApply: true`
+- body: `user_rule.md` 본문 유지 (제목·섹션 번호 포함)
+- §9는 `pull-request` skill 참조
+
+업데이트 시 `core/user-rule/user_rule.md`와 기존 `.cursor/rules/user-rule.mdc`를 diff하고 사용자 확인 후 갱신한다.
+
 다른 platform용 구현 경로를 추정하거나 자동 생성하지 않는다. 실제 지원 필요가 생기면 `docs/`를 기준으로 별도 target을 명시적으로 추가한다.
 
 ## 마지막 관리 기록
 
+- 2026-09-08: Core User Rule 정식 번들 초안 등록 (`bundles/core-user-rule/`). `user_rule` SSOT는 `core/` 유지, Rule은 설치 시 `.mdc` 생성, `pull-request` skill만 cursor 배포본에 포함.
 - 2026-09-08: 공식 target을 Cursor로 정리. Agent Thinking Guidelines의 Claude Code 배포본을 제거하고 Cursor 구현만 유지. 루트 README에 bundle 상태 목록을 노출하고 Career Management를 `draft`로 catalog에 등록.
 - 2026-09-08: `my_cursor_user_rule`을 `core/user-rule/`, `agent-thinking-guidelines`를 `bundles/agent-thinking-guidelines/`로 통합. Agent Skill Bundle을 단일 SSOT로 정리하고 Agent Thinking Guidelines를 첫 정식 번들로 등록.
 - 2026-08-27: #11. `report-bundle-feedback` 초안을 사용 기록 중심으로 바꿈. 소비 특수 규칙은 다른 예시 Skill에 넣지 않음.
