@@ -80,6 +80,14 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - `.cursor/` 승격·서버 복제·Script는 하지 않음
 - 다음 실험: 실제 MCP 제작 요청에서 절차를 검증하고 관찰을 이 공방에 되돌림
 
+### 프로그램 검증 vs LLM reviewer — idea
+
+- 정의: [`programmatic-verification-vs-llm-reviewer.md`](programmatic-verification-vs-llm-reviewer.md)
+- 영상 주장: 프로그램으로 되는 검증을 서브에이전트/LLM에 넘기지 말 것
+- 현재 ATG 검증은 자체 검토·reviewer·분석 역산이 모두 모델 판정. 번들에 Script 없음
+- 합계·행 수·테스트 결과는 프로그램, 논리·가정·해석은 reviewer 유지가 적용 후보
+- 번들 SSOT는 아직 바꾸지 않음. 수치 분석 1건으로 비교 실험한 뒤에만 문구 수정 검토
+
 ### 다음 후보
 
 - `blog_agnet`에서 본인 URL로 수집→팩→초고→첨삭을 돌리고 관찰을 이 공방에 되돌림
