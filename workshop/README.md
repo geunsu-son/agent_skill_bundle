@@ -80,6 +80,15 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - `.cursor/` 승격·서버 복제·Script는 하지 않음
 - 다음 실험: 실제 MCP 제작 요청에서 절차를 검증하고 관찰을 이 공방에 되돌림
 
+### 프로그램 검증 vs LLM reviewer — testing 1건
+
+- 정의: [`programmatic-verification-vs-llm-reviewer.md`](programmatic-verification-vs-llm-reviewer.md)
+- 데이터: 캐글 Telco Customer Churn 공개본(7,043행). 테스트 코드는 삭제, 관찰만 남김
+- 수치 슬라이스: 스크립트 23ms로 심은 오류 E1–E3 전부 검출. reviewer도 잡았으나 역산 1개 프로토콜이면 E3를 건너뛸 수 있음
+- 끝-끝 시간: Path A ≈147초, Path B ≈125초. 판단 LLM이 지배. reviewer를 켠 채로는 체감 단축이 작음
+- 판단(E4 인과): 프로그램으로 못 잡음. 양쪽 reviewer가 실패 처리
+- 번들 SSOT는 아직 바꾸지 않음
+
 ### 다음 후보
 
 - `blog_agnet`에서 본인 URL로 수집→팩→초고→첨삭을 돌리고 관찰을 이 공방에 되돌림
