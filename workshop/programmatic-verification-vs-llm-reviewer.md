@@ -22,7 +22,7 @@ Agent Thinking Guidelines의 검증 경로가, 코드로 끝나는 검사까지 
 
 ## 출처
 
-- **확인됨**: [YouTube Shorts `uGwUzvd-HzU`](https://youtube.com/shorts/uGwUzvd-HzU) 페이지에서 추출한 자막. 화면에 나온 하네스 예시는 이 기록에 없음.
+- **확인됨**: 시작 계기 [YouTube Shorts](https://youtube.com/shorts/uGwUzvd-HzU?si=b4sTXE3K84zMIqjb) 페이지에서 추출한 자막. 화면에 나온 하네스 예시는 이 기록에 없음.
 - **확인됨**: `bundles/agent-thinking-guidelines/` 문서·reviewer·analysis-protocol 현재 문구.
 - **확인됨**: 아래 실험 절의 데이터·스크립트 출력·서브에이전트 판정서. 테스트 코드는 실험 후 삭제함.
 - **추정**: 영상의 “예시 하네스”는 코딩 에이전트 검증(테스트·스키마·스크립트)을 가리킨다. Codex를 거론한 점과 맞다.
