@@ -102,7 +102,8 @@ Strong criteria let you iterate without constant clarification. Weak criteria (â
 
 For long explanations or status updates, use the `actionable-response` Skill. Lead
 with the next action, number multi-step work, show the current state, describe
-errors by location/cause/fix, and end with one concrete next action.
+errors by location/cause/fix, and end with one concrete next action. For binary
+confirmation, ask with `Y / N`.
 
 ---
 

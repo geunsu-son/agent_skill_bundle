@@ -98,7 +98,7 @@ Multi-agent review, orchestrator, reviewer loop 같은 방식은 큰 작업에�
 답변은 [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)의 출력 원칙에서
 영감을 받아 결론 또는 다음 행동부터 제시합니다. 여러 단계는 번호를 매기고,
 완료 상태와 오류의 원인을 드러내며, 마지막에는 실행 가능한 다음 행동 하나만
-남깁니다. 긴 절차가 필요할 때는 연결된
+남깁니다. 작업 여부처럼 양자택일을 물을 때는 `Y / N`을 사용합니다. 긴 절차가 필요할 때는 연결된
 [`actionable-response` Skill](../../bundles/core-user-rule/cursor/.cursor/skills/actionable-response/SKILL.md)을 사용합니다.
 
 ## Repository contents
