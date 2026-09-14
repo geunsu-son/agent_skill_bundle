@@ -33,6 +33,10 @@ AI coding agent는 빠르게 많은 코드를 작성하고, 여러 파일을 수
 
 한 번만 쓰는 로직을 미리 추상화하거나, 필요하지 않은 설정·확장성·예외 처리를 추가하지 않습니다. 코드가 더 단순하게 해결될 수 있다면 단순한 쪽을 선택합니다.
 
+이 원칙은 [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)의
+YAGNI 사다리에서 영감을 받았습니다. 다만 코드량 자체를 줄이는 것이 목적은
+아니며, 기존 흐름·모든 caller·검증·보안·접근성을 먼저 확인한 뒤 최소화합니다.
+
 ### Surgical changes
 
 기존 코드를 수정할 때는 요청과 직접 관련된 부분만 변경합니다.
@@ -89,10 +93,22 @@ Multi-agent review, orchestrator, reviewer loop 같은 방식은 큰 작업에�
 
 일상적인 수정에서는 단일 agent가 빠르게 처리하도록 하고, 새로운 설계나 irreversible data change, 중요한 수치 보고처럼 실제로 검증 비용이 필요한 경우에만 무거운 workflow를 사용합니다.
 
+## Actionable responses
+
+답변은 [ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)의 출력 원칙에서
+영감을 받아 결론 또는 다음 행동부터 제시합니다. 여러 단계는 번호를 매기고,
+완료 상태와 오류의 원인을 드러내며, 마지막에는 실행 가능한 다음 행동 하나만
+남깁니다. 긴 절차가 필요할 때는 연결된
+[`actionable-response` Skill](../../bundles/core-user-rule/cursor/.cursor/skills/actionable-response/SKILL.md)을 사용합니다.
+
 ## Repository contents
 
 - [`user_rule.md`](./user_rule.md) — Cursor / coding agent에 적용하는 실제 user rule
-- PR 작성 절차 Skill: 이 저장소의 [`.cursor/skills/pull-request/SKILL.md`](../../.cursor/skills/pull-request/SKILL.md) (`user_rule.md` §9에서 참조)
+- PR 작성 절차 Skill: [`pull-request`](../../bundles/core-user-rule/cursor/.cursor/skills/pull-request/SKILL.md)
+- 최소 구현 검토 Skill: [`minimal-implementation`](../../bundles/core-user-rule/cursor/.cursor/skills/minimal-implementation/SKILL.md)
+- 실행 가능한 답변 Skill: [`actionable-response`](../../bundles/core-user-rule/cursor/.cursor/skills/actionable-response/SKILL.md)
+
+두 새 Skill은 항상 전체 내용을 로드하지 않고, 해당 절차가 필요한 작업에서만 호출합니다.
 
 ## Updating this rule
 

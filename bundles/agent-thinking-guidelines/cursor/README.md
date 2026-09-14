@@ -6,6 +6,11 @@ Agent Thinking Guidelines의 공통 지침(`../docs/`)을 Cursor의 Rules / Skil
 
 기본 적용 모드는 **opt-in**입니다. 설치 직후 `core-principles.mdc`, `worker-conduct.mdc`의 `alwaysApply`는 `false`이며, 필요한 작업에서 명시적으로 호출합니다.
 
+구현 범위를 줄이는 기준은 [Ponytail](https://github.com/DietrichGebert/ponytail),
+실행 가능한 상태 보고 형식은 [i-have-adhd](https://github.com/ayghri/i-have-adhd)에서
+영감을 받았습니다. 두 저장소를 새 번들로 복사하지 않고 기존 지침에 맞는
+대규모 작업용 프로토콜로 재구성합니다.
+
 ## 구성
 
 ```text
@@ -19,7 +24,8 @@ cursor/
 │   ├── skills/
 │   │   ├── agent-thinking-guidelines/
 │   │   ├── analysis-protocol/
-│   │   └── design-protocol/
+│   │   ├── design-protocol/
+│   │   └── implementation-protocol/
 │   ├── agents/
 │   │   ├── orchestrator.md
 │   │   └── reviewer.md
@@ -35,6 +41,7 @@ cursor/
 | `worker-conduct` | opt-in Rule | 가정 자기신고, 수정 범위, 체크포인트 규율 |
 | `analysis-protocol` | Rule trigger + Skill | 샘플 검증 → 전체 확장, 행 수 추적, 역산 검증 |
 | `design-protocol` | Rule trigger + Skill | 구조 먼저, 결정/미결정 구분, 범위 최소화 |
+| `implementation-protocol` | opt-in Skill | 최소 구현 사다리, 단계별 검증, 실행 가능한 상태 보고 |
 | `orchestrator` | `/orchestrator` | 작업 분해·위험 등급·라우팅 계획 반환 |
 | `reviewer` | `/reviewer` | 산출물 체크리스트 검증 |
 | `memory/` | 수동 참조 | 프로젝트별 교훈 저장 |
@@ -46,6 +53,10 @@ cursor/
 2. **`@docs/agent-thinking-guidelines.md`** — SSOT 전문 직접 참조
 3. **`/reviewer …`** — 결과 검증
 4. **`/orchestrator …`** — 큰 작업 계획
+
+`/agent-thinking-guidelines`를 활성화한 뒤 대규모 구현에서는
+`implementation-protocol`을 함께 사용합니다. 데이터 분석은
+`analysis-protocol`, 설계·구조 변경은 `design-protocol`을 추가합니다.
 
 항상 적용이 필요할 때만 `core-principles.mdc`, `worker-conduct.mdc`의 `alwaysApply`를 `true`로 바꿉니다.
 
@@ -76,7 +87,7 @@ cp -r <bundle-root>/cursor/.cursor/* <your-project>/.cursor/
 ## 설치 확인
 
 - `.cursor/rules/`에 4개 guideline rule이 존재하는지 확인
-- `.cursor/skills/`에 `agent-thinking-guidelines`, `analysis-protocol`, `design-protocol`이 존재하는지 확인
+- `.cursor/skills/`에 `agent-thinking-guidelines`, `analysis-protocol`, `design-protocol`, `implementation-protocol`이 존재하는지 확인
 - `.cursor/agents/`에 `orchestrator.md`, `reviewer.md`가 존재하는지 확인
 - `.cursor/memory/`, `.cursor/state/` 규약 파일이 존재하는지 확인
 - `docs/agent-thinking-guidelines.md`가 존재하는지 확인
@@ -149,6 +160,29 @@ upstream bundle이 바뀌면:
 4. upstream 관리 파일만 갱신
 5. 프로젝트 memory / runtime state / custom artifact는 보존
 6. 설치 상태를 다시 audit
+
+## 사용자 핸드오프
+
+일상적인 수정은 Core User Rule만 사용합니다.
+
+```text
+이 버그를 최소 변경으로 고쳐줘. 관련 caller를 먼저 확인하고,
+수정 후 가장 작은 검증을 실행해줘.
+```
+
+설계·대규모 변경·중요 분석은 다음처럼 명시합니다.
+
+```text
+/agent-thinking-guidelines
+/implementation-protocol
+
+[목적] 팀 공유용
+[작업] 기존 인증 흐름을 새 API로 교체
+[제약] 기존 public API 유지, 단계별 검증 후 다음 단계 진행
+```
+
+계획만 먼저 확인하려면 `/orchestrator`, 완성된 결과를 점검하려면
+`/reviewer`를 사용합니다.
 
 ## 운영·보수
 

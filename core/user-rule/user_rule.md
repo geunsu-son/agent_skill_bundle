@@ -33,6 +33,14 @@ For genuinely divergent options (architecture, security, cost, irreversible data
 
 Ask yourself: “Would a senior engineer call this overcomplicated?” If yes, simplify.
 
+Before choosing a small diff, understand the real flow and check every caller of the
+function being changed. A short diff in the wrong place is not simplicity. If a
+deliberate simplification has a known ceiling, record it with a `ponytail:` comment
+and name the upgrade path.
+
+For a non-trivial change, leave the smallest runnable check that would fail if the
+logic breaks. Trivial one-line changes do not need a new test.
+
 ---
 
 ## 3. Surgical Changes
@@ -91,6 +99,10 @@ Strong criteria let you iterate without constant clarification. Weak criteria (�
 - Prefer short prose over large markdown tables unless the user needs the grid.
 - **Default language:** **Korean** for natural-language replies unless the user uses another language. Keep code, identifiers, and error messages in their original form.
 - **Efficiency:** batch or parallelize tool calls when the **results of one call are not required** to decide the next call (independent reads/searches).
+
+For long explanations or status updates, use the `actionable-response` Skill. Lead
+with the next action, number multi-step work, show the current state, describe
+errors by location/cause/fix, and end with one concrete next action.
 
 ---
 
@@ -158,6 +170,11 @@ For clearly **large, long-running, multi-phase, or high-risk work** (for example
 - If it is **not available**, recommend fetching/installing the **Agent Thinking Guidelines** bundle from the Agent Skill Bundle source through the **Bundle Catalog gate**. Do not install it automatically unless the user asks.
 - If the user declines or the bundle cannot be fetched, continue with the lightest safe workflow using the rules and tools already available.
 - For routine edits, do not suggest, fetch, or install the bundle.
+
+For a focused over-engineering or implementation-scope review, use the
+`minimal-implementation` Skill. It applies the same simplicity principle with a
+repeatable check of callers, existing capabilities, safety boundaries, and the
+smallest verification.
 
 ---
 
