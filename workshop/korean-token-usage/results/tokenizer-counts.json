@@ -1,0 +1,235 @@
+{
+  "status": "draft",
+  "what_this_measures": "input tokens of the same text under public tokenizers",
+  "what_this_does_not_measure": [
+    "Cursor system prompt / tools / cache",
+    "output or reasoning tokens",
+    "unpublished Grok 4.6 and Composer 2.5 tokenizers"
+  ],
+  "assumptions": [
+    "GPT-5.6 Luna uses the GPT-5.6 family tokenizer o200k_base (verified publicly for GPT-5.6 Sol; Luna is the same family).",
+    "Xenova/claude-tokenizer is the older public Claude vocab, not Claude 4.7+/Fable billing.",
+    "Grok 4.6 and Composer 2.5 have no public tokenizer; live agent usage is a separate experiment."
+  ],
+  "corpus": {
+    "source": "SH 제51차 장기전세주택 입주자 모집공고 PDF, 64 pages, InDesign extract",
+    "full_ko": {
+      "text": {
+        "chars": 89705,
+        "hangul_syllables": 50514,
+        "utf8_bytes": 193335,
+        "whitespace_tokens": 18363
+      },
+      "tokens": {
+        "o200k_base": {
+          "label": "GPT-5.6 family / GPT-4o (tiktoken)",
+          "tokens": 59755,
+          "tokens_per_100_chars": 66.613,
+          "tokens_per_hangul": 1.183,
+          "chars_per_token": 1.501
+        },
+        "cl100k_base": {
+          "label": "GPT-4 / 3.5 (tiktoken)",
+          "tokens": 86215,
+          "tokens_per_100_chars": 96.109,
+          "tokens_per_hangul": 1.707,
+          "chars_per_token": 1.04
+        },
+        "claude_xenova": {
+          "label": "Claude proxy (Xenova/claude-tokenizer, pre-Claude-3 vocab)",
+          "tokens": 94253,
+          "tokens_per_100_chars": 105.07,
+          "tokens_per_hangul": 1.866,
+          "chars_per_token": 0.952
+        }
+      },
+      "ratios": {
+        "o200k_over_claude": 0.634,
+        "claude_over_o200k": 1.577,
+        "cl100k_over_o200k": 1.443
+      }
+    },
+    "pair_ko": {
+      "text": {
+        "chars": 2107,
+        "hangul_syllables": 1431,
+        "utf8_bytes": 4989,
+        "whitespace_tokens": 436
+      },
+      "tokens": {
+        "o200k_base": {
+          "label": "GPT-5.6 family / GPT-4o (tiktoken)",
+          "tokens": 1263,
+          "tokens_per_100_chars": 59.943,
+          "tokens_per_hangul": 0.883,
+          "chars_per_token": 1.668
+        },
+        "cl100k_base": {
+          "label": "GPT-4 / 3.5 (tiktoken)",
+          "tokens": 1986,
+          "tokens_per_100_chars": 94.257,
+          "tokens_per_hangul": 1.388,
+          "chars_per_token": 1.061
+        },
+        "claude_xenova": {
+          "label": "Claude proxy (Xenova/claude-tokenizer, pre-Claude-3 vocab)",
+          "tokens": 2232,
+          "tokens_per_100_chars": 105.933,
+          "tokens_per_hangul": 1.56,
+          "chars_per_token": 0.944
+        }
+      },
+      "ratios": {
+        "o200k_over_claude": 0.566,
+        "claude_over_o200k": 1.767,
+        "cl100k_over_o200k": 1.572
+      }
+    },
+    "pair_en": {
+      "text": {
+        "chars": 5294,
+        "hangul_syllables": 0,
+        "utf8_bytes": 5306,
+        "whitespace_tokens": 777
+      },
+      "tokens": {
+        "o200k_base": {
+          "label": "GPT-5.6 family / GPT-4o (tiktoken)",
+          "tokens": 1006,
+          "tokens_per_100_chars": 19.003,
+          "tokens_per_hangul": null,
+          "chars_per_token": 5.262
+        },
+        "cl100k_base": {
+          "label": "GPT-4 / 3.5 (tiktoken)",
+          "tokens": 1017,
+          "tokens_per_100_chars": 19.21,
+          "tokens_per_hangul": null,
+          "chars_per_token": 5.206
+        },
+        "claude_xenova": {
+          "label": "Claude proxy (Xenova/claude-tokenizer, pre-Claude-3 vocab)",
+          "tokens": 1042,
+          "tokens_per_100_chars": 19.683,
+          "tokens_per_hangul": null,
+          "chars_per_token": 5.081
+        }
+      },
+      "ratios": {
+        "o200k_over_claude": 0.965,
+        "claude_over_o200k": 1.036,
+        "cl100k_over_o200k": 1.011
+      }
+    },
+    "calibration": {
+      "en": "I refactored the agent loop to cut token usage.",
+      "ko": "토큰 사용량을 줄이려고 에이전트 루프를 다시 짰다.",
+      "en_counts": {
+        "text": {
+          "chars": 47,
+          "hangul_syllables": 0,
+          "utf8_bytes": 47,
+          "whitespace_tokens": 9
+        },
+        "tokens": {
+          "o200k_base": {
+            "label": "GPT-5.6 family / GPT-4o (tiktoken)",
+            "tokens": 12,
+            "tokens_per_100_chars": 25.532,
+            "tokens_per_hangul": null,
+            "chars_per_token": 3.917
+          },
+          "cl100k_base": {
+            "label": "GPT-4 / 3.5 (tiktoken)",
+            "tokens": 12,
+            "tokens_per_100_chars": 25.532,
+            "tokens_per_hangul": null,
+            "chars_per_token": 3.917
+          },
+          "claude_xenova": {
+            "label": "Claude proxy (Xenova/claude-tokenizer, pre-Claude-3 vocab)",
+            "tokens": 12,
+            "tokens_per_100_chars": 25.532,
+            "tokens_per_hangul": null,
+            "chars_per_token": 3.917
+          }
+        },
+        "ratios": {
+          "o200k_over_claude": 1.0,
+          "claude_over_o200k": 1.0,
+          "cl100k_over_o200k": 1.0
+        }
+      },
+      "ko_counts": {
+        "text": {
+          "chars": 28,
+          "hangul_syllables": 21,
+          "utf8_bytes": 70,
+          "whitespace_tokens": 7
+        },
+        "tokens": {
+          "o200k_base": {
+            "label": "GPT-5.6 family / GPT-4o (tiktoken)",
+            "tokens": 20,
+            "tokens_per_100_chars": 71.429,
+            "tokens_per_hangul": 0.952,
+            "chars_per_token": 1.4
+          },
+          "cl100k_base": {
+            "label": "GPT-4 / 3.5 (tiktoken)",
+            "tokens": 31,
+            "tokens_per_100_chars": 110.714,
+            "tokens_per_hangul": 1.476,
+            "chars_per_token": 0.903
+          },
+          "claude_xenova": {
+            "label": "Claude proxy (Xenova/claude-tokenizer, pre-Claude-3 vocab)",
+            "tokens": 32,
+            "tokens_per_100_chars": 114.286,
+            "tokens_per_hangul": 1.524,
+            "chars_per_token": 0.875
+          }
+        },
+        "ratios": {
+          "o200k_over_claude": 0.625,
+          "claude_over_o200k": 1.6,
+          "cl100k_over_o200k": 1.55
+        }
+      }
+    }
+  },
+  "meaning_matched_ko_over_en": {
+    "o200k_base": {
+      "ko_tokens": 1263,
+      "en_tokens": 1006,
+      "ko_over_en": 1.255
+    },
+    "cl100k_base": {
+      "ko_tokens": 1986,
+      "en_tokens": 1017,
+      "ko_over_en": 1.953
+    },
+    "claude_xenova": {
+      "ko_tokens": 2232,
+      "en_tokens": 1042,
+      "ko_over_en": 2.142
+    }
+  },
+  "calibration_ko_over_en": {
+    "o200k_base": {
+      "ko_tokens": 20,
+      "en_tokens": 12,
+      "ko_over_en": 1.667
+    },
+    "cl100k_base": {
+      "ko_tokens": 31,
+      "en_tokens": 12,
+      "ko_over_en": 2.583
+    },
+    "claude_xenova": {
+      "ko_tokens": 32,
+      "en_tokens": 12,
+      "ko_over_en": 2.667
+    }
+  }
+}

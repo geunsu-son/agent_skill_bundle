@@ -89,6 +89,14 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 판단(E4 인과): 프로그램으로 못 잡음. 양쪽 reviewer가 실패 처리
 - 번들 SSOT는 아직 바꾸지 않음
 
+### 한국어 공고문 토큰 사용량 — draft 1회 측정
+
+- 정의·관찰: [`korean-token-usage.md`](korean-token-usage.md)
+- 스크립트·픽스처: [`korean-token-usage/`](korean-token-usage/)
+- SH 제51차 장기전세 공고 PDF: GPT-5.6 Luna 계열(`o200k`) 입력 59,755토큰. 구 Claude 근사는 1.58×. 한·영 대응 서문은 Luna에서 한국어가 1.26×
+- Grok 4.6·Composer 2.5는 공개 토크나이저가 없고, 서브에이전트 트랜스크립트에 usage가 없어 이 문서 기준 미측정
+- Rule/Skill 승격 안 함. 다음: xAI·Anthropic count API로 같은 텍스트를 재측정
+
 ### 다음 후보
 
 - `blog_agnet`에서 본인 URL로 수집→팩→초고→첨삭을 돌리고 관찰을 이 공방에 되돌림

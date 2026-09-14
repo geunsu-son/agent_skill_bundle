@@ -1,0 +1,35 @@
+{
+  "status": "usage_not_exposed",
+  "protocol": "Each subagent was told to read only fixtures/live-input-ko.txt and reply NOTICE_DATE=YYYY-MM-DD. No other tools.",
+  "live_input": {
+    "chars": 12000,
+    "o200k_base": 8176,
+    "cl100k_base": 11593,
+    "claude_xenova": 12535
+  },
+  "runs": [
+    {
+      "requested": "Grok 4.6",
+      "model_slug": "cursor-grok-4.6-high",
+      "bcId": "bc-d94cf44b-016a-5cdc-ab94-050099255f0c",
+      "answer": "NOTICE_DATE=2026-08-31",
+      "usage_in_transcript": null
+    },
+    {
+      "requested": "Composer 2.5",
+      "model_slug": "composer-2.5",
+      "bcId": "bc-29ed657b-e3d2-5b26-95ba-61beaef6672c",
+      "answer": "NOTICE_DATE=2026-08-31",
+      "usage_in_transcript": null
+    },
+    {
+      "requested": "GPT-5.6 Luna",
+      "model_slug": "gpt-5.6-sol-medium",
+      "note": "Luna is not in this agent's subagent model list. Sol is the same GPT-5.6 tokenizer family (o200k_base).",
+      "bcId": "bc-592995be-50eb-534d-bae8-5b395b27d326",
+      "answer": "NOTICE_DATE=2026-08-31",
+      "usage_in_transcript": null
+    }
+  ],
+  "limitation": "Cursor subagent transcripts for these runs had no token usage fields, so live billing counts could not be compared."
+}
