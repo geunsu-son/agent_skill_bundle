@@ -19,4 +19,5 @@ python3 workshop/korean-token-usage/measure.py
 - `fixtures/live-input-ko.txt` — 서브에이전트에 넣은 12,000자 발췌
 - `measure.py` — 토큰 집계
 - `results/tokenizer-counts.json` — 공개 토크나이저 결과
-- `results/live-runs.json` — 서브에이전트 실행 기록 (usage 없음)
+- `results/live-runs.json` — 1차 서브에이전트 기록 (usage 없음)
+- `results/parallel-standard-runs.json` — Luna/Sol/Composer/Grok standard 병렬 실행. Luna는 슬러그 없음. usage 필드 없음

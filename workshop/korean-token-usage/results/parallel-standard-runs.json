@@ -1,0 +1,57 @@
+{
+  "protocol": "Parallel Task subagents, identical prompt, same Korean notice file. Standard effort: gpt-5.6-sol-medium, composer-2.5, cursor-grok-4.6-medium.",
+  "file": "workshop/korean-token-usage/fixtures/sh-51-longterm-lease-ko.txt",
+  "file_chars": 89705,
+  "file_o200k_tokens": 59755,
+  "gpt_5_6_family_note": "Luna and Sol share o200k_base. Document input tokens are the same if both ingest the full file.",
+  "luna": {
+    "requested": "gpt-5.6 luna",
+    "launched": false,
+    "reason": "gpt-5.6-luna is not in this agent's Task model list. Available GPT-5.6 slugs are gpt-5.6-sol-* and gpt-5.6-terra-* only.",
+    "document_input_tokens_if_full_file": 59755,
+    "tokenizer": "o200k_base"
+  },
+  "runs": [
+    {
+      "requested": "gpt-5.6 sol standard",
+      "model_slug": "gpt-5.6-sol-medium",
+      "bcId": "bc-306d77f0-b0a7-5124-913b-1d478126fbf8",
+      "url": "https://cursor.com/agents/bc-306d77f0-b0a7-5124-913b-1d478126fbf8",
+      "notice_date": "2026-08-31",
+      "first_rank": "2026-09-14 ~ 2026-09-15",
+      "call_center": "16003456",
+      "chars_read_reported": 64135,
+      "chars_read_note": "Lower than file length 89705. Likely counted truncated Read output, not native tokenizer usage.",
+      "observed_usage": null,
+      "tokenizer": "o200k_base",
+      "document_input_tokens_if_full_file": 59755
+    },
+    {
+      "requested": "composer 2.5 standard",
+      "model_slug": "composer-2.5",
+      "bcId": "bc-e2b0fc67-f558-5b44-928e-b569a99e796c",
+      "url": "https://cursor.com/agents/bc-e2b0fc67-f558-5b44-928e-b569a99e796c",
+      "notice_date": "2026-08-31",
+      "first_rank": "2026-09-14 ~ 2026-09-15",
+      "call_center": "16003456",
+      "chars_read_reported": 89705,
+      "chars_read_note": "Matches file length. Agent used a forbidden shell len() to count characters.",
+      "observed_usage": null,
+      "tokenizer": "unpublished"
+    },
+    {
+      "requested": "grok 4.6 standard",
+      "model_slug": "cursor-grok-4.6-medium",
+      "bcId": "bc-5cd781cc-f5ed-5116-ae9f-2421ccaf0233",
+      "url": "https://cursor.com/agents/bc-5cd781cc-f5ed-5116-ae9f-2421ccaf0233",
+      "notice_date": "2026-08-31",
+      "first_rank": "2026-09-14 ~ 2026-09-15",
+      "call_center": "16003456",
+      "chars_read_reported": 102847,
+      "chars_read_note": "Invalid. Transcript shows the agent estimated the count; file is 89705 chars.",
+      "observed_usage": null,
+      "tokenizer": "unpublished"
+    }
+  ],
+  "limitation": "Cursor subagent transcripts and events.json contain no input/output token usage fields. Native billing tokens for Grok and Composer were not observable from this runner."
+}

@@ -79,6 +79,27 @@ OpenAI 최신 토크나이저는 이 문서에서 구 Claude 근사치의 **63%*
 
 이 대화 자체를 Grok 4.6으로 바꿔 가며 재실행하는 것도 Cursor 시스템 프롬프트·도구 정의가 문서보다 클 수 있어, 토크나이저 비교로는 부적합하다.
 
+### 2차 실측 (2026-09-14, 사용자 지정 4모델)
+
+Claude는 제외. 요청은 GPT-5.6 Luna, GPT-5.6 Sol standard, Composer 2.5 standard, Grok 4.6 standard.
+
+병렬 서브에이전트 슬러그: `gpt-5.6-sol-medium`, `composer-2.5`, `cursor-grok-4.6-medium`. 같은 파일 `fixtures/sh-51-longterm-lease-ko.txt`(89,705자)를 읽고 공고일·1순위 기간·콜센터를 JSON으로 쓰게 했다.
+
+| 모델 | 서브에이전트 | 실행 | 공고 사실 추출 | 네이티브 토큰 사용량 |
+|---|---|---|---|---|
+| GPT-5.6 Luna | 목록에 없음 | 못 띄움 | — | 문서 입력은 Sol과 같은 `o200k`라 **전체 파일 기준 59,755** |
+| GPT-5.6 Sol standard | `gpt-5.6-sol-medium` | [실행됨](https://cursor.com/agents/bc-306d77f0-b0a7-5124-913b-1d478126fbf8) | 맞음 | 트랜스크립트에 usage 없음. 전체 파일 기준 **59,755** |
+| Composer 2.5 standard | `composer-2.5` | [실행됨](https://cursor.com/agents/bc-e2b0fc67-f558-5b44-928e-b569a99e796c) | 맞음 | usage 없음. 토크나이저 비공개 |
+| Grok 4.6 standard | `cursor-grok-4.6-medium` | [실행됨](https://cursor.com/agents/bc-5cd781cc-f5ed-5116-ae9f-2421ccaf0233) | 맞음 | usage 없음. 토크나이저 비공개 |
+
+Luna 슬러그는 이 Task 목록에 없다. 있는 GPT-5.6는 `gpt-5.6-sol-*`, `gpt-5.6-terra-*`뿐이다. Luna를 Sol로 바꿔 띄우지는 않았다.
+
+세 실행 모두 `NOTICE_DATE=2026-08-31`, 1순위 2026-09-14~15, 콜센터 16003456을 맞췄다. `observed_usage`는 전부 `null`이었다. Cursor 서브에이전트 transcript/events에 input·output 토큰 필드가 없다.
+
+`chars_read`는 토큰이 아니다. Sol 64,135(Read 잘림으로 보임), Composer 89,705(파일 길이, 셸로 측정), Grok 102,847(추정, 부정확).
+
+확인된 입력 토큰은 GPT-5.6 계열(Luna=Sol 토크나이저)의 문서 값 **59,755**뿐이다.
+
 ### 바로 도움이 된 내용
 
 - 이 공고문 규모는 Luna 계열 입력 약 6만 토큰이다.
