@@ -95,7 +95,7 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 - 스크립트·픽스처: [`korean-token-usage/`](korean-token-usage/)
 - SH 제51차 장기전세 공고 PDF: GPT-5.6 Luna 계열(`o200k`) 입력 59,755토큰. 구 Claude 근사는 1.58×. 한·영 대응 서문은 Luna에서 한국어가 1.26×
 - 2차: Sol/Composer/Grok standard 병렬 서브에이전트 실행. Luna 슬러그는 Task 목록에 없음. 트랜스크립트에 usage 없음. GPT-5.6 문서 입력은 o200k 59,755
-- Rule/Skill 승격 안 함. 다음: xAI·Anthropic count API로 같은 텍스트를 재측정
+- Rule/Skill 승격 안 함. 다음: Grok은 xAI tokenize_text, Composer는 Cursor 사용량 UI
 
 ### 다음 후보
 

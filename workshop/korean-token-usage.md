@@ -108,11 +108,11 @@ Luna 슬러그는 이 Task 목록에 없다. 있는 GPT-5.6는 `gpt-5.6-sol-*`, 
 
 ### 불필요하거나 과도했던 내용
 
-서브에이전트 3회는 날짜 추출은 됐지만 usage를 남기지 않아 토큰 비교에는 쓰이지 못했다.
+병렬 서브에이전트는 공고 사실은 맞췄지만, Cursor가 토큰 usage를 트랜스크립트에 안 내려줘서 모델 간 청구 토큰 비교는 못 했다. `chars_read`는 모델마다 세는 방식이 달라 토큰 대용으로 쓰면 안 된다.
 
 ### 다음 실행에서 바꿀 한 가지
 
-xAI `tokenize_text`와 Anthropic `count_tokens`(Claude 4.7+/Fable)에 같은 추출 텍스트를 넣어 Grok·신 Claude 청구 기준을 직접 잰다. Composer는 Cursor 사용량 UI/API가 열릴 때만 측정 가능하다.
+Grok은 xAI `tokenize_text`로 같은 추출 텍스트를 센다. Composer는 Cursor 사용량 UI/대시보드 숫자가 보일 때만 비교 가능하다. Luna 서브에이전트 슬러그가 열리면 Sol과 동일 과제를 다시 돌린다.
 
 ## 검증
 
