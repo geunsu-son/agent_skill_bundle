@@ -102,7 +102,9 @@ Strong criteria let you iterate without constant clarification. Weak criteria (�
 
 For long explanations or status updates, use the `actionable-response` Skill. Lead
 with the next action, number multi-step work, show the current state, describe
-errors by location/cause/fix, and end with one concrete next action.
+errors by location/cause/fix, and end with one concrete next action. For binary
+confirmation, ask with `Y / N` or `예 / 아니오`; never use Korean initial
+consonants such as `ㅇ/ㄴ`.
 
 ---
 
