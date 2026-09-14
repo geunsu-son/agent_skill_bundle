@@ -99,6 +99,10 @@ GitHub 첫 화면에서도 현재 가지고 있는 bundle을 바로 확인할 �
 - 불필요한 heavy workflow 억제
 - PR 작성 시 diff 기반·일관된 형식 (`pull-request` skill)
 
+일반 작업용 최소 구현 기준은 [Ponytail](https://github.com/DietrichGebert/ponytail),
+실행 가능한 응답 형식은 [i-have-adhd](https://github.com/ayghri/i-have-adhd)에서
+영감을 받았습니다. 두 원칙은 기존 Core User Rule과 연결된 Skill로 흡수했습니다.
+
 자세한 배경과 변경 관리 방식은 [`core/user-rule/README.md`](core/user-rule/README.md)를 봅니다.
 
 ### `bundles/` — 검증되어 승격된 재사용 번들
@@ -123,6 +127,11 @@ Agent 작업 아이디어
 - `workshop/`: 인터뷰, 범위 정의, 설계 메모
 - `examples/`: 아직 `draft` / `testing` 상태인 실제 번들 후보
 - `bundles/`: 안정적으로 재사용할 정식 원본
+
+### 사용자 핸드오프
+
+두 번들의 사용 경계와 실제 호출 예시는
+[`docs/agent-guidelines-handoff.md`](docs/agent-guidelines-handoff.md)에 정리했습니다.
 
 ## Core rule과 heavy bundle의 관계
 

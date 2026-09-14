@@ -15,12 +15,15 @@ disable-model-invocation: true
 3. 상황에 맞으면 추가 프로토콜을 따른다:
    - 데이터 분석·집계·대량 처리 → `analysis-protocol` 스킬
    - 설계·구조 변경·스키마·기획 문서 → `design-protocol` 스킬
+   - 대규모·다단계·고위험 구현 → `implementation-protocol` 스킬
 4. 중요 산출물 완료 후 검증이 필요하면 `reviewer` 서브에이전트로 검증한다.
 
 ## SSOT
 
 - 전문 SSOT: `docs/agent-thinking-guidelines.md`
 - 내용이 갈라지면 `docs/`가 우선한다. 이 스킬은 **호출 진입점**이며 전문을 복제하지 않는다.
+- `implementation-protocol`은 Ponytail의 최소 구현 기준과 i-have-adhd의 실행 가능 보고 형식을
+  대규모 작업용 단계·검증 절차로 연결한다.
 
 ## 제출 시
 
