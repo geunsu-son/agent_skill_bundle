@@ -60,6 +60,7 @@ GitHub 첫 화면에서도 현재 가지고 있는 bundle을 바로 확인할 �
 | [Web Crawler Craft](examples/web-crawler-ver0/) | `examples/web-crawler-ver0/` | 웹 크롤러 제작 |
 | [Blog Style Writing](examples/blog-style-writing-ver0/) | `examples/blog-style-writing-ver0/` | 기존 블로그 문체 팩 구축·초고·첨삭 |
 | [Career Management](examples/career-management-ver0/) | `examples/career-management-ver0/` | 커리어 상담·이력 강점 발굴·포트폴리오 지원 |
+| [Domain Storytelling Workshop](examples/domain-storytelling-workshop-ver0/) | `examples/domain-storytelling-workshop-ver0/` | 업무 암묵지 질문·도메인 기록·개발 연결 |
 
 `Bundle Catalog`와 `Agent Skill Workshop`은 위 업무 번들을 만들고 설치·관리하기 위한 **공방 키트**이므로 별도 상태 목록으로 분리하지 않습니다.
 
