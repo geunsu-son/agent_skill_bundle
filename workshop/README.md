@@ -27,12 +27,12 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 
 ## 현재 작업대
 
-### 도메인 스토리텔링 워크숍 개발담당자 — ver0 draft
+### 도메인 스토리텔링 워크숍 담당자 — ver0 draft
 
 - 정의: [`domain-storytelling-workshop.md`](domain-storytelling-workshop.md)
 - 예시: [`examples/domain-storytelling-workshop-ver0/`](../examples/domain-storytelling-workshop-ver0/README.md)
-- Rule: 개발담당자·진행자 역할, 한 질문씩 진행, 사실·가정 분리, 확인 전 구현 금지
-- Skill: 범위 → Actor·Action·Work Object → 규칙·예외 → 재생·확인 → 개발 연결
+- Rule: 선택 담당자·진행자 역할, 한 질문씩 진행, 사실·가정 분리, 확인 전 구현 금지
+- Skill: 새 작업/이어하기 → 담당자 선택·추천 → 스토리 → 확인 → Markdown 저장
 - Script·Automation·`.cursor/` 승격은 하지 않음
 - 다음 실험: 문서화가 부족한 실제 업무 하나에서 새 규칙·예외 3개 발견과 질문 과잉 여부 관찰
 
