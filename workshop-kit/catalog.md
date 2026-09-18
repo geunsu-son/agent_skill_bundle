@@ -111,6 +111,7 @@ core/user-rule/user_rule.md
 
 ## 마지막 관리 기록
 
+- 2026-09-18: Domain Storytelling Workshop에 탐색 인터뷰 / 구현 전 정리 모드와 경계 draft 갱신을 추가. 근거: [Issue #21](https://github.com/geunsu-son/agent_skill_bundle/issues/21).
 - 2026-09-18: Domain Storytelling Workshop 예시 번들을 `testing`으로 등록. 개발자·데이터 분석가·데이터 엔지니어 역할 gate와 Markdown 저장·재개를 다른 저장소에서 검증.
 - 2026-09-14: Ponytail과 i-have-adhd에서 영감을 받은 최소 구현·실행 가능 응답 원칙을 기존 두 번들에 반영. Core User Rule에 `minimal-implementation`, `actionable-response`, Agent Thinking Guidelines에 `implementation-protocol`을 추가하고 사용자 핸드오프 문서를 작성.
 - 2026-09-08: Core User Rule 정식 번들 초안 등록 (`bundles/core-user-rule/`). `user_rule` SSOT는 `core/` 유지, Rule은 설치 시 `.mdc` 생성, `pull-request` skill만 cursor 배포본에 포함.
