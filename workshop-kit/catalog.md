@@ -51,7 +51,7 @@
 | Session Market Briefing | 예시 | `testing` | `examples/session-market-briefing/` | 3 — 선택 | `market-briefing.mdc` | `session-market-briefing` | — | 세션 경제 브리핑 |
 | Web Crawler Craft | 예시 | `draft` | `examples/web-crawler-ver0/` | 3 — 선택 | `crawler-craft.mdc` | `web-crawler-craft` | — | 웹 크롤러 제작 |
 | Domain Data Analysis | 예시 | `testing` | `examples/domain-data-analysis/` | 3 — 선택 | `domain-data-analysis.mdc` | `domain-data-analysis` | — | 도메인 기반 데이터 분석 설계·보고 |
-| Domain Storytelling Workshop | 예시 | `testing` | `examples/domain-storytelling-workshop-ver0/` | 3 — 선택 | `domain-storytelling-workshop.mdc` | `domain-storytelling-workshop` | — | 담당자 관점의 업무 암묵지 질문·Markdown 저장·재개 |
+| Domain Storytelling Workshop | 예시 | `testing` | `examples/domain-storytelling-workshop-ver0/` | 3 — 선택 | `domain-storytelling-workshop.mdc` | `domain-storytelling-workshop` | — | 워크숍 담당자의 업무 암묵지 질문·Markdown 저장·재개 |
 | MCP Server Craft | 예시 | `testing` | `examples/mcp-server-craft-ver0/` | 3 — 선택 | `mcp-server-craft.mdc` | `mcp-server-craft`, `mcp-server-scope`, `mcp-server-auth`, `mcp-tool-implement`, `mcp-server-connect` | — | MCP 서버 설계·권한·구현·연결 |
 | Blog Style Writing | 예시 | `draft` | `examples/blog-style-writing-ver0/` | 3 — 선택 | `blog-style-writing.mdc` | `blog-style-writing`, `collect-blog-corpus`, `build-style-context`, `write-blog-manuscript` | — | 기존 블로그 문체 팩 구축·초고·첨삭. 수집은 Web Crawler Craft에 의존 |
 | Career Management | 예시 | `draft` | `examples/career-management-ver0/` | 3 — 선택 | `career-management.mdc` | `career-management-session`, `career-market-research`, `resume-strength-discovery`, `portfolio-hosting-choice`, `portfolio-design-research`, `portfolio-site-build`, `job-posting-fit`, `interview-story-crafting`, `profile-optimization`, `learning-path-planning`, `networking-outreach`, `compensation-research` | — | 커리어 상담·이력 강점 발굴·포트폴리오·지원/성장 지원 |
@@ -111,6 +111,7 @@ core/user-rule/user_rule.md
 
 ## 마지막 관리 기록
 
+- 2026-09-19: Domain Storytelling Workshop 인터뷰 역할을 `workshop-facilitator`만으로 통일. 개발자·분석가·DE는 확인 후 선택적 연결점. 근거: [Issue #24](https://github.com/geunsu-son/agent_skill_bundle/issues/24) 후속.
 - 2026-09-18: Domain Storytelling Workshop에 탐색 인터뷰 / 구현 전 정리 모드와 경계 draft 갱신을 추가. 근거: [Issue #21](https://github.com/geunsu-son/agent_skill_bundle/issues/21).
 - 2026-09-18: Domain Storytelling Workshop 예시 번들을 `testing`으로 등록. 개발자·데이터 분석가·데이터 엔지니어 역할 gate와 Markdown 저장·재개를 다른 저장소에서 검증.
 - 2026-09-14: Ponytail과 i-have-adhd에서 영감을 받은 최소 구현·실행 가능 응답 원칙을 기존 두 번들에 반영. Core User Rule에 `minimal-implementation`, `actionable-response`, Agent Thinking Guidelines에 `implementation-protocol`을 추가하고 사용자 핸드오프 문서를 작성.
