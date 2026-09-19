@@ -51,7 +51,7 @@ GitHub 첫 화면에서도 현재 가지고 있는 bundle을 바로 확인할 �
 |---|---|---|
 | [Session Market Briefing](examples/session-market-briefing/) | `examples/session-market-briefing/` | 세션 경제 브리핑 |
 | [Domain Data Analysis](examples/domain-data-analysis/) | `examples/domain-data-analysis/` | 도메인 기반 데이터 분석 설계·보고 |
-| [Domain Storytelling Workshop](examples/domain-storytelling-workshop-ver0/) | `examples/domain-storytelling-workshop-ver0/` | 담당자 관점의 업무 암묵지 질문·Markdown 저장·재개 |
+| [Domain Storytelling Workshop](examples/domain-storytelling-workshop-ver0/) | `examples/domain-storytelling-workshop-ver0/` | 워크숍 담당자의 업무 암묵지 질문·Markdown 저장·재개 |
 | [MCP Server Craft](examples/mcp-server-craft-ver0/) | `examples/mcp-server-craft-ver0/` | MCP 서버 설계·권한·구현·연결 |
 
 ### Draft

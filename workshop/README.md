@@ -31,10 +31,10 @@ Rule, Skill, Script, Automation 중 무엇으로 해결할 수 있을까?
 
 - 정의: [`domain-storytelling-workshop.md`](domain-storytelling-workshop.md)
 - 예시: [`examples/domain-storytelling-workshop-ver0/`](../examples/domain-storytelling-workshop-ver0/README.md)
-- Rule: 선택 담당자·진행자 역할, 한 질문씩 진행, 사실·가정 분리, 확인 전 구현 금지, 경계는 draft, 현재 업무 중심·설계 모드 중단 gate
-- Skill: 새 작업/이어하기 → 담당자 선택·추천 → 모드(탐색 인터뷰 / 구현 전 정리) → 경계 draft → 스토리 → 확인 → Markdown 저장. 니즈 vs 구현 결정 분리, 설계 지속 시 중단
+- Rule: 워크숍 담당자, 한 질문씩 진행, 사실·가정 분리, 확인 전 구현 금지, 경계는 draft, 현재 업무 중심·설계 모드 중단 gate
+- Skill: 새 작업/이어하기 → 모드(탐색 인터뷰 / 구현 전 정리) → 경계 draft → 스토리 → 확인 → Markdown 저장. 니즈 vs 구현 결정 분리, 설계 지속 시 중단. 연결점은 확인 후·선택
 - Script·Automation·`.cursor/` 승격은 하지 않음
-- catalog `testing` 등록. [Issue #21](https://github.com/geunsu-son/agent_skill_bundle/issues/21) 탐색 모드·경계 draft, [Issue #24](https://github.com/geunsu-son/agent_skill_bundle/issues/24) 목적·니즈 심화·설계 중단 gate 반영. 다음 실험: to-be 주제에서도 구현 유도 질문이 줄고 설계 중단 gate가 걸리는지
+- catalog `testing` 등록. [Issue #21](https://github.com/geunsu-son/agent_skill_bundle/issues/21) 탐색 모드·경계 draft, [Issue #24](https://github.com/geunsu-son/agent_skill_bundle/issues/24) 목적·니즈·설계 중단·**워크숍 담당자만** 반영. 다음 실험: 역할 gate 없는 인터뷰가 구현 유도 체감을 줄이는지
 
 ### 세션 경제 브리핑
 
