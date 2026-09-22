@@ -159,7 +159,7 @@ Skill을 다시 호출하면 새 워크숍 또는 저장된 Markdown 이어하�
 대조한 외부 사례:
 
 - [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) — `docs/skill-anatomy.md`의 frontmatter 계약(what + when), Common Rationalizations 표, 증거 기반 Verification, 500줄 상한, 스킬 간 내용 중복 금지. 같은 장르인 `skills/interview-me`의 가설·확신도, Q+GUESS 형식, 예측 가능성 정지 테스트, 종료 턴 STOP 규칙.
-- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) — 처음 걸리는 단에서 멈추는 사다리 구조, grep 가능한 `ponytail:` 마커에 한계와 후속 경로를 함께 적는 방식.
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) — 과잉 구현을 막는 YAGNI 사다리(처음 걸리는 단에서 멈춤), 필요한 최소 코드 선택. `ponytail:` 마커는 단순화 선택의 grep 가능한 근거와, 의도적으로 미뤄 둔 단순화의 upgrade path 보조.
 - [alibaba/open-code-review](https://github.com/alibaba/open-code-review) — 규칙마다 실행 가능한 검사, 좁은 예외를 우선하는 escape hatch(`allow-non-english: <reason>`).
 
 반영:
