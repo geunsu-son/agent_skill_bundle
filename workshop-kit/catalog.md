@@ -111,6 +111,7 @@ core/user-rule/user_rule.md
 
 ## 마지막 관리 기록
 
+- 2026-09-22: Domain Storytelling Workshop에 인터뷰 전제 충돌 복구(대리 답변 요청 시 `[초안]`으로 내리고 범위 재선언)와 `confirmed` 승격 기준(양이 아니라 명시적 확인)을 추가. 근거 Issue는 AI가 도메인 답변자였던 세션이므로 3역할 분리·배치형 문답은 보류. 근거: [Issue #28](https://github.com/geunsu-son/agent_skill_bundle/issues/28), [workshop 관찰 2026-09-22](../workshop/domain-storytelling-workshop.md).
 - 2026-09-21: Domain Storytelling Workshop 지침을 외부 사례(`addyosmani/agent-skills`, `DietrichGebert/ponytail`, `alibaba/open-code-review`)와 대조해 보강. Skill에 frontmatter·입장 확인(as-is)·추측을 붙인 질문·질문 사다리·종료 테스트를 추가하고, 금지 목록 사본은 Skill의 자기합리화 표로 합침. 예시 번들 중 이 번들만 SKILL.md에 frontmatter를 가진다. 근거: [workshop 지침 점검 2026-09-21](../workshop/domain-storytelling-workshop.md).
 - 2026-09-19: Domain Storytelling Workshop 인터뷰 역할을 `workshop-facilitator`만으로 통일. 개발자·분석가·DE는 확인 후 선택적 연결점. 근거: [Issue #24](https://github.com/geunsu-son/agent_skill_bundle/issues/24) 후속.
 - 2026-09-18: Domain Storytelling Workshop에 탐색 인터뷰 / 구현 전 정리 모드와 경계 draft 갱신을 추가. 근거: [Issue #21](https://github.com/geunsu-son/agent_skill_bundle/issues/21).
